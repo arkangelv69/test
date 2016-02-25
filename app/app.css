@@ -1,16 +1,58 @@
-﻿.title {
-    font-size: 30;
-    horizontal-align: center;
-    margin:20;
+﻿@import { url('~/platform.css') };
+
+ActionBar {
+	padding: 0px;  /* No sense */
+	margin: 0px;  /* No sense */
+	border: 0px;  /* No sense */
+	width: 100%;  /* No sense */
+	background-color: red;
 }
 
-button {
-    font-size: 42;
-    horizontal-align: center;
+ActionBar StackLayout {
+	padding: 0px;  /* No sense */
+	margin: 0px;  /* No sense */
+	border: 0px;  /* No sense */
+	color: white;
+	font-family: MaterialIcons-Regular;
+	font-size: 36px;
+	}
+
+ActionBar StackLayout Button {
+	width: 36px;
+	padding: 0px;
+	margin: 0px;
+	border: 0px;
+	shadow: none;
+	background-color: red;
 }
 
-.message {
-    font-size: 20;
-    color: #284848;
-    horizontal-align: center;
+.MenuAndFourButtons Button.MenuButton {
+	margin-left: -5;
 }
+
+.MenuAndFourButtons Button.FirstActionButton {
+	margin-left: 38%;
+	margin-right: 5%;
+}
+
+.inactive {
+	color: #B50000;
+}
+
+
+.fab-button {
+    height: 70;
+/*    margin: 30 15 -30 15;*/
+    margin: 30 15 5 15;
+    background-color: red; 
+    horizontal-align: right; /* Android Only */
+    vertical-align: bottom; /* Android Only */
+    color: #fff;  /* iOS Only */
+}
+
+.fab-button {  /* No sense */
+  font-family: MaterialIcons-Regular;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 36px;  /* Preferred icon size */
+  }

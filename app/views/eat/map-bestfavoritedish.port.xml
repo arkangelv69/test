@@ -1,7 +1,46 @@
-<Page xmlns="http://schemas.nativescript.org/tns.xsd" loaded="pageLoaded">
-  <StackLayout>
-    <Label text="Tap the button" class="title"/>
-    <Button text="TAP" tap="{{ tapAction }}" />
-    <Label text="{{ message }}" class="message" textWrap="true"/>
-  </StackLayout>
+ <Page 
+    xmlns="http://www.nativescript.org/tns.xsd"
+    xmlns:maps="nativescript-google-maps-sdk"
+    xmlns:FAB="nativescript-floatingactionbutton"
+    >
+
+	<Page.actionBar style="width:100%;">
+	<ActionBar style="width:100%;">
+		<ActionBar.titleView horizontalAlignment="right">	
+			<StackLayout orientation="horizontal" horizontalAlignment="right" class="MenuAndFourButtons">
+				<Button text="&#xE5D2;" class="MenuButton" tap="eventTap" /> <!-- ic_menu : &#xE5D2; -->
+
+				<Button text="&#xE616;" class="FirstActionButton" tap="eventTap" /> <!-- ic_event_note : &#xE616; -->
+
+				<Button text="&#xE7FD;" tap="eventTap" /> <!-- ic_person : &#xE7FD; -->
+				<Switch checked="{{ someProperty }}" />
+
+				<Button text="&#xE80B;" class="inactive" tap="eventTap" /> <!-- ic_public : &#xE80B; -->
+			</StackLayout>
+		</ActionBar.titleView>
+	</ActionBar>
+	</Page.actionBar>
+
+
+  	<StackLayout orientation="vertical" style="height:100%">
+  		<GridLayout rows="auto, *" style="height:70%">
+		    <maps:mapView row="1" latitude="{{ latitude }}" longitude="{{ longitude }}"
+		              zoom="{{ zoom }}" bearing="{{ bearing }}"
+		              tilt="{{ tilt }}" mapReady="onMapReady" 
+		              markerSelect="onMarkerSelect" cameraChanged="onCameraChanged" style="height:100%"/>
+
+		    <FAB:fab row="1" tap="fabTap"
+                     icon="res://ic_directions_walk_white_36dp"
+                     text="&#xE536;"
+                     rippleColor="#f1f1f1"
+                     class="fab-button"/> <!-- ic_directions_walk  &#xE536; -->
+	    </GridLayout>
+ 
+		<GridLayout rows="auto, auto, auto" columns="auto, auto" style="height:70%;">
+			<Label row="1" row="1" colSpan="2" text="Bar Reynols" style="font-size: 36px; color: black;  font-weight:bold; height: 30%;" />
+			<Label row="2" col="1" text="Croquetas" style="font-size: 24px; height: 30%; width: 160%; " />
+			<Label row="2" col="2" rowSpan="2" text="95" style="font-size: 48px; font-weight:bold; color:blue; text-align: right; height: 30%; width: 20%; " />
+			<Label row="3" col="1" text="5 min" style="border-top: solid 1px black; height: 20%; padding-top: 20px; " />
+		</GridLayout>
+	</StackLayout>
 </Page>

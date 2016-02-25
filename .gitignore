@@ -13,5 +13,7 @@ gradle-app.setting
 # Mine
 node_modules
 platforms
+app/**/*.js
+app/**/*.js.map
 *.sublime-project
 *.sublime-workspace
