@@ -12,3 +12,6 @@ gradle-app.setting
 
 # Mine
 node_modules
+platforms
+*.sublime-project
+*.sublime-workspace
