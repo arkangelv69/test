@@ -1,0 +1,330 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "$PROJECT_HOME/ILovePlatos/package.json",
+			"settings":
+			{
+				"buffer_size": 539,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "Packages/User/nativescript.sublime-build",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/JSHint/JSHint.sublime-build",
+					""
+				],
+				[
+					"Packages/User/nativescript.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/User/nativescript.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 87.0,
+		"last_filter": "inspector",
+		"selected_items":
+		[
+			[
+				"inspector",
+				"Web Inspector"
+			],
+			[
+				"inspect",
+				"Web Inspector"
+			],
+			[
+				"pack",
+				"Package Control: Install Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"jsfmt",
+				"JSFMT: Settings - Default"
+			],
+			[
+				"check",
+				"Git: Checkout Current File"
+			],
+			[
+				"json",
+				"JSFMT: Format the current file"
+			],
+			[
+				"ignore",
+				"Git: Update Project Ignored Files"
+			],
+			[
+				"commit",
+				"Git: Quick Commit"
+			],
+			[
+				"git ignore",
+				"Git: Update Project Ignored Files"
+			],
+			[
+				"checkout",
+				"Git: Checkout Current File"
+			],
+			[
+				"git check",
+				"Git: Checkout Current File"
+			],
+			[
+				"git checkout",
+				"Git: Checkout Current File"
+			],
+			[
+				"focus",
+				"Focus File on Sidebar"
+			],
+			[
+				"side",
+				"View: Toggle Side Bar"
+			],
+			[
+				"focus file",
+				"Focus File on Sidebar"
+			],
+			[
+				"focusf",
+				"Focus File on Sidebar"
+			],
+			[
+				"package",
+				"Package Control: Install Package"
+			],
+			[
+				"git:checkout",
+				"Git: Checkout Current File"
+			],
+			[
+				"package control:install package",
+				"Package Control: Install Package"
+			],
+			[
+				"package control: install Package ",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: ",
+				"Package Control: List Packages"
+			]
+		],
+		"width": 398.0
+	},
+	"console":
+	{
+		"height": 139.0,
+		"history":
+		[
+			"clear",
+			"cls"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"$PROJECT_HOME/ILovePlatos/app"
+	],
+	"file_history":
+	[
+		"$PROJECT_HOME/nativeScriptTutorial/app/views/login/main-view-model.js",
+		"$PROJECT_HOME/nativeScriptTutorial/app/app.css",
+		"$PROJECT_HOME/nativeScriptTutorial/app/views/login/login.js",
+		"$PROJECT_HOME/nativeScriptTutorial/app/views/login/login.xml",
+		"$PROJECT_HOME/nativeScriptTutorial/app/app.js"
+	],
+	"find":
+	{
+		"height": 33.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "$PROJECT_HOME/ILovePlatos/package.json",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 539,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								19,
+								19
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScriptNext - ES6 Syntax/JSON (JavaScriptNext).tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 33.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 112.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.git":
+	{
+		"height": 112.0
+	},
+	"pinned_build_system": "",
+	"project": "iloveplatos.sublime-project",
+	"replace":
+	{
+		"height": 60.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
