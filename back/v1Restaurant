@@ -1,0 +1,43 @@
+{	
+	"links": {
+		"self": "http://iloveplatos/restaurant/107",
+	},
+	"data": {
+		"type":"Restaruant",
+		"id":"107",
+		"attributes":{
+			"name": "Bar Reinols",
+			"description": "Es el bar de la serie de Aida",
+			"image":"",
+			"long":"",
+			"lat":"",
+			"address":"",
+			"menu":[{"key":"12/12/2016","menus":[102,203]}]
+		},
+		"links": {
+		  "self": "http://example.com/demanda_horas/1"
+		},
+		"relationships": {
+			"menus": {
+				"links": {
+				  "self": "http://iloveplatos/restaurant/107/menus",
+				},
+				"data": 	[
+					{	
+						"id":"1",
+						"type":"Menu",
+						"attributes":{
+							"name":"Menu ejecutivo",
+							
+
+{
+	"links":{
+		"self": "http://iloveplatos/plate/12"
+	},
+	"data":{
+		"type":"Plate",
+		"name":"Macarrones",
+		"description":"Macarrones con chorizo y tomate",
+		"image":"http://img.jpg"
+	}
+}
