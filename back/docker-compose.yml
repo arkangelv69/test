@@ -1,0 +1,16 @@
+version: '2.0'
+services:
+  neo4j:
+    image: neo4j
+    cap_add:
+     - SYS_RESOURCE
+    ports:
+     - "7474:7474"
+  web:
+    build: .
+    ports:
+     - "5000:5000"
+    volumes:
+     - .:/code
+    depends_on:
+     - neo4j

@@ -1,0 +1,13 @@
+#
+####### iloveplatos  #######
+#
+###### Requirements ######
+#collections
+flask
+datetime
+py2neo
+pandas
+werkzeug
+dotenv
+PyJWT
+flask-cors

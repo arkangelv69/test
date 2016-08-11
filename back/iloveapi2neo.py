@@ -109,8 +109,9 @@ def securedPing():
 
 
 #driver = GraphDatabase.driver("bolt://localhost:7687/",auth=basic_auth("neo4j",".dgonzalez."))
-#graph = Graph("http://neo4j:.dgonzalez.@localhost:7474/")
-graph = Graph(password=".dgonzalez.")
+#graph = Graph("http://neo4j:.dgonzalez.@neo4j:7474/")
+#graph = Graph("http://neo4j:.dgonzalez.@neo4j:7474/")
+graph = Graph(host="neo4j",password=".dgonzalez.")
 
 
 @app.route('/', methods=['GET'])
@@ -299,5 +300,5 @@ def user(userId):
             return "no esta"
 
 
-app.run(debug=True)
+app.run(host='0.0.0.0')
 
