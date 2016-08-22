@@ -150,8 +150,8 @@ def newPlate():
     """
     if request.method == 'POST':
         plate = request.get_json(force=True)
-        plateNode = Node(plate["data"]["type"],name=plate["data"]["name"]
-                     ,description=plate["data"]["description"],image=plate["data"]["image"])
+        plateNode = Node(plate["data"]["type"],name=plate["data"]["attributes"]["name"]
+                     ,description=plate["data"]["attributes"]["description"],image=plate["data"]["attributes"]["image"])
         graph.create(plateNode)
         plateId = graph.run('match (p:Plate{name:"'+plateNode["name"]+'"}) return ID(p) as id').evaluate()
         plate["links"]["self"]="http://iloveplatos/plate/" + str(plateId)
@@ -161,9 +161,9 @@ def newPlate():
     elif request.method == 'PUT':
         plate = request.get_json(force=True)
         plateNode = graph.node(plate["data"]["id"])
-        plateNode["name"] = plate["data"]["name"]
-        plateNode["description"] = plate["data"]["description"]
-        plateNode["image"] = plate["data"]["image"]
+        plateNode["name"] = plate["data"]["attributes"]["name"]
+        plateNode["description"] = plate["data"]["attributes"]["description"]
+        plateNode["image"] = plate["data"]["attributes"]["image"]
         plateNode.push()
         return json.dumps(plate)
 
@@ -190,9 +190,12 @@ def plate(plateId):
 	                    },
                         "data":{
                             "type":"Plate",
-                            "name":record["p.name"],
-                            "description":record["p.description"],
-                            "image":record["p.image"]
+                            "id":plateId,
+                            "attributes":{
+                                "name":record["p.name"],
+                                "description":record["p.description"],
+                                "image":record["p.image"]
+                            }
                         }
                     }
         if 'plate' in locals():
@@ -249,8 +252,8 @@ def newUser():
     """
     if request.method == 'POST':
         user = request.get_json(force=True)
-        userNode = Node(user["data"]["type"],name=user["data"]["name"]
-                     ,email=user["data"]["email"],device_id=user["data"]["device_id"])
+        userNode = Node(user["data"]["type"],name=user["data"]["attributes"]["name"]
+                     ,email=user["data"]["attributes"]["email"],device_id=user["data"]["attributes"]["device_id"])
         graph.create(userNode)
         userId = graph.run('match (p:User{device_id:"'+userNode["device_id"]+'"}) return ID(p) as id').evaluate()
         user["links"]["self"]="http://iloveplatos/private/user/" + str(userId)
@@ -260,9 +263,9 @@ def newUser():
     elif request.method == 'PUT':
         user = request.get_json(force=True)
         userNode = graph.node(user["data"]["id"])
-        userNode["name"] = user["data"]["name"]
-        userNode["email"] = user["data"]["email"]
-        userNode["device_id"] = user["data"]["device_id"]
+        userNode["name"] = user["data"]["attributes"]["name"]
+        userNode["email"] = user["data"]["attributes"]["email"]
+        userNode["device_id"] = user["data"]["attributes"]["device_id"]
         userNode.push()
         return json.dumps(user)
 
@@ -289,9 +292,12 @@ def user(userId):
                         },
                         "data":{
                             "type":"User",
-                            "name":record["p.name"],
-                            "email":record["p.email"],
-                            "device_id":record["p.device_id"]
+                            "id":userId,
+                            "attributes":{
+                                "name":record["p.name"],
+                                "email":record["p.email"],
+                                "device_id":record["p.device_id"]
+                            }
                         }
                     }
         if 'user' in locals():
