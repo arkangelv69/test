@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html lang="es"  ng-app="ILovePlatos"  data-ng-controller="MainController as mainCtrl">
+    <head>
+        <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+        -->
+        <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' * 'unsafe-inline';font-src data: * 'self' 'unsafe-inline' 'unsafe-eval'; script-src * 'self' 'unsafe-inline' 'unsafe-eval'; img-src blob: data: * ;connect-src blob: data: * ;">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <meta charset="UTF-8" />
+
+        <base href="/">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <link rel="apple-touch-icon-precomposed" href="favicon.ico">
+
+        <title>iLovePlatos</title>
+
+        <meta name="title" content="iLovePlatos" />
+        <meta name="description" content="Rellenar description" />
+        <meta name="keywords" content="love,platos,menu,restaurante" />
+
+        <meta name="og:title" content="iLovePlatos" />
+        <meta name="og:description" content="Rellenar description" />
+        <meta name="og:type" content="website" />
+        <!--meta name="og:url" content="http://www.buhomag.com" /-->
+        <!--meta name="og:image" content="http://frontend.cdn.buhomag.com/images/buho.png" /-->
+        <!--meta name="fb:app_id" content="1659320774310612" /-->
+        <meta name="og:site_name" content="iLovePlatos"/>
+
+        <!--meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="http://www.buhomag.com" />
+        <meta name="twitter:description" content="TITULO HOME" />
+        <meta name="twitter:image" content="http://frontend.cdn.buhomag.com/images/buho.png" />
+        <meta name="twitter:site" content="@BuhoMag" /-->
+
+        <!-- endbower -->
+        <!--style class="cards"></style-->
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+        <link rel="stylesheet" href="css/styles.css">
+
+        <!--script language="JavaScript" type="text/javascript">
+            function getStateConnextion() {
+                var connection = false;                
+
+                if(navigator && navigator.connection) {
+                    var networkState = navigator.connection.type;
+
+                    var states = {};
+
+                    states[Connection.UNKNOWN]  = false;
+                    states[Connection.ETHERNET] = 'Ethernet connection';
+                    states[Connection.WIFI]     = 'WiFi connection';
+                    states[Connection.CELL_2G]  = 'Cell 2G connection';
+                    states[Connection.CELL_3G]  = 'Cell 3G connection';
+                    states[Connection.CELL_4G]  = 'Cell 4G connection';
+                    states[Connection.CELL]     = 'Cell generic connection';
+                    states[Connection.NONE]     = false;
+                }
+
+                connection = states[networkState]
+
+                return connection;
+            }
+
+            document.addEventListener("deviceready", function () {
+
+                var connection = getStateConnextion();
+
+                if(!connection) {
+                    console.log('No tienes conexión');
+                    window.location = 'file:///android_asset/www/errorNotConexion.html';
+                }
+
+              }, false);
+
+              setInterval(function() {
+                var connection = getStateConnextion();
+                if(!connection) {
+                    if(window.plugins && window.plugins.toast) {
+                        window.plugins.toast.show('Upss!! Esta aplicación necesita conectarse a la red.', 6000, 'bottom', function(a){});
+                    }
+                }
+              },5000);
+
+        </script-->
+
+        <link rel="icon" type="image/x-icon" href="favicon.ico" />
+
+        <!--script type="text/javascript" src="cordova.js"></script-->
+        <!--script type="text/javascript" src="js-default/index.js"></script-->
+
+    </head>
+
+    <body class="appNative browser" ng-class="[mainCtrl.customClass]" id="{[{mainCtrl.id}]}">
+        <div data-ng-controller="UserController as userCtrl" ng-class="{'no-login':!userCtrl.currentUser,'login':userCtrl.currentUser}">
+            <div class="container">
+                <div id="map"></div>
+                <script>
+
+                    function initMap() {
+                        var minZoomLevel = 15;
+                        var lat = 40.4284285;
+                        var lng = -3.5306863;
+                        var myLatLng = {lat: lat, lng: lng};
+
+                        // Create a map object and specify the DOM element for display.
+                        var map = new google.maps.Map(document.getElementById('map'), {
+                          center: myLatLng,
+                          scrollwheel: false,
+                          zoom: minZoomLevel
+                        });
+
+                        // Create a marker and set its position.
+                        var marker = new google.maps.Marker({
+                          map: map,
+                          position: myLatLng,
+                          title: 'Hello World!'
+                        });
+
+                        // Bounds for North America
+                         var strictBounds = new google.maps.LatLngBounds(
+                         new google.maps.LatLng(lat - 0.00001, lng - 0.00001),
+                         new google.maps.LatLng(lat + 0.00001, lng + 0.00001));
+
+                        // Listen for the dragend event
+                        google.maps.event.addListener(map, 'dragend', function () {
+                             if (strictBounds.contains(map.getCenter())) return;
+
+                             // We're out of bounds - Move the map back within the bounds
+
+                             var c = map.getCenter(),
+                                 x = c.lng(),
+                                 y = c.lat(),
+                                 maxX = strictBounds.getNorthEast().lng(),
+                                 maxY = strictBounds.getNorthEast().lat(),
+                                 minX = strictBounds.getSouthWest().lng(),
+                                 minY = strictBounds.getSouthWest().lat();
+
+                             if (x < minX) x = minX;
+                             if (x > maxX) x = maxX;
+                             if (y < minY) y = minY;
+                             if (y > maxY) y = maxY;
+
+                             map.setCenter(new google.maps.LatLng(y, x));
+                        });
+
+                        // Limit the zoom level
+                        google.maps.event.addListener(map, 'zoom_changed', function () {
+                             if (map.getZoom() < minZoomLevel) map.setZoom(minZoomLevel);
+                        });
+                    }
+
+                </script>
+                <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJXI0Ul_ef-tPmKaNFqvCTQUIPJWO2osw&callback=initMap"
+                    async defer></script>
+
+                <div class="row">
+                  <div class="col s6">
+                      <div class="switch">
+                        <label>
+                          Off
+                          <input type="checkbox">
+                          <span class="lever"></span>
+                          On
+                        </label>
+                      </div>
+                  </div>
+                  <div class="col s6">
+                      
+                  </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="built/js/_bower.min.js"></script>
+
+        <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+
+        <script src="js/i18n/es_ES.js"></script>
+        <script src="js/i18n/en_EN.js"></script>
+
+        <script src="lib/angular-storage/dist/angular-storage.js"></script>
+
+        <link rel='stylesheet' href='lib/material-refresh/build/css/material-refresh.min.css'/>
+        <script src='lib/material-refresh/build/js/material-refresh.js'></script>
+        
+        <!--script src="jsx/templates.js"></script-->
+        <script src="built/js/iloveplatos.js"></script>
+
+        <!--script async src="built/js/iloveplatos-core.min.js"></script-->
+    </body>
+
+    <link rel="stylesheet" href="built/css/_bower.min.css" />
+    <!-- css que no puede comprimir porque no puedo cambiar la ruta -->
+    <link rel="stylesheet" href="js/bower_components/font-awesome/css/font-awesome.min.css" />
+
+</html>
