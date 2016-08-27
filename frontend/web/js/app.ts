@@ -16,6 +16,7 @@
 
 /// <reference path="controllers/entities/EntityController.ts" />
 /// <reference path="controllers/entities/ContenidoController.ts" />
+/// <reference path="controllers/entities/PerfilController.ts" />
 
 /// <reference path="controllers/modals/PerfilModalController.ts" />
 
@@ -23,6 +24,7 @@
 
 /// <reference path="services/EntityApirestService.ts" />
 /// <reference path="services/ContenidoApirestService.ts" />
+/// <reference path="services/PerfilApirestService.ts" />
 /// <reference path="services/DateService.ts" />
 
 /// <reference path="services/modules/files/service.ts" />
@@ -72,9 +74,11 @@ module ILovePlatos{
         .controller("PerfilModalController", PerfilModalController)
         // controllers.entidades
         .controller("ContenidoController", ContenidoController)
+        .controller("PerfilController", PerfilController)
         //cotroller.modules
         // service service
         .service("ContenidoApirestService", ContenidoApirestService)
+        .service("PerfilApirestService", PerfilApirestService)
         .service("FilesService", FilesService)
         .service("DateService", DateService)
         //Directives

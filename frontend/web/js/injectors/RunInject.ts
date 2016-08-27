@@ -3,10 +3,10 @@ module ILovePlatos{
 
     export class RunInject {
         static $inject = [
-            "ContenidoApirestService","config","PaginaApirestService","$rootScope","$state","auth", "store", "jwtHelper"
+            "ContenidoApirestService","config","$rootScope","$state","auth", "store", "jwtHelper"
         ];
 
-        constructor(ContenidoApirestService,config,PaginaApirestService,$rootScope,$state,auth, store, jwtHelper){
+        constructor(ContenidoApirestService,config,$rootScope,$state,auth, store, jwtHelper){
 
             $rootScope.$on('$stateChangeStart', function(event, toState, toParams) {
 
@@ -30,9 +30,6 @@ module ILovePlatos{
                 //----------<<<<<
 
             });
-    
-            //Precarga todas las plantillas de las páginas
-            PaginaApirestService.preloadAllTemplateContent();
         }
 
     }

@@ -114,87 +114,6 @@ module ILovePlatos{
                     url: "/index-ios.html",
                     absolute:true
                 })
-                .state('home.preview', {
-                    url: "/home/preview?reset",
-                })
-                .state('categorias_tmp', {
-                    url: "/categorias?reset",
-                    controller: 'HomeCategoriasController',
-                    controllerAs:'homecategoriaCtrl',
-                    templateUrl: "partials/categorias.html"
-                })
-                .state('categorias', {
-                    url: "/contenidos?reset",
-                    controller: 'HomeCategoriasController',
-                    controllerAs:'homecategoriaCtrl',
-                    templateUrl: "partials/categorias.html"
-                })
-                .state('filtrosubcategoria', {
-                    url: "/contenidos/:categoria/filtros?reset",
-                    controller: 'HomeSubcategoriasByCategoriaController',
-                    controllerAs:'homesubcategoriasCtrl',
-                    templateUrl: "partials/subcategorias-by-categoria.html"
-                })
-                .state('contenidosbycategoria_tmp', {
-                    url: "/contenidos/categoria/:id?reset",
-                    controller: 'HomeContenidoByCategoriaController',
-                    controllerAs:'homecontenidoCtrl',
-                    templateUrl: "partials/contenido-by-categoria.html"
-                })
-                .state('contenidosbycategoria', {
-                    url: "/contenidos/:id?reset",
-                    controller: 'HomeContenidoByCategoriaController',
-                    controllerAs:'homecontenidoCtrl',
-                    templateUrl: "partials/contenido-by-categoria.html"
-                })
-                .state('contenido', {
-                    url: "/contenidos/:categoria/:slug/:id?reset",
-                    controller: 'DetailContenidoController',
-                    controllerAs:'detailCtrl',
-                    templateUrl: "partials/page/contenido.html"
-                })
-                .state('bienvenida', {
-                    url: "/bienvenido-a-buho",
-                    controller: 'HomeBienvenidaController',
-                    controllerAs:'homebienvenidaCtrl',
-                    templateUrl: "partials/bienvenida.html"
-                })
-                .state('tags', {
-                    url: "/tags?reset",
-                    controller: 'HomeContenidoByTagController',
-                    controllerAs:'homecontenidoCtrl',
-                    templateUrl: "partials/contenido-by-tag.html"
-                })
-                .state('contenidosbytag', {
-                    url: "/tags/:id?reset",
-                    controller: 'HomeContenidoByTagController',
-                    controllerAs:'homecontenidoCtrl',
-                    templateUrl: "partials/contenido-by-tag.html"
-                })
-                .state('hashtags', {
-                    url: "/hashtags?reset",
-                    controller: 'HomeContenidoByHashtagController',
-                    controllerAs:'homecontenidoCtrl',
-                    templateUrl: "partials/contenido-by-hashtag.html"
-                })
-                .state('contenidosbyhashtag_tmp', {
-                    url: "/contenidos/hashtags/:id?reset",
-                    controller: 'HomeContenidoByHashtagController',
-                    controllerAs:'homecontenidoCtrl',
-                    templateUrl: "partials/contenido-by-hashtag.html"
-                })
-                .state('contenidosbyhashtag', {
-                    url: "/hashtags/:id?reset",
-                    controller: 'HomeContenidoByHashtagController',
-                    controllerAs:'homecontenidoCtrl',
-                    templateUrl: "partials/contenido-by-hashtag.html"
-                })
-                .state('comentariosbycontenido', {
-                    url: "/comentarios/:categoria/:slug/:id?focus",
-                    controller: 'HomeComentariosByContenidoController',
-                    controllerAs:'homecomentarioCtrl',
-                    templateUrl: "partials/comentario-by-contenido.html"
-                })
                 .state('mi-perfil', {
                     url: "/mi-perfil?reset",
                     controller: 'HomeMiPerfilController',
@@ -209,71 +128,11 @@ module ILovePlatos{
                     templateUrl: "partials/mi-perfil-editar.html",
                     data: { requiresLogin: true }
                 })
-                .state('mi-perfil-seguimiento', {
-                    url: "/mi-perfil/seguimiento?reset&tab",
-                    controller: 'HomeMiPerfilSeguimientoController',
-                    controllerAs:'homeperfilCtrl',
-                    templateUrl: "partials/mi-perfil-seguimiento.html"
-                })
-                .state('mi-perfil-conversaciones', {
-                    url: "/mi-perfil/conversaciones?reset&tab",
-                    controller: 'HomeMiPerfilConversacionesController',
-                    controllerAs:'homeperfilCtrl',
-                    templateUrl: "partials/mi-perfil-conversaciones.html"
-                })
-                .state('mi-perfil-mensajes', {
-                    url: "/mi-perfil/mensajes/:username?reset&tab",
-                    controller: 'HomeMiPerfilMensajesController',
-                    controllerAs:'homeperfilCtrl',
-                    templateUrl: "partials/mi-perfil-mensajes.html"
-                })
                 .state('mi-perfil-ajustes', {
                     url: "/mi-perfil/ajustes",
                     controller: 'HomeMiPerfilAjustesController',
                     controllerAs:'homeperfilCtrl',
                     templateUrl: "partials/mi-perfil-ajustes.html"
-                })
-                .state('perfil', {
-                    url: "/perfil/:username?reset",
-                    controller: 'HomePerfilController',
-                    controllerAs:'homeperfilCtrl',
-                    templateUrl: "partials/perfil.html"
-                }) 
-                .state('perfil-seguimiento', {
-                    url: "/perfil/:username/seguimiento?reset&tab",
-                    controller: 'HomePerfilSeguimientoController',
-                    controllerAs:'homeperfilCtrl',
-                    templateUrl: "partials/perfil-seguimiento.html"
-                })
-                .state('notificaciones', {
-                    url: "/notificaciones",
-                    controller: 'HomeNotificacionController',
-                    controllerAs:'homenotificacionesCtrl',
-                    templateUrl: "partials/notificaciones.html"
-                })            
-                .state('buscador', {
-                    url: "/buscador",
-                    controller: 'HomeBuscadorController',
-                    controllerAs:'homebuscadorCtrl',
-                    templateUrl: "partials/buscador.html"
-                })
-                .state('publicarpost', {
-                    url: "/publicar-post",
-                    controller: 'HomePublicarPostController',
-                    controllerAs:'homepublicarpostCtrl',
-                    templateUrl: "partials/publicar-post.html"
-                })
-                .state('editarpost', {
-                    url: "/editar-post/:id",
-                    controller: 'HomePublicarPostController',
-                    controllerAs:'homepublicarpostCtrl',
-                    templateUrl: "partials/editar-post.html"
-                })
-                .state('legal', {
-                    url: "/legal?reset",
-                    controller: 'HomeLegalController',
-                    controllerAs:'homelegalCtrl',
-                    templateUrl: "partials/legal.html"
                 })
                 .state('signin', {
                     url: "/iniciar-sesion?reset&redirectState&backName",
@@ -288,25 +147,6 @@ module ILovePlatos{
                     params: {redirectParams: null,customClass:null},
                     controllerAs:'homemiperfilCtrl',
                     templateUrl: "partials/signup.html"
-                })
-                .state('signup-end', {
-                    url: "/terminar-registro?reset&redirectState&backName",
-                    controller: 'HomeMiPerfilController',
-                    params: {redirectParams: null,customClass:null},
-                    controllerAs:'homemiperfilCtrl',
-                    templateUrl: "partials/signup-end.html"
-                })
-                .state('landings', {
-                    url: "/landings/:client/:slug",
-                    controller: 'HomeLandingController',
-                    controllerAs:'homelandingCtrl',
-                    templateUrl: "partials/landing.html"
-                })
-                .state('landingsaction', {
-                    url: "/landings/:client/:slug/:action",
-                    controller: 'HomeLandingController',
-                    controllerAs:'homelandingCtrl',
-                    templateUrl: "partials/landing.html"
                 })
                 .state('notfound', {
                     url: "/not-found",
