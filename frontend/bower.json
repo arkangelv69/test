@@ -23,7 +23,7 @@
     "angular-ui-router": "latest",
     "angular-ui-router-anim-in-out": "latest",
     "auth0.js": "latest",
-    "auth0-lock": "9.x∫",
+    "auth0-lock": "9.*",
     "auth0-angular": "latest",
     "font-awesome": "latest",
     "jquery": "latest",
