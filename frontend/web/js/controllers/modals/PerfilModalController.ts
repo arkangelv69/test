@@ -1,5 +1,4 @@
 /// <reference path="../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../../../typings/parse/parse.d.ts" />
 /// <reference path="../../services/modules/files/service.ts" />
 
 module ILovePlatos{

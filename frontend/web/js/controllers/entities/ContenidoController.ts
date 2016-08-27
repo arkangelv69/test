@@ -1,9 +1,8 @@
 /// <reference path="../../../typings/angularjs/angular.d.ts" />
 /// <reference path="../../services/ContenidoApirestService.ts" />
-/// <reference path="../../services/ContenidoCardService.ts" />
 
+/// <reference path="Contenido/ContenidoCard.ts" />
 /// <reference path="Contenido/ContenidoEdit.ts" />
-/// <reference path="Contenido/ContenidoRecomendado.ts" />
 
 module ILovePlatos{
 
@@ -94,24 +93,22 @@ module ILovePlatos{
             }
         };
         
-        portadas = [];
-        noticiasPrincipales = [];
         mother;
         wall:any;
         contenidoText:string;
-        preview:any;
-        images = [];
-        tituloText:string;
-        category:any;
         showTituloForm = false;
         showMediaFile = false;
         imagenDeFondo = 'transparent';
+        tituloText:any;
+        preview:any;
+        category:any;
+        images:any;
 
         homepublicarpostCtrl:any;
 
         //Composición de clases
+        ContenidoCard:ContenidoCard;
         ContenidoEdit:ContenidoEdit;
-        ContenidoRecomendado:ContenidoRecomendado;
 
         constructor(
             public $config,
@@ -137,96 +134,10 @@ module ILovePlatos{
             //Seteo el controlador principal
             super($config,svc,DateService,$rootScope,$controller,$stateParams,$scope,$state,$element,$sce,auth,store);
 
+            this.ContenidoCard = new ContenidoCard(this);
             this.ContenidoEdit = new ContenidoEdit(this);
-            this.ContenidoRecomendado = new ContenidoRecomendado(this);
 
             var self = this;
-
-            if(typeof(preloadContent) != 'undefined' && $state.current.name == 'contenido') {
-                this.content = JSON.parse(preloadContent);
-                this.$scope.newContents++;
-            }
-
-            $scope.$watch('newContents', function(newValue, oldValue) {
-                if(!newValue || newValue < 1) {
-                    return null;
-                }
-
-                jQuery(".overlayer").addClass("hidden");
-
-                //Esto comprueba si es un contenido único, si no, no emite el mensaje
-                if(self.content && self.content.id) {
-                    self.setMine(self.content);
-                    self._main.setContentBuho(self.isLinkBuho(self.content));
-                    var nickname = self.getLinkAutores(self.contents);
-                    $scope.$emit('newDetailContent', self.content, nickname);
-
-
-                    if(self.$state.current.name == 'editarpost') {
-                        self.regenerateFormulario();
-                    }
-                }
-
-            });
-
-            $rootScope.$on('changeContenidoPublicar', function (event,text) {
-                if(text) {
-                    self.contenidoText = text;
-                }
-            });
-
-            $rootScope.$on('changePreviewPublicar', function (event,preview) {
-                if(preview) {
-                    self.preview = preview;
-                }
-            });
-
-            $scope.$on("hideMediaAction",function(event,hideMediaAction) {
-                self.hideMediaAction();
-            });
-
-            $scope.$on("flippyFront",function(event,hideMediaAction) {
-                self.flippyToFrontAction(null);
-            });
-
-            //Mensaje para refrescar los contenidos de la home
-            $scope.$on("refreshHome",function(event,refreshHome) {
-                if(refreshHome) {
-                    self._main.deleteAllCache();
-                    self.render({nameState:'home',filterType:'all',cache:false}).then(function() {
-                        var templateHome = $compile('<div class="group_cards" ng-repeat="group in contenidoCtrl.contents track by $index">\
-                            <div ng-repeat="card in group track by $index" class="brick card-{[{card.id}]} {[{card.attributes.formato}]} {[{card.attributes.tipoDeModulo}]} {[{\'relevancia_\'+card.attributes.relevancia}]} {[{contenidoCtrl.classBuho(card)}]} {[{contenidoCtrl.classRepost(card)}]}" ng-init="contenidoCtrl.updateStateContent(\'detailcontenido\',card);">\
-                                <card formato="{[{contenidoCtrl.getFormato(card)}]}" card="{[{card}]}" relevancia="{[{contenidoCtrl.getRelevancia(card)}]}" color="{[{contenidoCtrl.getColorTextoContenedorTarjeta(card)}]}"></card>\
-                            </div>\
-                        </div>')($scope);
-                        angular.element('#home .wall').html(templateHome);
-                    });
-                    self.getPortadas();
-                    self.getNoticiasPrincipales();
-                }
-            });
-
-            //Lógica para la recomendación de contenidos para usuarios registrados----->
-            this.ContenidoRecomendado.initRecomendados();
-
-            //Lógica para la publicación de contenidos----->
-            //Seteamos contenido mientras el usuario lo edita
-            if($state.current.name == 'publicarpost' || $state.current.name == 'editarpost') {
-                this.initEdit();
-            }
-            //-------------->
-
-            var blockUpdatePreviewInCard = false;
-            $rootScope.$on('changeFiles',function(event,droppedFiles) {
-                self.addFiles(droppedFiles);
-                if(!blockUpdatePreviewInCard) {
-                    blockUpdatePreviewInCard = true;
-                    setTimeout(function() {
-                        self.previewImageInCard();
-                        blockUpdatePreviewInCard = false;
-                    },100);
-                }
-            });
 
         }
 
@@ -275,9 +186,6 @@ module ILovePlatos{
                     svc = this.getById(params.filterId);
                 }
             }
-            else if(this.$state.current.name == 'home.preview') {
-                this.getAllCard(preview);
-            }
             else {
                 svc = this.getAll({"view[layout]":"home"});
             }
@@ -311,38 +219,6 @@ module ILovePlatos{
 
             });
         };
-
-        getPortadas() {
-            var category = '';
-            var self = this;
-            if(this.$stateParams.id) {
-                category = this.$stateParams.id;
-            }
-            return this.svc.getPortadas(category).then((contents: iEntityApirest) => {
-                
-                if(contents.data) {
-                    self.portadas = contents.data;
-                    jQuery(".overlayer").addClass("hidden");
-                }
-
-            })
-        }
-
-        getNoticiasPrincipales() {
-            var category = '';
-            var self = this;
-            if(this.$stateParams.id) {
-                category = this.$stateParams.id;
-            }
-            return this.svc.getNoticiasPrincipales(category).then((contents: iEntityApirest) => {
-                
-                if(contents.data) {
-                    self.noticiasPrincipales = contents.data;
-                    jQuery(".overlayer").addClass("hidden");
-                }
-
-            })
-        }
 
         getByCategoria(entityId:string,queryString?): ng.IPromise<any> {
 
@@ -439,42 +315,6 @@ module ILovePlatos{
             });
         }
 
-        initScrollRecomendados() {
-            this.ContenidoRecomendado.initScrollRecomendados();
-        }
-
-        getRecomendadosById(contenidoId) {
-            return this.ContenidoRecomendado.getRecomendadosById(contenidoId);
-        }
-
-        getRecomendados() {
-            this.ContenidoRecomendado.getRecomendados();
-        }
-
-        getItemsRecomendados() {
-            return this.ContenidoRecomendado.getItemsRecomendados();
-        }
-
-        getRecomendadoIndex() {
-            return this.ContenidoRecomendado.getRecomendadoIndex();
-        }
-
-        filterRecomendacionesCalificacionesToPositivas(calificaciones) {
-            return this.ContenidoRecomendado.filterRecomendacionesCalificacionesToPositivas(calificaciones);
-        }
-
-        getRecomendadoId (recomendado) {
-            return this.ContenidoRecomendado.getRecomendadoId(recomendado);
-        }
-
-        getLabelRecomendado(recomendado) {
-            return this.ContenidoRecomendado.getLabelRecomendado(recomendado);
-        }
-
-        getRecomendadosLocal() {
-            this.ContenidoRecomendado.getRecomendadosLocal();
-        }
-
         getByUserId(userId:string): ng.IPromise<any> {
 
             var self:EntityController = this;
@@ -527,44 +367,6 @@ module ILovePlatos{
             })
         }
 
-        getVistoById(entityId:string): ng.IPromise<any> {
-
-            var self = this;
-            return this.svc.getById(entityId).then((contents) => {
-
-                var visto = self.setAttributes([contents.data],{relevancia:'2-4',tipoDeModulo:'vertical',usarImagenDeFondo:0});
-                visto = self.changeCarrouselToAlbum(visto);
-
-                self.currentState = visto;
-                self.contents.push(visto);
-            })
-        }
-
-        getAllCard(card) {
-            var relevancia = ['portada','noticia-principal','1-4','2-4','3-4','4-4'];
-            var tipoDeModulo = ['portada','noticia-principal','vertical','horizontal'];
-            var contents = [];
-
-            angular.forEach(tipoDeModulo,function(valueTM,keyTM) {
-                angular.forEach(relevancia,function(valueR,keyR) {
-                    var cardTMP = jQuery.extend(true, {},card);
-                    if( (valueR == 'portada' && valueTM != 'portada') || (valueR != 'portada' && valueTM == 'portada') ) {
-                        return null;
-                    }
-                    if( (valueR == 'noticia-principal' && valueTM != 'noticia-principal') || (valueR != 'noticia-principal' && valueTM == 'noticia-principal') ) {
-                        return null;
-                    }
-                    cardTMP.attributes.relevancia = valueR;
-                    cardTMP.attributes.tipoDeModulo = valueTM;
-                    contents.push(cardTMP);
-                });
-            });
-
-            this.contents.push(contents);
-            this.$scope.newContents ++;
-            jQuery(".overlayer").addClass("hidden");
-        }
-
         addElementToContent(retryCount) {
             if(!retryCount) {
                 retryCount = 0;
@@ -588,20 +390,6 @@ module ILovePlatos{
                     self.addElementToContent(retryCount);
                 },50);
             }*/
-        }
-
-        loadCard() {
-            angular.element('.loading-card').addClass("hidden");
-        }
-
-        search(search) {
-            var self = this;
-            return this.svc.search(search).then((contents) => {
-                self.searches = [];
-                self.searches.push(contents.data);
-                self._main.regenereWall('.wall');
-                self.scrollTop = angular.element(document).scrollTop();
-            })
         }
 
         getTags(card) {
@@ -858,48 +646,12 @@ module ILovePlatos{
             return params;
         }
 
-        hideShowMore() {
-            var content = this.content;
-            if(content && content.attributes && content.attributes.cuerpo && content.attributes.cuerpo.length<1000) {
-                return true;
-            }else {
-                return false;
-            }
-        }
-
-        showMore(event) {
-            event.preventDefault;
-            angular.element('.dtl-cuerpo').removeClass('preview');
-        }
-
-        toggleShowMore(event) {
-            event.preventDefault;
-            if(angular.element('.dtl-cuerpo').hasClass('preview')) {
-                var params = this.getParamsOmniture();
-                var nickname = this.getLinkAutores(this.contents);
-                this.$scope.$emit('newDetailContent', this.content, nickname, 'Ver todo el contenido');
-                angular.element('.dtl-cuerpo').removeClass('preview');
-            }else {
-                angular.element('.dtl-cuerpo').addClass('preview');
-                this._main.goToScrollTop(event);
-            }
-        }
-
         getWidth(group) {
             if(group.attributes.tipoDeModulo == 'vertical') {
                 return '200px';
             }else {
                 return '500px';
             }
-        }
-
-        loadCards(selector?) {
-            jQuery(selector).masonry({
-                itemSelector: '.brick',
-                columnWidth: '.vertical',
-                percentPosition: true,
-                transitionDuration: 0
-            });
         }
 
         add(entity){

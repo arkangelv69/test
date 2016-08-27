@@ -29,3 +29,4 @@ frontend/node_modules
 frontend/web/js/bower_components
 frontend/web/typings/
 frontend/web/css/iloveplatos.min.css
+frontend/web/js/config.ts

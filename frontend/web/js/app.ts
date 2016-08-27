@@ -2,7 +2,6 @@
 /// <reference path="../typings/jquery/jquery.d.ts" />
 /// <reference path="../typings/node/node.d.ts" />
 /// <reference path="../typings/underscore/underscore.d.ts" />
-/// <reference path="../typings/parse/parse.d.ts" />
 /// <reference path="../typings/angularjs/angular.d.ts" />
 /// <reference path="../typings/angular-ui-router/angular-ui-router.d.ts" />
 

@@ -2,7 +2,7 @@
 /// <reference path="../../models/mainModel.ts" />
 /// <reference path="../../models/entityModel.ts" />
 
-module Buho{
+module ILovePlatos{
 
     export class HomeNotFoundController {
         static $inject = [
