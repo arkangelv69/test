@@ -1,7 +1,9 @@
-version: '2.0'
+version: "2"
 services:
   neo4j:
     image: neo4j
+#    env_file:
+#     - .neo4j.env
     cap_add:
      - SYS_RESOURCE
     ports:
