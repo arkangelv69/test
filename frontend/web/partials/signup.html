@@ -1,0 +1,5 @@
+<div class="perfil" ng-controller="PerfilController as perfilCtrl">cc
+  	<div ng-if="!userCtrl.isLogged()">
+		<div ng-init="userCtrl.signup();mainCtrl.showLogin();" class="login"></div>
+	</div>
+</div>

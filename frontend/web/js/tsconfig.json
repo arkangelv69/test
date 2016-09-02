@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+        "out": "../built/js/iloveplatos.js",
+        "sourceMap": true,
+        "target": "es5"
+    },
+    "files": [
+        "app.ts",
+        "config.ts",
+        "models/mainModel.ts",
+        "models/entityModel.ts",
+        "controllers/MainController.ts",
+        "controllers/homes/HomeController.ts",
+        "controllers/entities/EntityController.ts",
+        "services/EntityApirestService.ts",
+        "services/DateService.ts",
+        "directives/scrollDirective.ts",
+        "filters/GeneralFilter.ts"
+    ]
+}

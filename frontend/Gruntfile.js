@@ -140,8 +140,6 @@ grunt.initConfig({
         'underscore': ["underscore-min.js"],
         'waypoints': ["lib/jquery.waypoints.min.js","lib/shortcuts/infinite.min.js"],
         'select2': ["dist/js/select2.min.js","dist/css/select2.min.css"],
-        'react': ["react.min.js","react-dom.min.js","react-with-addons.min.js"],
-        'ngReact': ["ngReact.min.js"],
         //'angular-lazy-img': ["release/angular-lazy-img.js"],
         //'tether': ["dist/js/tether.min.js"],
         //'tether-drop': ["dist/js/drop.min.js"],
@@ -168,14 +166,8 @@ grunt.initConfig({
         'web/built/js/iloveplatos-lib.min.js': [
           'web/lib/angular-storage/dist/angular-storage.js',
           'web/lib/ngMeta/dist/ngMeta.js',
-          'web/lib/ng-videosharing-embed-master/src/angular-embedplayer.js',
-          'web/lib/ng-videosharing-embed-master/src/filters/videosettings.js',
-          'web/lib/ng-videosharing-embed-master/src/filters/whitelist.js',
-          'web/lib/ng-videosharing-embed-master/src/directives/embedvideo.js',
-          'web/js/custom/custom.js',
           'web/lib/material-refresh/build/js/material-refresh.js',
         ],
-        'web/js/custom/lock.min.js': ['web/js/custom/lock.js','web/js/custom/lock-7.9-custom.js'],
         'web/built/js/iloveplatos.min.js': [
           'web/built/js/iloveplatos.js'
         ]
@@ -188,7 +180,6 @@ grunt.initConfig({
           'web/built/js/_bower.min.js',
           'web/js/i18n/es_ES.js',
           'web/js/i18n/en_EN.js',
-          'web/js/custom/lock.min.js',
           'web/built/js/iloveplatos-lib.min.js',
           'web/built/js/iloveplatos.min.js'
       ],
@@ -199,12 +190,9 @@ grunt.initConfig({
     main: {
       files: [
         // includes files within path
-        {expand: true, cwd: 'web/js/bower_components/lightgallery/dist/fonts/', src: ['*'], dest: 'web/built/fonts/'},
-        {expand: true, cwd: 'web/js/bower_components/lightgallery/dist/img/', src: ['*'], dest: 'web/built/img/'},
         {expand: true, cwd: 'web/js/bower_components/font-awesome/fonts', src: ['*'], dest: 'web/built/fonts/'},
         {expand: true, cwd: 'web/js/bower_components/angular-animate/', src: ['angular-animate.min.js.map'], dest: 'web/built/js/'},
         {expand: true, cwd: 'web/js/bower_components/angular-sanitize/', src: ['angular-sanitize.min.js.map'], dest: 'web/built/js/'},
-        {expand: true, cwd: 'web/js/bower_components/tinymce/', src: ['plugins/emoticons/img/*'], dest: 'web/built/js/'},
       ],
     },
   },

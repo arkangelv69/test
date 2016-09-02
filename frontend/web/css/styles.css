@@ -194,3 +194,20 @@ h4 { color: #9E9E9E; }
 	height: 100%;
 	width: 100%;	
 }
+
+/*main-menu*/
+#main-menu a.action-button{
+	position: absolute;
+	top: 10px;
+	z-index: 1;
+	right: 10px;
+}
+
+/*action-buttons*/
+.action-buttons {
+	position: absolute;
+	bottom: 20px;
+	left: 20px;
+	background: rgba(255, 255, 255, 0.6);
+	padding: 10px 35px 0 35px;
+}

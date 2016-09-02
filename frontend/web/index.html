@@ -62,6 +62,7 @@
         <!-- endbower -->
         <!--style class="cards"></style-->
         <!-- Compiled and minified CSS -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
         <link rel="stylesheet" href="css/styles.css">
 
@@ -121,6 +122,22 @@
     <body class="appNative browser" ng-class="[mainCtrl.customClass]" id="{[{mainCtrl.id}]}">
         <div data-ng-controller="UserController as userCtrl" ng-class="{'no-login':!userCtrl.currentUser,'login':userCtrl.currentUser}">
             <div class="container">
+                <div id="main-menu">
+                  <ul id="slide-out" class="side-nav">
+                    <li><div class="userView">
+                      <img class="background" src="images/office.jpg">
+                      <a href="#!user"><img class="circle" src="images/yuna.jpg"></a>
+                      <a href="#!name"><span class="white-text name">John Doe</span></a>
+                      <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
+                    </div></li>
+                    <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
+                    <li><a href="#!">Second Link</a></li>
+                    <li><div class="divider"></div></li>
+                    <li><a class="subheader">Subheader</a></li>
+                    <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+                  </ul>
+                  <a href="#" data-activates="slide-out" class="action-button button-collapse"><i class="material-icons small">menu</i></a>
+                </div>
                 <div id="map"></div>
                 <script>
 
@@ -180,20 +197,40 @@
                 </script>
                 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJXI0Ul_ef-tPmKaNFqvCTQUIPJWO2osw&callback=initMap"
                     async defer></script>
-
-                <div class="row">
-                  <div class="col s6">
+                <div class="action-buttons">
+                  <div class="row">
                       <div class="switch">
                         <label>
-                          Off
+                          <i class="small material-icons">grade</i>
                           <input type="checkbox">
                           <span class="lever"></span>
-                          On
                         </label>
                       </div>
                   </div>
-                  <div class="col s6">
-                      
+                  <div class="row">
+                      <div class="switch">
+                        <label>
+                          <i class="small material-icons">equalizer</i>
+                          <input type="checkbox">
+                          <span class="lever"></span>
+                        </label>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="switch">
+                        <label>
+                          <i class="small material-icons">room</i>
+                          <input type="checkbox">
+                          <span class="lever"></span>
+                        </label>
+                      </div>
+                  </div>
+                  <div class="row">
+                       <form action="#">
+                        <p class="range-field">
+                          <input type="range" id="distance" min="0" max="2" step="0.1" start="2"/>
+                        </p>
+                      </form>
                   </div>
                 </div>
             </div>
@@ -210,7 +247,7 @@
         <script src="lib/angular-storage/dist/angular-storage.js"></script>
 
         <link rel='stylesheet' href='lib/material-refresh/build/css/material-refresh.min.css'/>
-        <script src='lib/material-refresh/build/js/material-refresh.js'></script>
+        <!--script src='lib/material-refresh/build/js/material-refresh.js'></script-->
         
         <!--script src="jsx/templates.js"></script-->
         <script src="built/js/iloveplatos.js"></script>

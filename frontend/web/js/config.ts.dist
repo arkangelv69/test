@@ -1,0 +1,25 @@
+var configBuho:any = {};
+
+module ILovePlatos{
+    'use strict';
+
+    configBuho = {
+        domain: 'unidadeditorial.eu.auth0.com',//prod
+        //domain: 'opensistemas.eu.auth0.com',//devel
+        clientID: 'oSg8I5guesBbuT1CPFiQQCBKb5lEQL3s',//prod
+        //clientID: 'rZhl75nsGxaN0BRjLBo2eQ6vfg967lQJ',//devel
+        protocolApirest:"http://",
+        domainApirest:'api.buhomag.com',
+        //domainApirest:'test.buhomag.com',
+        //domainApirest:'devel.api.buho.unioneditorial.es',
+        //domainApirest:'prod.api.buho.unioneditorial.es',
+        cdn:'frontend.cdn.buhomag.com',
+        protocolCdn:"http://",
+        bucket:'production-frontend',
+        protocolFront:"http://",
+        domainFront:'www.buhomag.com',
+        //domainFront:'devel.buho.unioneditorial.es',
+        emailContacto:'buhosocialmag@gmail.com'
+    }
+
+}
