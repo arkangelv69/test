@@ -3,6 +3,7 @@ import re
 import jwt
 import base64
 import os
+import requests
 
 from collections import defaultdict
 from flask import Flask, jsonify, abort, make_response, request, current_app, _request_ctx_stack
@@ -142,7 +143,7 @@ def allPlates():
 #@crossdomain(origin='*')
 @cross_origin(headers=['Content-Type', 'Authorization'])
 @cross_origin(headers=['Access-Control-Allow-Origin', '*'])
-@requires_auth
+#@requires_auth
 def newPlate():
     """
     new plate
@@ -173,7 +174,7 @@ def newPlate():
 #@crossdomain(origin='*')
 @cross_origin(headers=['Content-Type', 'Authorization'])
 @cross_origin(headers=['Access-Control-Allow-Origin', '*'])
-@requires_auth
+#@requires_auth
 def plate(plateId):
     """
     get plate and return plate
@@ -244,7 +245,7 @@ def allUsers():
 #@crossdomain(origin='*')
 @cross_origin(headers=['Content-Type', 'Authorization'])
 @cross_origin(headers=['Access-Control-Allow-Origin', '*'])
-@requires_auth
+#@requires_auth
 def newUser():
     """
     new user
@@ -275,7 +276,7 @@ def newUser():
 #@crossdomain(origin='*')
 @cross_origin(headers=['Content-Type', 'Authorization'])
 @cross_origin(headers=['Access-Control-Allow-Origin', '*'])
-@requires_auth
+#@requires_auth
 def user(userId):
     """
     get user and return user
@@ -306,5 +307,78 @@ def user(userId):
             return "no esta"
 
 
-app.run(host='0.0.0.0')
+#@app.route('/public/restaurant/<float:lat>/<float:lon>/<float:r>', methods=['GET'])
+@app.route('/public/restaurant/<string:lat>/<string:lon>/<string:r>', methods=['GET'])
+#@crossdomain(origin='*')
+@cross_origin(headers=['Content-Type', 'Authorization'])
+@cross_origin(headers=['Access-Control-Allow-Origin', '*'])
+#@requires_auth
+def restaurants(lat,lon,r):
+    """
+    try:
+        lat, long, r = float(lat), float(long), float(r)
+    except ValueError:
+        abort(404)
+    """
+    """
+    r = requests.post('http://localhost:7474/db/data/ext/SpatialPlugin/graphdb/findGeometriesWithinDistance', auth=('neo4j', '.dgonzalez.'),json={"pointX":-3.490169657737401,"pointY":40.39707680663439,"distanceInKm":1,"layer":"Restaurants"})
 
+    myRestaurants = []
+    for restaurant in r.json():
+        myRestaurants += [restaurant["metadata"]["id"]]
+
+    cursor = graph.run('match (r:Restaurant) where ID(r) IN ' + str(myRestaurants) + ' return r.name').data()
+    """
+    cursor = graph.run('MATCH (r:Restaurant) WHERE distance(point(r),point({latitude:'+
+                       lat+',longitude:'+ lon +'})) < '+ r+'*1000 RETURN r.name').data()
+    for record in cursor:
+        print record["r.name"]
+
+    return "listo: lat"+str(lat)
+
+app.run(host='0.0.0.0',debug="true")
+
+"""
+match (u:User{name:"David"})-[re:LIKED]->(p:Plate)<-[:HAVE]-(m:Menu)<-[:HAVE]-(r:Restaurant)
+where ID(r) IN [38]
+return p
+"""
+
+
+""" Obtener los restaurantes
+MATCH (r:Restaurant)
+WHERE distance(point(r),point({latitude:40.39682978190974,longitude:-3.4897354662994173})) < 2*1000
+RETURN r
+"""
+
+""" Obtener los restaurantes y los favoritos
+MATCH (r:Restaurant)
+MATCH (u:User{name:"David"})-[r2:LIKED]->(p:Plate)<-[]-(m:Menu)<-[r3:HAVE]-(r4)
+WHERE distance(point(r),point({latitude:40.39726896121282,longitude:-3.491032314358118})) < 0.2*1000
+AND r3.active = true
+RETURN r,p,-1
+"""
+
+""" Obtener el top 10
+START n=node:user('*:*')
+MATCH (n)-[r]->(x)
+RETURN n, COUNT(r)
+ORDER BY COUNT(r) DESC
+LIMIT 10
+"""
+
+
+""" TODO JUNTO
+MATCH (u:User)-[r4]->(p:Plate)<-[]-(m:Menu)<-[r3:HAVE]-(r)
+WHERE distance(point(r),point({latitude:40.39726896121282,longitude:-3.491032314358118})) < 0.2*1000 and r3.active = true
+RETURN r,p, COUNT(r4) as top
+ORDER BY COUNT(r4) DESC
+limit 3
+UNION
+WITH -1 as top
+MATCH (r:Restaurant)
+MATCH (u:User{name:"David"})-[r2:LIKED]->(p:Plate)<-[]-(m:Menu)<-[r3:HAVE]-(r4)
+WHERE distance(point(r),point({latitude:40.39726896121282,longitude:-3.491032314358118})) < 0.2*1000
+AND r3.active = true
+RETURN r,p,top
+"""

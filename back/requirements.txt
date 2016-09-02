@@ -11,3 +11,4 @@ werkzeug
 dotenv
 PyJWT
 flask-cors
+shapely
