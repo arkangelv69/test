@@ -7,9 +7,10 @@ module ILovePlatos{
     export class MapController {
         static $inject = [
             "config",
+            "$state",
         ];
 
-        constructor(public $config) {
+        constructor(protected $config,protected $state) {
         }
 
         init() {
@@ -17,6 +18,7 @@ module ILovePlatos{
         }
 
         initMap() {
+            var self = this;
             var minZoomLevel = 15;
             var lat = 40.4284285;
             var lng = -3.5306863;
@@ -72,7 +74,7 @@ module ILovePlatos{
             });
 
             marker.addListener('click', function() {
-              console.log(this);
+              self.$state.go('card',{id:'1'});
             });
         }
 

@@ -34,6 +34,9 @@
 }
 
 /*card*/
+.card {
+	margin: 0;
+}
 .card .card-panel {
 	margin:0;
 	padding: 0;
@@ -46,11 +49,24 @@
 }
 .card .card-panel .col-left{
 	padding: 0px;
-	ımargin-bottom: -6px;
+	margin-bottom: -6px;
 }
 .card-menu-title {
 	background: rgba(0,0,0,0.1);
     	padding: 5px;	
+}
+.card-menu-offer {
+	text-align: right;
+	float:right;
+	display: inline-block;
+}
+.card-menu-offer i{
+	position: relative;
+    	top: -2px;
+    	color: rgba(0,0,0,0.4);
+}
+.card-menu-separator {
+	 margin: 0 5px;
 }
 .card .card-image .card-title {
 	background: rgba(0,0,0,.4);
@@ -176,4 +192,16 @@ p.item-description {
 	text-align: right;
 	display: block;
     	width: 100%;
+}
+
+/*carrousel item favorite*/
+.carousel-item-favorite {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+.carousel-item-favorite a {color: #eaeced; padding: 10px 0;}
+.carousel-item-favorite a.active {color:#039be5;}
+.carousel-item-favorite a:hover {
+	color:#8bc34a!important;
 }

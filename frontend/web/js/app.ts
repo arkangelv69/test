@@ -11,8 +11,10 @@
 /// <reference path="controllers/MainController.ts" />
 /// <reference path="controllers/UserController.ts" />
 /// <reference path="controllers/homes/HomeController.ts" />
+/// <reference path="controllers/homes/HomeCardController.ts" />
 
 /// <reference path="controllers/entities/MapController.ts" />
+/// <reference path="controllers/entities/CardController.ts" />
 // <reference path="controllers/entities/PerfilController.ts" />
 
 /// <reference path="controllers/data/DataJsonController.ts" />
@@ -62,8 +64,10 @@ module ILovePlatos{
         .controller("UserController", UserController)
         // controllers.home
         .controller("HomeController", HomeController)
+        .controller("HomeCardController", HomeCardController)
         // controllers.entidades
         .controller("MapController", MapController)
+        .controller("CardController", CardController)
         //.controller("PerfilController", PerfilController)
         //cotroller.modules
         // service service

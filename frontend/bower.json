@@ -47,7 +47,8 @@
     "imgcache.js": "^1.0.0",
     "waypoints": "^4.0.0",
     "select2": "^4.0.3",
-    "materialize": "^0.97.7"
+    "materialize": "^0.97.7",
+    "mdi": "^1.7.22"
   },
   "overrides": {
     "tinymce-dist": {

@@ -4,7 +4,7 @@ module ILovePlatos{
 
     declare var google:any;
 
-    export class MapController {
+    export class CardController {
         static $inject = [
             "config",
         ];

@@ -114,7 +114,7 @@ module ILovePlatos{
                     url: "/index-ios.html",
                     absolute:true
                 })
-                 .state('mi-perfil', {
+                 .state('card', {
                     url: "/card/:id",
                     controller: 'HomeCardController',
                     controllerAs:'homecardCtrl',
