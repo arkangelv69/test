@@ -1,36 +1,66 @@
-<div id="content_home" ng-controller="ContenidoController as contenidoCtrl" scroll="document" scroll-wall-selector=".wall" ng-init="contenidoCtrl.render({nameState:'home',filterType:'all',cache:true});contenidoCtrl.loadCards('.wall');contenidoCtrl.askByNewContent();">
-	<section class="destacado" ng-init="contenidoCtrl.getPortadas();contenidoCtrl.getNoticiasPrincipales();">
-		<div ng-repeat="card in contenidoCtrl.portadas track by $index" class="brick card-{[{card.id}]} {[{card.attributes.formato}]} portada {[{'relevancia_'+card.attributes.relevancia}]} {[{contenidoCtrl.classBuho(card)}]} {[{contenidoCtrl.classRepost(card)}]}" ng-init="contenidoCtrl.updateStateContent('detailcontenido',card);">
-			<style ng-if="card.attributes.colorDelLogo">
-				#home .contenedor > header .bloque > h2:before,#home .contenedor > header .bloque > .header-title:before {
-				    color:{[{card.attributes.colorDelLogo}]};
-				}
-				@media only screen and (max-width: 768px) {
-					.submenu-perfil > a:before {
-					    color:{[{card.attributes.colorDelLogo}]};	
-					}
-				}
-			</style>
-			<card data="contenidoCtrl.portadas[$index]"></card>
-		</div>
-		<div ng-repeat="card in contenidoCtrl.noticiasPrincipales track by $index" class="brick card-{[{card.id}]} {[{card.attributes.formato}]} noticia-principal {[{'relevancia_'+card.attributes.relevancia}]} {[{contenidoCtrl.classBuho(card)}]} {[{contenidoCtrl.classRepost(card)}]}" ng-init="contenidoCtrl.updateStateContent('detailcontenido',card);">
-			<card data="contenidoCtrl.noticiasPrincipales[$index]"></card>
-		</div>
-		<section class="lista-categorias" ng-controller="CategoriaController as categoriaCtrl">
-		     <div class="bloque" ng-init="categoriaCtrl.getAll()">
-		          <h4>Categorías</h4>
-		                <ul>
-		                        <li class="lista-cate-{[{item.id}]}" ng-repeat="item in categoriaCtrl.contents track by $index"  ng-if="!item.relationships.parents">
-		                            <a ui-sref="contenidosbycategoria({id: item.id})" href="javascript:void(0);" role="button">{[{item.attributes.nombre}]}</a>
-		                        </li>
-		                </ul>
-		        </div>
-		 </section>
-	</section>
-	<section class="wall">
-		<test data="contenidoCtrl.contents"></test>
-	</section>
-	<div class="loading-card hidden">
-		<img src="images/spinner.gif" />
-	</div>
+<div id="map" class="container" data-ng-controller="MapController as mapCtrl" data-ng-click="mapCtrl.init();">
+    <div id="main-menu">
+      <ul id="slide-out" class="side-nav">
+        <li><div class="userView">
+          <img class="background" src="images/office.jpg">
+          <a href="#!user"><img class="circle" src="images/yuna.jpg"></a>
+          <a href="#!name"><span class="white-text name">John Doe</span></a>
+          <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
+        </div></li>
+        <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
+        <li><a href="#!">Second Link</a></li>
+        <li><div class="divider"></div></li>
+        <li>
+          <div>Aquí va el login</div>
+        </li>
+        <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+      </ul>
+      <a href="#" data-activates="slide-out" class="action-button button-collapse"><i class="material-icons small">menu</i></a>
+    </div>
+    <div id="map-layer"></div>
+    <script>
+    	function initMap() {
+    		//setTimeout(function() {
+    			angular.element('#map').scope().mapCtrl.initMap();
+    		//},50);
+    	}
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJXI0Ul_ef-tPmKaNFqvCTQUIPJWO2osw&callback=initMap"
+        async defer></script>
+    <div class="map action-buttons">
+      <div class="row">
+          <div class="switch">
+            <label>
+              <i class="small material-icons">grade</i>
+              <input type="checkbox">
+              <span class="lever"></span>
+            </label>
+          </div>
+      </div>
+      <div class="row">
+          <div class="switch">
+            <label>
+              <i class="small material-icons">equalizer</i>
+              <input type="checkbox">
+              <span class="lever"></span>
+            </label>
+          </div>
+      </div>
+      <div class="row">
+          <div class="switch">
+            <label>
+              <i class="small material-icons">room</i>
+              <input type="checkbox">
+              <span class="lever"></span>
+            </label>
+          </div>
+      </div>
+      <div class="row">
+           <form action="#">
+            <p class="range-field">
+              <input type="range" id="distance" min="0" max="2" step="0.1" start="2"/>
+            </p>
+          </form>
+      </div>
+    </div>
 </div>

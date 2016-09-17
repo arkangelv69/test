@@ -121,124 +121,13 @@
 
     <body class="appNative browser" ng-class="[mainCtrl.customClass]" id="{[{mainCtrl.id}]}">
         <div data-ng-controller="UserController as userCtrl" ng-class="{'no-login':!userCtrl.currentUser,'login':userCtrl.currentUser}">
-            <div class="container">
-                <div id="main-menu">
-                  <ul id="slide-out" class="side-nav">
-                    <li><div class="userView">
-                      <img class="background" src="images/office.jpg">
-                      <a href="#!user"><img class="circle" src="images/yuna.jpg"></a>
-                      <a href="#!name"><span class="white-text name">John Doe</span></a>
-                      <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
-                    </div></li>
-                    <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-                    <li><a href="#!">Second Link</a></li>
-                    <li><div class="divider"></div></li>
-                    <li><a class="subheader">Subheader</a></li>
-                    <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
-                  </ul>
-                  <a href="#" data-activates="slide-out" class="action-button button-collapse"><i class="material-icons small">menu</i></a>
-                </div>
-                <div id="map"></div>
-                <script>
-
-                    function initMap() {
-                        var minZoomLevel = 15;
-                        var lat = 40.4284285;
-                        var lng = -3.5306863;
-                        var myLatLng = {lat: lat, lng: lng};
-
-                        // Create a map object and specify the DOM element for display.
-                        var map = new google.maps.Map(document.getElementById('map'), {
-                          center: myLatLng,
-                          scrollwheel: false,
-                          zoom: minZoomLevel
-                        });
-
-                        // Create a marker and set its position.
-                        var marker = new google.maps.Marker({
-                          map: map,
-                          position: myLatLng,
-                          title: 'Hello World!'
-                        });
-
-                        // Bounds for North America
-                         var strictBounds = new google.maps.LatLngBounds(
-                         new google.maps.LatLng(lat - 0.00001, lng - 0.00001),
-                         new google.maps.LatLng(lat + 0.00001, lng + 0.00001));
-
-                        // Listen for the dragend event
-                        google.maps.event.addListener(map, 'dragend', function () {
-                             if (strictBounds.contains(map.getCenter())) return;
-
-                             // We're out of bounds - Move the map back within the bounds
-
-                             var c = map.getCenter(),
-                                 x = c.lng(),
-                                 y = c.lat(),
-                                 maxX = strictBounds.getNorthEast().lng(),
-                                 maxY = strictBounds.getNorthEast().lat(),
-                                 minX = strictBounds.getSouthWest().lng(),
-                                 minY = strictBounds.getSouthWest().lat();
-
-                             if (x < minX) x = minX;
-                             if (x > maxX) x = maxX;
-                             if (y < minY) y = minY;
-                             if (y > maxY) y = maxY;
-
-                             map.setCenter(new google.maps.LatLng(y, x));
-                        });
-
-                        // Limit the zoom level
-                        google.maps.event.addListener(map, 'zoom_changed', function () {
-                             if (map.getZoom() < minZoomLevel) map.setZoom(minZoomLevel);
-                        });
-                    }
-
-                </script>
-                <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJXI0Ul_ef-tPmKaNFqvCTQUIPJWO2osw&callback=initMap"
-                    async defer></script>
-                <div class="action-buttons">
-                  <div class="row">
-                      <div class="switch">
-                        <label>
-                          <i class="small material-icons">grade</i>
-                          <input type="checkbox">
-                          <span class="lever"></span>
-                        </label>
-                      </div>
-                  </div>
-                  <div class="row">
-                      <div class="switch">
-                        <label>
-                          <i class="small material-icons">equalizer</i>
-                          <input type="checkbox">
-                          <span class="lever"></span>
-                        </label>
-                      </div>
-                  </div>
-                  <div class="row">
-                      <div class="switch">
-                        <label>
-                          <i class="small material-icons">room</i>
-                          <input type="checkbox">
-                          <span class="lever"></span>
-                        </label>
-                      </div>
-                  </div>
-                  <div class="row">
-                       <form action="#">
-                        <p class="range-field">
-                          <input type="range" id="distance" min="0" max="2" step="0.1" start="2"/>
-                        </p>
-                      </form>
-                  </div>
-                </div>
-            </div>
+            <div data-ui-view class="anim-in-out anim-slide-below-fade" data-anim-speed="1000" data-anim-sync="true"></div>
         </div>
 
         <script src="built/js/_bower.min.js"></script>
 
         <!-- Compiled and minified JavaScript -->
+        <script src="lib/ngMeta/dist/ngMeta.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
 
         <script src="js/i18n/es_ES.js"></script>
@@ -246,7 +135,7 @@
 
         <script src="lib/angular-storage/dist/angular-storage.js"></script>
 
-        <link rel='stylesheet' href='lib/material-refresh/build/css/material-refresh.min.css'/>
+        <!--link rel='stylesheet' href='lib/material-refresh/build/css/material-refresh.min.css'/-->
         <!--script src='lib/material-refresh/build/js/material-refresh.js'></script-->
         
         <!--script src="jsx/templates.js"></script-->
@@ -257,6 +146,6 @@
 
     <link rel="stylesheet" href="built/css/_bower.min.css" />
     <!-- css que no puede comprimir porque no puedo cambiar la ruta -->
-    <link rel="stylesheet" href="js/bower_components/font-awesome/css/font-awesome.min.css" />
+    <!--link rel="stylesheet" href="js/bower_components/font-awesome/css/font-awesome.min.css" /-->
 
 </html>

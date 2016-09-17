@@ -114,6 +114,12 @@ module ILovePlatos{
                     url: "/index-ios.html",
                     absolute:true
                 })
+                 .state('mi-perfil', {
+                    url: "/card/:id",
+                    controller: 'HomeCardController',
+                    controllerAs:'homecardCtrl',
+                    templateUrl: "partials/card.html",
+                })
                 .state('mi-perfil', {
                     url: "/mi-perfil?reset",
                     controller: 'HomeMiPerfilController',
@@ -127,12 +133,6 @@ module ILovePlatos{
                     controllerAs:'homemiperfilEditarCtrl',
                     templateUrl: "partials/mi-perfil-editar.html",
                     data: { requiresLogin: true }
-                })
-                .state('mi-perfil-ajustes', {
-                    url: "/mi-perfil/ajustes",
-                    controller: 'HomeMiPerfilAjustesController',
-                    controllerAs:'homeperfilCtrl',
-                    templateUrl: "partials/mi-perfil-ajustes.html"
                 })
                 .state('signin', {
                     url: "/iniciar-sesion?reset&redirectState&backName",

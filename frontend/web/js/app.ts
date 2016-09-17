@@ -10,20 +10,13 @@
 /// <reference path="injectors/RunInject.ts" />
 /// <reference path="controllers/MainController.ts" />
 /// <reference path="controllers/UserController.ts" />
-/// <reference path="controllers/homes/HomeController.ts" /> />
-/// <reference path="controllers/homes/DetailContenidoController.ts" />
-/// <reference path="controllers/homes/HomeNotFoundController.ts" />
+/// <reference path="controllers/homes/HomeController.ts" />
 
-/// <reference path="controllers/entities/EntityController.ts" />
-/// <reference path="controllers/entities/ContenidoController.ts" />
-/// <reference path="controllers/entities/PerfilController.ts" />
-
-/// <reference path="controllers/modals/PerfilModalController.ts" />
+/// <reference path="controllers/entities/MapController.ts" />
+// <reference path="controllers/entities/PerfilController.ts" />
 
 /// <reference path="controllers/data/DataJsonController.ts" />
 
-/// <reference path="services/EntityApirestService.ts" />
-/// <reference path="services/ContenidoApirestService.ts" />
 /// <reference path="services/PerfilApirestService.ts" />
 /// <reference path="services/DateService.ts" />
 
@@ -57,7 +50,8 @@ module ILovePlatos{
         'angular-jwt',
         'ngCordova',
         'angular-flippy',
-        'angular-progress-button-styles'
+        'angular-progress-button-styles',
+        'ngMeta'
     ])
         //Config
         .config(ConfigInject)
@@ -68,16 +62,12 @@ module ILovePlatos{
         .controller("UserController", UserController)
         // controllers.home
         .controller("HomeController", HomeController)
-        .controller("DetailContenidoController", DetailContenidoController)
-        .controller("HomeNotFoundController", HomeNotFoundController)
-        //Controller modals
-        .controller("PerfilModalController", PerfilModalController)
         // controllers.entidades
-        .controller("ContenidoController", ContenidoController)
-        .controller("PerfilController", PerfilController)
+        .controller("MapController", MapController)
+        //.controller("PerfilController", PerfilController)
         //cotroller.modules
         // service service
-        .service("ContenidoApirestService", ContenidoApirestService)
+        //.service("ContenidoApirestService", ContenidoApirestService)
         .service("PerfilApirestService", PerfilApirestService)
         .service("FilesService", FilesService)
         .service("DateService", DateService)

@@ -1,0 +1,155 @@
+<div class="card" data-ng-click="CardController as cardCtrl">
+  <div class="card-image">
+    <img src="http://www.gruposhow.es/gestion/contenidos/galeria/1/FRA_0177.JPG">
+    <span class="card-title">Restaurante Kokken</span>
+    <a class="card-navigation btn-floating btn-large blue">
+      <i class="material-icons">navigation</i>
+    </a>
+    <a class="card-close">
+      <i class="material-icons">highlight_off</i>
+    </a>
+  </div>
+  <div class="card-panel-group teal lighten-2">
+    <div class="card-panel-media">
+      <img src="http://lorempixel.com/400/200/food/1"> <!-- notice the "circle" class -->
+    </div>
+    <div class="card-panel-body">
+      <div class="card-panel-title white-text">Salpicon de pollo</div>
+    </div>
+  </div>
+  <div class="card-content">
+    <div class="card-menus">
+      <span class="card-title grey-text text-darken-4">Menús</span>
+      <div class="menu-group">
+        <div class="card-menu-title">Menú principal</div>
+        <ul class="collapsible" data-collapsible="accordion" data-ng-init="mainCtrl.initAccordion('.collapsible');">
+          <li>
+            <div class="collapsible-header"><i class="material-icons">filter_drama</i>Primero</div>
+            <div class="collapsible-body">
+              <div class="item-group first">
+                <div class="item-media"><img src="http://lorempixel.com/200/200/food/1/"/></div>
+                <div class="item-body">
+                  <div class="item-title">Salpicon de pollo</div>
+                  <p class="item-description">pimiento, cebolla, pollo, salsa</p>
+                </div>
+                <div class="item-score">0</div>
+                <div class="item-favorite">
+                  <a href="#">
+                    <i class="small material-icons">grade</i>
+                  </a>
+                </div>
+              </div>
+              <div class="item-group">
+                <div class="item-media"><img src="http://lorempixel.com/200/200/food/2/"/></div>
+                <div class="item-body">
+                  <div class="item-title">Salpicon de pollo</div>
+                  <p class="item-description">pimiento, cebolla, pollo, salsa</p>
+                </div>
+                <div class="item-score item-score-low">10</div>
+                <div class="item-favorite">
+                  <a href="#">
+                    <i class="small material-icons">grade</i>
+                  </a>
+                </div>
+              </div>
+              <div class="item-group">
+                <div class="item-media"><img src="http://lorempixel.com/200/200/food/3/"/></div>
+                <div class="item-body">
+                  <div class="item-title">Salpicon de pollo</div>
+                  <p class="item-description">pimiento, cebolla, pollo, salsa</p>
+                </div>
+                <div class="item-score item-score-medium">40</div>
+                <div class="item-favorite">
+                  <a href="#" class="active">
+                    <i class="small material-icons">grade</i>
+                  </a>
+                </div>
+              </div>
+              <div class="item-group last">
+                <div class="item-media"><img src="http://lorempixel.com/200/200/food/4/"/></div>
+                <div class="item-body">
+                  <div class="item-title">Salpicon de pollo</div>
+                  <p class="item-description">pimiento, cebolla, pollo, salsa</p>
+                </div>
+                <div class="item-score item-score-higth">80</div>
+                <div class="item-favorite">
+                  <a href="#">
+                    <i class="small material-icons">grade</i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="collapsible-header"><i class="material-icons">place</i>Segundo</div>
+            <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+          </li>
+          <li>
+            <div class="collapsible-header"><i class="material-icons">whatshot</i>Postre</div>
+            <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+          </li>
+        </ul>
+      </div>
+      <div class="menu-group">
+        <div class="card-menu-title">Menú ejecutivo</div>
+        <ul class="collapsible" data-collapsible="accordion" data-ng-init="mainCtrl.initAccordion('.collapsible');">
+          <li>
+            <div class="collapsible-header"><i class="material-icons">filter_drama</i>Primero</div>
+            <div class="collapsible-body">
+              <div class="item-group first">
+                <div class="item-media"><img src="http://lorempixel.com/200/200/food/1/"/></div>
+                <div class="item-body">
+                  <div class="item-title">Salpicon de pollo</div>
+                  <p class="item-description">pimiento, cebolla, pollo, salsa</p>
+                </div>
+                <div class="item-score">0</div>
+              </div>
+              <div class="item-group">
+                <div class="item-media"><img src="http://lorempixel.com/200/200/food/2/"/></div>
+                <div class="item-body">
+                  <div class="item-title">Salpicon de pollo</div>
+                  <p class="item-description">pimiento, cebolla, pollo, salsa</p>
+                </div>
+                <div class="item-score item-score-low">10</div>
+              </div>
+              <div class="item-group">
+                <div class="item-media"><img src="http://lorempixel.com/200/200/food/3/"/></div>
+                <div class="item-body">
+                  <div class="item-title">Salpicon de pollo</div>
+                  <p class="item-description">pimiento, cebolla, pollo, salsa</p>
+                </div>
+                <div class="item-score item-score-medium">40</div>
+              </div>
+              <div class="item-group last">
+                <div class="item-media"><img src="http://lorempixel.com/200/200/food/4/"/></div>
+                <div class="item-body">
+                  <div class="item-title">Salpicon de pollo</div>
+                  <p class="item-description">pimiento, cebolla, pollo, salsa</p>
+                </div>
+                <div class="item-score item-score-higth">80</div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="collapsible-header"><i class="material-icons">place</i>Segundo</div>
+            <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+          </li>
+          <li>
+            <div class="collapsible-header"><i class="material-icons">whatshot</i>Postre</div>
+            <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <span class="card-title grey-text text-darken-4">Mejores Platos</span>
+    <div class="carousel carousel-slider carousel-slider2" data-indicators="true" data-ng-init="mainCtrl.initCarrousel('.carousel-slider2');">
+      <a class="carousel-item" href="#one!"><img src="http://lorempixel.com/800/400/food/1"></a>
+      <a class="carousel-item" href="#two!"><img src="http://lorempixel.com/800/400/food/2"></a>
+      <a class="carousel-item" href="#three!"><img src="http://lorempixel.com/800/400/food/3"></a>
+      <a class="carousel-item" href="#four!"><img src="http://lorempixel.com/800/400/food/4"></a>
+    </div>
+  </div>
+  <div class="card-action">
+    <a href="#" class="return">Volver al mapa</a>
+  </div>
+</div>

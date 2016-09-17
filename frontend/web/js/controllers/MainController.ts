@@ -7,16 +7,16 @@ module ILovePlatos{
 
     declare var tinymce:any;
     declare var ga:any;
-    declare var envioSC:any;
     declare var md5:any;
-    declare var _sf_endpt:any;
-    declare var _sf_async_config:any;
     declare var cordova:any;
     declare var mRefresh:any;
     declare var navigator:any;
     declare var ImgCache:any;
     declare var window:any;
     declare var screen:any;
+    declare var map:any;
+    declare var marker:any;
+    declare var strictBounds:any;
 
     export class MainController implements iMainModel{
 
@@ -122,6 +122,7 @@ module ILovePlatos{
 
         initGeneralEnvent() {
             var self = this;
+
             angular.element('body').on("focusin","input,textarea", function(event) {
                 var name = angular.element(this).attr('name');
                 angular.element('body').addClass('focusin-element focusin-element-'+name);

@@ -34,38 +34,6 @@ module ILovePlatos{
             
             this._main.hideLogin();
 
-            var keywords =  '';
-            if($rootScope.ngMeta && $rootScope.ngMeta.keywords) {
-                keywords = $rootScope.ngMeta.keywords;
-            }
-
-            var titular = 'buho';
-            if($rootScope.ngMeta && $rootScope.ngMeta.title) {
-                titular = $rootScope.ngMeta.title;
-            }            
-
-            this._main.setOmniture({
-                seccion:'home',
-                subseccion1:'',
-                subseccion2:'',
-                subseccion3:'',
-                subseccion4:'',
-                titular:titular,
-                id:'home',
-                tags:keywords,
-                multimedia:'foto',
-                tipo:'home',                
-                autor:'buho'
-            });
-            this._main.sendOmniture();
-            this._main.sendGoogleAnalytics();
-
-            this._main.setChartBeat({
-                sections:'home',
-                authors:'buho'
-            });
-            this._main.initChartBeat();
-
             setTimeout(function()  {
                 self.setWayPoing();
             },50);
