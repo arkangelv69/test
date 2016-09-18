@@ -37,6 +37,7 @@
 .card {
 	margin: 0;
 }
+/*card panel */
 .card .card-panel {
 	margin:0;
 	padding: 0;
@@ -51,19 +52,41 @@
 	padding: 0px;
 	margin-bottom: -6px;
 }
-.card-menu-title {
+/*car menu*/
+.card-menu-header {
 	background: rgba(0,0,0,0.1);
     	padding: 5px;	
 }
+.card-menu-title{
+	display: inline-block;
+}
 .card-menu-offer {
 	text-align: right;
-	float:right;
 	display: inline-block;
+	float: right;
 }
 .card-menu-offer i{
 	position: relative;
     	top: -2px;
     	color: rgba(0,0,0,0.4);
+}
+.card-menu-offer span.and-or{
+	position: relative;
+	top:-4px;
+	color: rgba(0,0,0,0.4);
+}
+.card .card-menus .collapsible{
+	margin-bottom:5px;
+}
+.card-menu-footer {
+	width: 100%;
+    	margin-bottom: 10px;
+}
+.card-menu-price{
+	width: 100%;
+	text-align: right;
+	font-size: 25px;
+	 color: #00b0ff
 }
 .card-menu-separator {
 	 margin: 0 5px;
@@ -94,12 +117,14 @@
 /*card panel*/
 .card-panel-group {
 	width: 100%;
-	line-height: 0;
+	height: calc((100vw * 0.45)/2);
 }
 .card-panel-media {
 	display: inline-block;
 	width:45%;
 	line-height: 0;
+	position: relative;
+	height: calc((100vw * 0.45)/2);
 }
 .card-panel-media img{
 	width: 100%;
@@ -118,6 +143,30 @@
 p.card-panel-description {
 	padding:0; 
 	font-size: 0.8em;
+}
+.card-panel-item-favorite {
+	position: absolute;
+	top: 8px;
+    	right: 8px;
+}
+.card-panel-item-favorite a {color: #eaeced; padding: 10px 0;}
+.card-panel-item-favorite a.active {color:#039be5;}
+.card-panel-item-favorite a:hover {
+	color:#8bc34a!important;
+}
+.card-panel-item-score {
+	position: absolute;
+	top: 46px;
+    	right: 10px;
+	font-size: 20px;
+}
+.card-panel-item-layer {
+	width: 42px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 66px;
+	background: rgba(0,0,0,0.6);
 }
 /*item*/
 .item-group {
@@ -204,4 +253,27 @@ p.item-description {
 .carousel-item-favorite a.active {color:#039be5;}
 .carousel-item-favorite a:hover {
 	color:#8bc34a!important;
+}
+.carousel-item-score {
+	position: absolute;
+	top: 31px;
+    	right: 10px;
+	font-size: 20px;
+}
+.carousel-item-layer {
+	width: 42px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 66px;
+	background: rgba(0,0,0,0.6);
+}
+/*waypoint*/
+.card-down .card .card-image{
+	position: fixed;
+    	top: -120px;
+    	z-index: 1000;
+}
+.card-image-shadow {
+	width: 100%;
 }

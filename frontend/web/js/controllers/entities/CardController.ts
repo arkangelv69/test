@@ -14,6 +14,9 @@ module ILovePlatos{
 
         init() {
             $(".button-collapse").sideNav();
+            $(window).scroll(function(event) {
+
+            });
         }
 
         initCarrousel(selector) {

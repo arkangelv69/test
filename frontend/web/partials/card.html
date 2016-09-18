@@ -1,7 +1,8 @@
 <div class="card" data-ng-controller="CardController as cardCtrl">
+  <div class="card-image-shadow"></div>
   <div class="card-image">
     <img src="http://www.gruposhow.es/gestion/contenidos/galeria/1/FRA_0177.JPG">
-    <span class="card-title">Restaurante Kokken</span>
+    <span class="card-title">Restaurante Kokken el grande</span>
     <a class="card-navigation btn-floating btn-large blue">
       <i class="material-icons">navigation</i>
     </a>
@@ -12,6 +13,13 @@
   <div class="card-panel-group teal lighten-2">
     <div class="card-panel-media">
       <img src="http://lorempixel.com/400/200/food/1"> <!-- notice the "circle" class -->
+      <div class="card-panel-item-layer"></div>
+      <div class="card-panel-item-score item-score-low">10</div>
+      <div class="card-panel-item-favorite">
+        <a href="#" class="active">
+          <i class="mdi mdi-star mdi-24px"></i>
+        </a>
+      </div>
     </div>
     <div class="card-panel-body">
       <div class="card-panel-title white-text">Salpicon de pollo</div>
@@ -21,12 +29,12 @@
     <div class="card-menus">
       <span class="card-title grey-text text-darken-4">Menús</span>
       <div class="menu-group">
-        <div class="card-menu-title">
-          Menú principal
+        <div class="card-menu-header">
+          <div class="card-menu-title">Menú principal</div>
           <div class="card-menu-offer">
             <span class="card-menu-offer-desserts">
               <i class="mdi mdi-food-apple mdi-24px"></i>
-              y
+              <span class="and-or">y</span>
               <i class="mdi mdi-coffee mdi-24px"></i>
             </span>
           </div>
@@ -98,14 +106,17 @@
             <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
           </li>
         </ul>
+        <div class="card-menu-footer">
+          <div class="card-menu-price">10€</div>
+        </div>
       </div>
       <div class="menu-group">
-        <div class="card-menu-title">
-          Menú ejecutivo
+        <div class="card-menu-header">
+          <div class="card-menu-title">Menú ejecutivo</div>
           <div class="card-menu-offer">
               <span class="card-menu-offer-desserts">
                 <i class="mdi mdi-food-apple mdi-24px"></i>
-                o
+                <span class="and-or">o</span>
                 <i class="mdi mdi-coffee mdi-24px"></i>
               </span>
             </div>
@@ -158,12 +169,17 @@
             <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
           </li>
         </ul>
+        <div class="card-menu-footer">
+          <div class="card-menu-price">15€</div>
+        </div>
       </div>
       <div class="card-better">
       <span class="card-title grey-text text-darken-4">Mejores Platos</span>
       <div class="carousel carousel-slider carousel-slider2" data-indicators="true" data-ng-init="cardCtrl.initCarrousel('.carousel-slider2');">
         <div class="carousel-item">
           <img src="http://lorempixel.com/400/200/food/1">
+          <div class="carousel-item-layer"></div>
+          <div class="carousel-item-score item-score-higth">80</div>
           <div class="carousel-item-favorite">
             <a href="#">
               <i class="mdi mdi-star-outline mdi-24px"></i>
@@ -172,6 +188,8 @@
         </div>
         <div class="carousel-item" href="#two!">
           <img src="http://lorempixel.com/400/200/food/2">
+          <div class="carousel-item-layer"></div>
+          <div class="carousel-item-score item-score-medium">40</div>
           <div class="carousel-item-favorite">
             <a href="#" class="active">
               <i class="mdi mdi-star mdi-24px"></i>
@@ -180,6 +198,8 @@
         </div>
         <div class="carousel-item">
           <img src="http://lorempixel.com/400/200/food/3">
+          <div class="carousel-item-layer"></div>
+          <div class="carousel-item-score item-score-low">10</div>
           <div class="carousel-item-favorite">
             <a href="#">
               <i class="mdi mdi-star-outline mdi-24px"></i>

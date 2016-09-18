@@ -37,18 +37,21 @@ module ILovePlatos{
         }
 
         setWayPoing() {
-            $('#home header').waypoint(function(direction) {
+            $('.card').waypoint(function(direction) {
                 if(direction == 'up') {
-                    angular.element('body').addClass("logo-up");
-                    angular.element('body').removeClass("logo-down");
+                    angular.element('body').addClass("card-up");
+                    angular.element('body').removeClass("card-down");
+                    angular.element(".card-image-shadow").height(0);
                     setTimeout(function(){
-                        angular.element('body').removeClass("logo-up");
+                        angular.element('body').removeClass("card-up");
                     },1500);
                 }else {
-                    angular.element('body').addClass("logo-down");
+                    angular.element('body').addClass("card-down");
+                    var height = angular.element('.card-image').height();
+                    angular.element(".card-image-shadow").height(height);
                 }
             }, {
-              offset: -150
+              offset: -100
             });
         }
 
