@@ -12,11 +12,25 @@
 }
 
 /*main-menu*/
-#main-menu a.action-button{
+#home #main-menu {
+	display: block;
+}
+#main-menu {
 	position: absolute;
-	top: 10px;
-	z-index: 1;
-	right: 10px;
+	z-index: 999;
+	background: rgba(255,255,255,0.6);
+	width: calc(100% - 20px);
+	margin: 10px;
+	display: none;
+}
+#main-menu a.action-button{
+	position: relative;
+	top: 4px;
+    	left: 4px;
+}
+#main-menu a.action-button i{
+	font-size: 30px;
+	color: #000;
 }
 
 /*map action-buttons*/

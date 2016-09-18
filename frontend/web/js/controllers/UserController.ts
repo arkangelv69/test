@@ -69,12 +69,11 @@ module ILovePlatos{
 
         login() {
           var self = this;
-          angular.element('.login').append('<div id="hiw-login-container"></div>');
           this.auth.signin({
               authParams: {
                 scope: 'openid offline_access'
               },
-              dict: 'es',closable: false/*,container: 'hiw-login-container'*/,gravatar: false,disableSignupAction: false
+              dict: 'es',closable: false,container: 'hiw-login-container',gravatar: false,disableSignupAction: false
             }, function (profile, token) {
               // Success callback
               self.store.set('profile', profile);
@@ -83,43 +82,6 @@ module ILovePlatos{
               if(profile) {
 
                 self.setUserProfile(profile);
-                self._main._user = self;
-                self._main.deleteAllCache();
-                self.$scope.$emit('activeNumberNotificacionesInterval');
-
-                if( !self.$scope.$$phase  ) {
-                  self.$scope.$apply();
-                }
-
-                if(!profile.user_metadata || !profile.user_metadata.alreadyLoggedIn) {
-                  if(self.ageBirth && self.ageBirth.day && self.ageBirth.month && self.ageBirth.year) {
-                    self.updateMeta('ageBirth',self.ageBirth);
-                  }
-                  self.updateMeta('privacidad','PUBLICO');
-                  self.updateMeta('enviarNotificacionesAlEmail','TRUE');
-
-                  if(profile.identities[0].provider != 'auth0') {
-                    //Si existen parámetros de redirección redirigimos a la página
-                    var params = {};
-                     if(self.$stateParams.redirectState) {
-                      params = self.$stateParams;
-                     }
-
-                    self.$state.go('signup-end',{params});
-                  }else {
-                    if(self.$stateParams.redirectState) {
-                      self.redirect();
-                    }else {
-                      self.$state.go('bienvenida');
-                    }
-                  }
-                }else {
-                   if(self.$stateParams.redirectState) {
-                    self.redirect();
-                   }else {
-                    self.$state.go('home');
-                   }
-                }
 
               }
 
@@ -141,55 +103,6 @@ module ILovePlatos{
               self.store.set('profile', profile);
               self.store.set('token', token);
 
-              if(profile) {
-                self.setUserProfile(profile);
-                self._main._user = self;
-                self._main.deleteAllCache();
-
-                self.$scope.$emit('activeNumberNotificacionesInterval');
-
-                if( !self.$scope.$$phase  ) {
-                  self.$scope.$apply();
-                }
-
-                if(!profile.user_metadata || !profile.user_metadata.alreadyLoggedIn) {
-                  if(self.ageBirth && self.ageBirth.day && self.ageBirth.month && self.ageBirth.year) {
-                    self.updateMeta('ageBirth',self.ageBirth);
-                  }
-                  self.updateMeta('privacidad','PUBLICO');
-                  self.updateMeta('enviarNotificacionesAlEmail','TRUE');
-
-                  if(profile.identities[0].provider != 'auth0') {
-                    //Si existen parámetros de redirección redirigimos a la página
-                    var params = {};
-                     if(self.$stateParams.redirectState) {
-                      params = self.$stateParams;
-                     }
-
-                    self.$state.go('signup-end',params);
-                  }else {
-                    self.completeRegister = true;
-                    self.updateMeta('completeRegister',true);
-
-                   //Si existen parámetros de redirección redirigimos a la página
-                   if(self.$stateParams.redirectState) {
-                    self.redirect();
-                   }else {
-                    self.$state.go('bienvenida');
-                   }
-
-                  }
-
-                }else {
-                   if(self.$stateParams.redirectState) {
-                    self.redirect();
-                   }else {
-                    self.$state.go('home');
-                   }
-                }
-
-              }
-
             }, function () {
               // Error callback
             });
@@ -208,49 +121,6 @@ module ILovePlatos{
               // Success callback
               self.store.set('profile', profile);
               self.store.set('token', token);
-
-              if(profile) {
-
-                self.setUserProfile(profile);
-                self._main._user = self;
-                self._main.deleteAllCache();
-                self.$scope.$emit('activeNumberNotificacionesInterval');
-
-                if( !self.$scope.$$phase  ) {
-                  self.$scope.$apply();
-                }
-
-                if(!profile.user_metadata || !profile.user_metadata.alreadyLoggedIn) {
-                  if(self.ageBirth && self.ageBirth.day && self.ageBirth.month && self.ageBirth.year) {
-                    self.updateMeta('ageBirth',self.ageBirth);
-                  }
-                  self.updateMeta('privacidad','PUBLICO');
-                  self.updateMeta('enviarNotificacionesAlEmail','TRUE');
-
-                  if(profile.identities[0].provider != 'auth0') {
-                    //Si existen parámetros de redirección redirigimos a la página
-                    var params = {};
-                     if(self.$stateParams.redirectState) {
-                      params = self.$stateParams;
-                     }
-
-                    self.$state.go('signup-end',{params});
-                  }else {
-                    if(self.$stateParams.redirectState) {
-                      self.redirect();
-                    }else {
-                      self.$state.go('bienvenida');
-                    }
-                  }
-                }else {
-                   if(self.$stateParams.redirectState) {
-                    self.redirect();
-                   }else {
-                    self.$state.go('home');
-                   }
-                }
-
-              }
 
             }, function () {
               // Error callback
@@ -291,37 +161,15 @@ module ILovePlatos{
           self.store.remove('profile');
           self.store.remove('token');
           self.store.remove('refreshToken');
-          self._main.deleteAllCache();
           self.auth.signout();
 
-          setTimeout(function(){
+          //setTimeout(function(){
             self.$state.go('home', {}, {reload: true});
-          },100);
+          //},100);
         }
 
         isLogged() {
-          if(this.currentUser && !this.alreadyLoggedIn && this.completeRegister && this.$state.current.name == 'signup-end') {
-            if(this.$stateParams.redirectState) {
-              this.redirect();
-            }else {
-              this.$state.go('bienvenida');
-            }
-          }
-          else if(this.currentUser && this.alreadyLoggedIn && this.completeRegister && this.$state.current.name == 'signup-end') {
-            this.$state.go('mi-perfil');
-          }
-          else if(this.currentUser && !this.completeRegister && 
-            this.$state.current.name && 
-            this.$state.current.name != 'signup-end' && 
-            this.$state.current.name != 'bienvenida' && 
-            this.$state.current.name != 'signup' &&
-            this.$state.current.name != 'signin'
-          ) {
-            this.$state.go('signup-end');
-          }
-          else {
-            return this.currentUser;
-          }
+            return this.currentUser;          
         }
 
         watchSession() {
@@ -786,36 +634,18 @@ module ILovePlatos{
             this.currentUser = profile;
             this.userId = profile['user_id'];
             this.username = profile.username;
-            this.nickname = profile.nickname;
             this.description = profile.description;
             this.email = profile.email;
             this.imagePerfil = profile.picture;
             this.connection = this.getConnection(profile.identities);
             if(profile.user_metadata) {
               this.username = profile.user_metadata.username || this.username;
-              this.nickname = profile.user_metadata.nickname || profile.nickname || this.nickname;
-              this.description = profile.user_metadata.description || profile.description || this.description;
               this.imagePerfil = profile.user_metadata.avatar || this.imagePerfil;
-              this.ageBirth = profile.user_metadata.ageBirth;
-              if(this.$window.old) {
-                this.ageBirth = this.$window.old;
-              }
               this.colorBackground = profile.user_metadata.colorBackground || '#transparent';
               this.imageBackground = profile.user_metadata.imageBackground  || '/images/trans.png';
-              this.privacidad = profile.user_metadata.privacidad || 'PUBLICO';
-              this.enviarNotificacionesAlEmail = profile.user_metadata.enviarNotificacionesAlEmail || 'TRUE';
-              this.completeRegister = profile.user_metadata.completeRegister || false;
-              this.alreadyLoggedIn = profile.user_metadata.alreadyLoggedIn || false;
 
               if(!this.completeRegister && this.checkCompleteRegister(profile)) {
                 this.confirmCompeteRegister();
-              }
-
-              this.promocode = this.promocode || profile.user_metadata.promocode;
-
-              if(!this.completeRegister && profile.identities[0].provider == 'auth0') {
-                  this.completeRegister = true;
-                  this.updateMeta('completeRegister',true);
               }
 
               this.configAjaxJquery();

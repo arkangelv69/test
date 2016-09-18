@@ -1,6 +1,6 @@
 module ILovePlatos{
 
-    export class HomeCardController {
+    export class HomeRestaurantController {
         static $inject = [
             "config",
             "$rootScope",

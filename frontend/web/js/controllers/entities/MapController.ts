@@ -14,7 +14,6 @@ module ILovePlatos{
         }
 
         init() {
-            $(".button-collapse").sideNav();
         }
 
         initMap() {

@@ -20,8 +20,6 @@ module ILovePlatos{
             var self = this;
             
             this._main = $rootScope.$$childHead.mainCtrl;
-            this._main.setCache('home');
-            this._main.setCache('home.inicio');
             this._main.resetMessages();
             this._main.setTitle('Buhos');
             this._main.setId('home');

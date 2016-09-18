@@ -122,6 +122,33 @@
 
     <body class="appNative browser" ng-class="[mainCtrl.customClass]" id="{[{mainCtrl.id}]}">
         <div data-ng-controller="UserController as userCtrl" ng-class="{'no-login':!userCtrl.currentUser,'login':userCtrl.currentUser}">
+            <div id="main-menu">
+              <ul id="slide-out" class="side-nav">
+                <li>
+                  <div class="userView">
+                  <img class="background" src="images/office.jpg">
+                  <a href="#!user"><img class="circle" src="images/yuna.jpg"></a>
+                  <a href="#!name"><span class="white-text name">John Doe</span></a>
+                  <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
+                  </div>
+                </li>
+                <li>
+                  <div id="login">
+                    <div ng-if="!userCtrl.isLogged()">
+                      <div data-ng-init="userCtrl.login();" class="login">
+                        <div id="hiw-login-container"></div>
+                      </div>
+                    </div>
+                    <div ng-if="userCtrl.isLogged()"><a data-ng-click="userCtrl.logout();" class="waves-effect waves-light btn">Logout</a></div>
+                  </div>
+                </li>
+                <li ng-if="userCtrl.isLogged()"><div class="divider"></div></li>
+                <li ng-if="userCtrl.isLogged()"><a ui-sref="restaurant-create">Crear restaurante</a></li>
+                <li ng-if="userCtrl.isLogged()"><a ui-sref="plate-create">Crear plato</a></li>
+                <li ng-if="userCtrl.isLogged()"><a ui-sref="menu-create">Crear menu</a></li>
+              </ul>
+              <a href="#" data-activates="slide-out" class="action-button button-collapse"><i class="material-icons small">menu</i></a>
+            </div>
             <div data-ui-view class="anim-in-out anim-slide-below-fade" data-anim-speed="1000" data-anim-sync="true"></div>
         </div>
 

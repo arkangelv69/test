@@ -12,7 +12,7 @@ module ILovePlatos{
         ];
 
         constructor($interpolateProvider,$locationProvider,$stateProvider, $urlRouterProvider,$translateProvider,authProvider,jwtInterceptorProvider,$httpProvider,$provide){
-            $interpolateProvider.startSymbol('{{').endSymbol('}}');
+            $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
             $locationProvider.hashPrefix('!');
 
             //Si estamos en una aplicación cordova y para ios.
@@ -29,13 +29,19 @@ module ILovePlatos{
                 console.log(basePath);
             }
             
-            $locationProvider.html5Mode({
+            /*$locationProvider.html5Mode({
               enabled: false,
+              requireBase: true
+            });*/
+
+            //Para mantener la sesión del usuario indefinida------>
+            $locationProvider.html5Mode({
+              enabled: true,
               requireBase: true
             });
 
             //Para mantener la sesión del usuario indefinida------>
-            /*authProvider.init({
+            authProvider.init({
                 domain: configBuho.domain,
                 clientID: configBuho.clientID
             });
@@ -75,23 +81,7 @@ module ILovePlatos{
             $httpProvider.interceptors.push('jwtInterceptor');
             //-----------------------<<<<<
 
-            //Por seguridad de auth------------>
-            $provide.factory('redirect', ['$q', 'auth', 'store', '$location',function($q, auth, store, $location) {
-              return {
-                responseError: function(rejection) {
-
-                  if (rejection.status === 401) {
-                    auth.signout();
-                    store.remove('profile');
-                    store.remove('token');
-                    $location.path('/');
-                  }
-                  return $q.reject(rejection);
-                }
-              }
-            }]);
-            $httpProvider.interceptors.push('redirect');
-            //-----------<<<<<*/
+            //-----------<<<<<
 
             $stateProvider
                 .state('home', {
@@ -119,6 +109,24 @@ module ILovePlatos{
                     controller: 'HomeCardController',
                     controllerAs:'homecardCtrl',
                     templateUrl: "partials/card.html",
+                })
+                 .state('restaurant-create', {
+                    url: "/restaurant/create",
+                    controller: 'HomeRestaurantController',
+                    controllerAs:'homerestaurantCtrl',
+                    templateUrl: "partials/restaurant-create.html",
+                })
+                 .state('plate-create', {
+                    url: "/plate/create",
+                    controller: 'HomePlateController',
+                    controllerAs:'homeplateCtrl',
+                    templateUrl: "partials/plate-create.html",
+                })
+                 .state('menu-create', {
+                    url: "/menu/create",
+                    controller: 'HomeMenuController',
+                    controllerAs:'homemenuCtrl',
+                    templateUrl: "partials/menu-create.html",
                 })
                 .state('mi-perfil', {
                     url: "/mi-perfil?reset",

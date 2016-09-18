@@ -12,6 +12,9 @@
 /// <reference path="controllers/UserController.ts" />
 /// <reference path="controllers/homes/HomeController.ts" />
 /// <reference path="controllers/homes/HomeCardController.ts" />
+/// <reference path="controllers/homes/HomeRestaurantController.ts" />
+/// <reference path="controllers/homes/HomePlateController.ts" />
+/// <reference path="controllers/homes/HomeMenuController.ts" />
 
 /// <reference path="controllers/entities/MapController.ts" />
 /// <reference path="controllers/entities/CardController.ts" />
@@ -65,6 +68,9 @@ module ILovePlatos{
         // controllers.home
         .controller("HomeController", HomeController)
         .controller("HomeCardController", HomeCardController)
+        .controller("HomeRestaurantController", HomeRestaurantController)
+        .controller("HomePlateController", HomePlateController)
+        .controller("HomeMenuController", HomeMenuController)
         // controllers.entidades
         .controller("MapController", MapController)
         .controller("CardController", CardController)
