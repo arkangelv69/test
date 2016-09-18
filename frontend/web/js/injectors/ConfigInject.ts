@@ -29,14 +29,8 @@ module ILovePlatos{
                 console.log(basePath);
             }
             
-            /*$locationProvider.html5Mode({
-              enabled: false,
-              requireBase: true
-            });*/
-
-            //Para mantener la sesión del usuario indefinida------>
             $locationProvider.html5Mode({
-              enabled: true,
+              enabled: false,
               requireBase: true
             });
 

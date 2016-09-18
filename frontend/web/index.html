@@ -124,7 +124,7 @@
         <div data-ng-controller="UserController as userCtrl" ng-class="{'no-login':!userCtrl.currentUser,'login':userCtrl.currentUser}">
             <div id="main-menu">
               <ul id="slide-out" class="side-nav">
-                <li>
+                <li ng-if="userCtrl.isLogged()">
                   <div class="userView">
                   <img class="background" src="images/office.jpg">
                   <a href="#!user"><img class="circle" src="images/yuna.jpg"></a>
@@ -132,14 +132,16 @@
                   <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
                   </div>
                 </li>
-                <li>
+                <li ng-if="!userCtrl.isLogged()">
                   <div id="login">
-                    <div ng-if="!userCtrl.isLogged()">
-                      <div data-ng-init="userCtrl.login();" class="login">
-                        <div id="hiw-login-container"></div>
-                      </div>
+                    <div data-ng-init="userCtrl.login();" class="login">
+                      <div id="hiw-login-container"></div>
                     </div>
-                    <div ng-if="userCtrl.isLogged()"><a data-ng-click="userCtrl.logout();" class="waves-effect waves-light btn">Logout</a></div>
+                  </div>
+                </li>
+                <li ng-if="userCtrl.isLogged()">
+                  <div id="logout">
+                    <a data-ng-click="userCtrl.logout();" class="waves-effect waves-light btn">Logout</a>
                   </div>
                 </li>
                 <li ng-if="userCtrl.isLogged()"><div class="divider"></div></li>
