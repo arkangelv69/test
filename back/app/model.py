@@ -163,7 +163,7 @@ class User(GraphObject):
     def toJson(self):
         user = {
             "links": {
-                "self": "http://iloveplatos/plate/" + self.__primaryvalue__
+                "self": "http://iloveplatos/plate/" + str(self.__primaryvalue__)
             },
             "data": {
                 "type": self.__primarylabel__,
