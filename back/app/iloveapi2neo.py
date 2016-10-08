@@ -1,12 +1,13 @@
 import json
 import re
-import jwt
 import base64
 import os
 import requests
+import jwt
 
 from collections import defaultdict
 from flask import Flask, jsonify, abort, make_response, request, current_app, _request_ctx_stack
+from flask.ext.cors import cross_origin
 from functools import wraps
 from datetime import timedelta
 from functools import update_wrapper
@@ -14,38 +15,26 @@ from py2neo import Graph, Node, Relationship
 from pandas import DataFrame
 from werkzeug.local import LocalProxy
 from dotenv import Dotenv
-from flask.ext.cors import cross_origin
+from model import *
 
+###############################################################
+#                   VARIABLES DE ENTORNO                      #
+###############################################################
 env = None
 
 try:
-    env = Dotenv('./.env')
+    env = Dotenv('env/.env')
     client_id = env["AUTH0_CLIENT_ID"]
     client_secret = env["AUTH0_CLIENT_SECRET"]
 except IOError:
   env = os.environ
 
+
 app = Flask(__name__)
 
-def split(string, brackets_on_first_result = False):
-    matches = re.split("[\[\]]+", string)
-    matches.remove('')
-    return matches
-
-def mr_parse(params):
-    results = {}
-    for key in params:
-        if '[' in key:
-            key_list = split(key)
-            d = results
-            for partial_key in key_list[:-1]:
-                if partial_key not in d:
-                    d[partial_key] = dict()
-                d = d[partial_key]
-            d[key_list[-1]] = params[key]
-        else:
-            results[key] = params[key]
-    return results
+###############################################################
+#                   AUTHENTICATION                            #
+###############################################################
 
 # Format error response and append status code.
 def handle_error(error, status_code):
@@ -90,6 +79,94 @@ def requires_auth(f):
 
   return decorated
 
+###############################################################
+#                   COMMON FUNCTIONS                          #
+###############################################################
+
+def split(string, brackets_on_first_result = False):
+    matches = re.split("[\[\]]+", string)
+    matches.remove('')
+    return matches
+
+def mr_parse(params):
+    results = {}
+    for key in params:
+        if '[' in key:
+            key_list = split(key)
+            d = results
+            for partial_key in key_list[:-1]:
+                if partial_key not in d:
+                    d[partial_key] = dict()
+                d = d[partial_key]
+            d[key_list[-1]] = params[key]
+        else:
+            results[key] = params[key]
+    return results
+
+#def plateJson(id,name,desc,image=""):
+def plateJson(*args, **kwargs):
+    plate = {
+                "links":{
+                    "self": "http://iloveplatos/plate/" + args[0]
+                },
+                "data":{
+                    "type": "Plate",
+                    "id": args[0],
+                    "attributes": {
+                        "name": args[1],
+                        "description": args[2]
+                    }
+                }
+    }
+    for k,v in kwargs.iteritems():
+        plate["data"]["attributes"][k]=v
+
+    return plate
+
+def userJson(*args, **kwargs):
+    user = {
+                "links":{
+                    "self": "http://iloveplatos/private/user/" + args[0]
+                },
+                "data":{
+                    "type":"User",
+                    "id":args[0],
+                    "attributes":{
+                        "name":args[2],
+                        "email":args[3],
+                        "device_id":args[1]
+                    }
+                }
+            }
+    for k,v in kwargs.iteritems():
+        user["data"]["attributes"][k]=v
+
+    return user
+
+def menuJson(*args, **kwargs):
+    menu = {
+                "links":{
+                    "self": "http://iloveplatos/private/menu/" + args[0]
+                },
+                "data":{
+                    "type":"Menu",
+                    "id":args[0],
+                    "attributes":{
+                        "name":args[1],
+                        "price":args[2]
+                    }
+                }
+            }
+
+    for k,v in kwargs.iteritems():
+        menu["data"]["attributes"][k]=v
+
+    return menu
+
+###############################################################
+#                       TESTS                                 #
+###############################################################
+
 # Controllers API
 @app.route("/ping")
 @cross_origin(headers=['Content-Type', 'Authorization'])
@@ -104,10 +181,9 @@ def securedPing():
     return "All good. You only get this message if you're authenticated"
 
 
-#Descomentar para conectar con cassandra
-#cluster = Cluster()
-#session = cluster.connect('enron')
-
+###############################################################
+#                   CONNECTION NEO4J                          #
+###############################################################
 
 #driver = GraphDatabase.driver("bolt://localhost:7687/",auth=basic_auth("neo4j",".dgonzalez."))
 #graph = Graph("http://neo4j:.dgonzalez.@neo4j:7474/")
@@ -116,17 +192,17 @@ graph = Graph(host="neo4j",password=".dgonzalez.")
 
 
 @app.route('/', methods=['GET'])
-#@cross_origin(headers=['Access-Control-Allow-Origin', '*'])
+@cross_origin(headers=['Access-Control-Allow-Origin', '*'])
 def helloWorld():
-    #testDic = request.args.get('test')
-    testDic = mr_parse(request.args)
-    #return testDic["filter"]["a"]
-    return "ok"
+    return "API is UP"
 
-#return jsonify({'Hello': request.args.get["test"]})
 
+###############################################################
+#                           PLATES                            #
+###############################################################
 @app.route('/public/plate', methods=['GET'])
 @cross_origin(headers=['Access-Control-Allow-Origin', '*'])
+@requires_auth
 def allPlates():
     return "all plates"
 
@@ -138,6 +214,7 @@ def allPlates():
     },
     "data": [
 """
+
 
 @app.route('/private/plate', methods=['PUT','POST'])
 #@crossdomain(origin='*')
@@ -185,20 +262,8 @@ def plate(plateId):
     if request.method == 'GET':
         cursor = graph.run('match (p:Plate) where ID(p) = '+str(plateId)+' return p.name, p.description, p.image, ID(p) as id').data()
         for record in cursor:
-            plate = {
-	                    "links":{
-		                    "self": "http://iloveplatos/plate/" + str(plateId)
-	                    },
-                        "data":{
-                            "type":"Plate",
-                            "id":plateId,
-                            "attributes":{
-                                "name":record["p.name"],
-                                "description":record["p.description"],
-                                "image":record["p.image"]
-                            }
-                        }
-                    }
+            plate = plateJson(str(plateId),record["p.name"],record["p.description"],image=record["p.image"])
+
         if 'plate' in locals():
             return json.dumps(plate)
         else:
@@ -287,20 +352,8 @@ def user(userId):
     if request.method == 'GET':
         cursor = graph.run('match (p:User) where ID(p) = '+str(userId)+' return p.name, p.email, p.device_id, ID(p) as id').data()
         for record in cursor:
-            user = {
-                        "links":{
-                            "self": "http://iloveplatos/private/user/" + str(userId)
-                        },
-                        "data":{
-                            "type":"User",
-                            "id":userId,
-                            "attributes":{
-                                "name":record["p.name"],
-                                "email":record["p.email"],
-                                "device_id":record["p.device_id"]
-                            }
-                        }
-                    }
+            user = userJson(str(userId),record["p.device_id"],record["p.name"],record["p.email"])
+
         if 'user' in locals():
             return json.dumps(user)
         else:
@@ -308,77 +361,98 @@ def user(userId):
 
 
 #@app.route('/public/restaurant/<float:lat>/<float:lon>/<float:r>', methods=['GET'])
-@app.route('/public/restaurant/<string:lat>/<string:lon>/<string:r>', methods=['GET'])
+@app.route('/public/restaurant/<string:lat>/<string:lon>/<string:r>/<string:deviceId>', methods=['GET'])
 #@crossdomain(origin='*')
 @cross_origin(headers=['Content-Type', 'Authorization'])
 @cross_origin(headers=['Access-Control-Allow-Origin', '*'])
 #@requires_auth
-def restaurants(lat,lon,r):
-    """
+def restaurantsUser(lat,lon,r,deviceId):
+    """ Si necesito operar
     try:
         lat, long, r = float(lat), float(long), float(r)
     except ValueError:
         abort(404)
     """
-    """
-    r = requests.post('http://localhost:7474/db/data/ext/SpatialPlugin/graphdb/findGeometriesWithinDistance', auth=('neo4j', '.dgonzalez.'),json={"pointX":-3.490169657737401,"pointY":40.39707680663439,"distanceInKm":1,"layer":"Restaurants"})
 
-    myRestaurants = []
-    for restaurant in r.json():
-        myRestaurants += [restaurant["metadata"]["id"]]
+    restaurants = {"data":{}}
 
-    cursor = graph.run('match (r:Restaurant) where ID(r) IN ' + str(myRestaurants) + ' return r.name').data()
-    """
-    cursor = graph.run('MATCH (r:Restaurant) WHERE distance(point(r),point({latitude:'+
-                       lat+',longitude:'+ lon +'})) < '+ r+'*1000 RETURN r.name').data()
+    cursor = graph.run("CALL spatial.withinDistance('Restaurants', {latitude:"+lat+",longitude:"+lon+"}, "+r+") YIELD node AS r RETURN ID(r) as id,r.name,r.latitude,r.longitude").data()
     for record in cursor:
-        print record["r.name"]
+        jsonIdRestaurant = "r_"+str(record["id"])
+        restaurants["data"][jsonIdRestaurant] = {"type":"Restaurant",
+                                    "id": record["id"],
+                                    "attributes":{
+                                        "name": record["r.name"],
+                                        "latitude": record["r.latitude"],
+                                        "longitude": record["r.longitude"]
+                                    },
+                                    "relationships":{
+                                        "top":[],
+                                        "favorites":[]
+                                    }
+                                    }
 
-    return "listo: lat"+str(lat)
+    cypherQuery = "CALL spatial.withinDistance('Restaurants', {latitude:" + lat + ",longitude:" + lon + "}, " + r + ") YIELD node AS r"" \
+    ""MATCH (r)-[:HAVE_MENU{active:true}]->(m)-[]->(p)<-[x:LIKED]-(u:User)"" \
+    ""RETURN ID(r) as restaurantId, r.name, ID(p) as id,p.name, p.description, COUNT(x) as points"" \
+    ""ORDER BY COUNT(x) DESC"" \
+    ""LIMIT 10"
+    cursor = graph.run(cypherQuery).data()
+
+    i = 1
+    for record in cursor:
+        jsonIdRestaurant = "r_"+str(record["restaurantId"])
+        restaurants["data"][jsonIdRestaurant]["relationships"]["top"].append(
+                plateJson(str(record["id"]),record["p.name"],record["p.description"],points=record["points"],ranking=i)
+            )
+        i = i + 1
+
+    cypherQuery = "CALL spatial.withinDistance('Restaurants', {latitude:" + lat + ",longitude:" + lon + "}, " + r + ") YIELD node AS r"" \
+        ""MATCH (r)-[:HAVE_MENU{active:true}]->(m)-[]->(p)<-[x:LIKED]-(u:User{deviceId:"+deviceId+"})"" \
+        ""RETURN ID(r) as restaurantId, r.name, ID(p) as id,p.name,p.description"
+
+    cursor = graph.run(cypherQuery).data()
+
+    for record in cursor:
+        jsonIdRestaurant = "r_" + str(record["restaurantId"])
+        restaurants["data"][jsonIdRestaurant]["relationships"]["favorites"].append(
+                plateJson(str(record["id"]),record["p.name"],record["p.description"])
+        )
+
+    #if 'plate' in locals():
+    return json.dumps(restaurants)
+    #else:
+    #return "No hay restaurantes aqui"
+
+@app.route('/public/card/<string:restaurantId>', methods=['POST'])
+#@crossdomain(origin='*')
+@cross_origin(headers=['Content-Type', 'Authorization'])
+@cross_origin(headers=['Access-Control-Allow-Origin', '*'])
+#@requires_auth
+def cardRestaurant(restaurantId):
+    restaurant = request.get_json(force=True)
+    cypherQuery = \
+        "MATCH (b:Restaurant)-[r:HAVE_MENU{active:true}]->(m:Menu)-[x:HAVE_PLATE]->(p:Plate) " \
+        "where ID(b) = " + restaurantId +\
+        " return ID(m) as id,m.name,m.price,x.type,ID(p) as plateId,p.name,p.description,p.image"
+    cursor = graph.run(cypherQuery).data()
+
+    idMenu = 0
+    restaurant["relationships"]["menus"] = []
+    for record in cursor:
+        if(idMenu != record["id"]):
+            menu = menuJson(str(record["id"]),record["m.name"],record["m.price"])
+            menu["relstionships"] = {}
+            menu["relstionships"]["entrantes"] = []
+            menu["relstionships"]["primeros"] = []
+            menu["relstionships"]["segundos"] = []
+            menu["relstionships"]["postres"] = []
+            restaurant["relationships"]["menus"].append(menu)
+
+        menu["relstionships"]["entrantes"].append(plateJson(str(record["plateId"]),record["p.name"],record["p.description"]))
+
+        idMenu=record["id"]
+
+    return json.dumps(restaurant)
 
 app.run(host='0.0.0.0',debug="true")
-
-"""
-match (u:User{name:"David"})-[re:LIKED]->(p:Plate)<-[:HAVE]-(m:Menu)<-[:HAVE]-(r:Restaurant)
-where ID(r) IN [38]
-return p
-"""
-
-
-""" Obtener los restaurantes
-MATCH (r:Restaurant)
-WHERE distance(point(r),point({latitude:40.39682978190974,longitude:-3.4897354662994173})) < 2*1000
-RETURN r
-"""
-
-""" Obtener los restaurantes y los favoritos
-MATCH (r:Restaurant)
-MATCH (u:User{name:"David"})-[r2:LIKED]->(p:Plate)<-[]-(m:Menu)<-[r3:HAVE]-(r4)
-WHERE distance(point(r),point({latitude:40.39726896121282,longitude:-3.491032314358118})) < 0.2*1000
-AND r3.active = true
-RETURN r,p,-1
-"""
-
-""" Obtener el top 10
-START n=node:user('*:*')
-MATCH (n)-[r]->(x)
-RETURN n, COUNT(r)
-ORDER BY COUNT(r) DESC
-LIMIT 10
-"""
-
-
-""" TODO JUNTO
-MATCH (u:User)-[r4]->(p:Plate)<-[]-(m:Menu)<-[r3:HAVE]-(r)
-WHERE distance(point(r),point({latitude:40.39726896121282,longitude:-3.491032314358118})) < 0.2*1000 and r3.active = true
-RETURN r,p, COUNT(r4) as top
-ORDER BY COUNT(r4) DESC
-limit 3
-UNION
-WITH -1 as top
-MATCH (r:Restaurant)
-MATCH (u:User{name:"David"})-[r2:LIKED]->(p:Plate)<-[]-(m:Menu)<-[r3:HAVE]-(r4)
-WHERE distance(point(r),point({latitude:40.39726896121282,longitude:-3.491032314358118})) < 0.2*1000
-AND r3.active = true
-RETURN r,p,top
-"""
