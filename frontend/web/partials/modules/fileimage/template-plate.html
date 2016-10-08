@@ -1,0 +1,18 @@
+<section class="fileimage">
+	<div class="button action">
+		<input type="file" id="fileElemImage" name="fileElemImage" ng-model="plateCtrl.fileElemImage"	 accept="image/*" onchange="angular.element(this).scope().plateCtrl.changeFiles(this.files);">
+		<button id="fileSelect" ng-click="plateCtrl.selectFile($event,'#fileElemImage')" type="button" class="btn btn-subir-foto">
+				<span>Subir imagen</span>
+		</button>
+	</div>
+	<div class="fileimage-preview" data-ng-show="plateCtrl.hasImage()">
+		<div id="preview"></div>
+		<div id="canvasCropper">
+			<p>Necesitamos que realices estos recortes para que tu plato se visualice correctamente.</p>
+			<h4>Miniatura cuadrada</h4>
+			<div class="canvasCropper-image cuadrado"></div>
+			<h4>Miniatura apaisada</h4>
+			<div class="canvasCropper-image apaisado"></div>
+		</div>
+	</div>	
+</section>

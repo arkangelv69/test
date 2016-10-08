@@ -1,14 +1,14 @@
 /// <reference path="EntityController.ts" />
 // <reference path="Contenido/ContenidoCard.ts" />
-/// <reference path="Restaurant/RestaurantEdit.ts" />
+/// <reference path="Menu/MenuEdit.ts" />
 
 module ILovePlatos{
 
-    export class RestaurantController extends EntityController{
+    export class MenuController extends EntityController{
 
         static $inject = [
             "config",
-            "RestaurantApirestService",
+            "MenuApirestService",
             "DateService",
             "$rootScope",
             "$stateParams",
@@ -28,12 +28,12 @@ module ILovePlatos{
         images = [];
 
         //ContenidoCard:ContenidoCard;
-        RestaurantEdit:RestaurantEdit;
+        MenuEdit:MenuEdit;
         
         dataAutocomplete:any;
         content = {
                 id:"",
-                type:"Restaurant",
+                type:"Menu",
                 attributes:{
                     name: "",
                     address: {},
@@ -54,7 +54,7 @@ module ILovePlatos{
             var self = this;
 
             //this.ContenidoCard = new ContenidoCard(this);
-            this.RestaurantEdit = new RestaurantEdit(this);
+            this.MenuEdit = new MenuEdit(this);
 
             window.addEventListener('message', function(event) { 
 
@@ -83,100 +83,48 @@ module ILovePlatos{
         }
 
         initEdit() {
-            this.RestaurantEdit.initEdit();
+            this.MenuEdit.initEdit();
         }
 
         syncPreviewCard() {
-            this.RestaurantEdit.syncPreviewCard();
+            this.MenuEdit.syncPreviewCard();
         }
 
         isSubmitActive(){
-            return this.RestaurantEdit.isSubmitActive();
+            return this.MenuEdit.isSubmitActive();
         }
 
         submit(newPostForm,update?) {
-            this.RestaurantEdit.submit(newPostForm,update);
+            this.MenuEdit.submit(newPostForm,update);
         }
 
         formEntity() {
-            this.RestaurantEdit.formEntity();
+            this.MenuEdit.formEntity();
         }
 
         advanceProgressbar() {
-            this.RestaurantEdit.advanceProgressbar();
+            this.MenuEdit.advanceProgressbar();
         }
 
         progressStart(newPostForm) {
-            return this.RestaurantEdit.progressStart(newPostForm);
+            return this.MenuEdit.progressStart(newPostForm);
         }
 
         progressCancel() {
-            this.RestaurantEdit.progressCancel();
-        }
-
-        changeFiles(files) {
-            this.RestaurantEdit.changeFiles(files);
-        }
-
-        hasImage() {
-            return this.RestaurantEdit.hasImage();
-        }
-
-        addFiles(files) {
-            this.RestaurantEdit.addFiles(files);   
-        }
-
-        deleteImage(event,index){
-            this.RestaurantEdit.deleteImage(event,index);
-        }
-
-        renderRecorteCuadrado(event,target) {
-            event.preventDefault();
-            this.RestaurantEdit.renderRecorteCuadrado(target,'.canvasCropper-image');
-        }
-
-        renderRecorteApaisado(event,target) {
-            event.preventDefault();
-            this.RestaurantEdit.renderRecorteApaisado(target,'.canvasCropper-image');
-        }
-
-        cropperImage(target) {
-            this.RestaurantEdit.cropperImage(target);
-        }
-
-        croppImageCancel(event) {
-            this.RestaurantEdit.croppImageCancel(event);
-        }
-
-        croppImage(event) {
-            this.RestaurantEdit.croppImage(event);
-        }
-
-        rotateCropperImage(event,grades) {
-            this.RestaurantEdit.rotateCropperImage(event,grades);
-        }
-
-        getCroppedCanvas(event) {
-            return this.RestaurantEdit.getCroppedCanvas(event);
+            this.MenuEdit.progressCancel();
         }
 
         isUpdate() {
-            return this.RestaurantEdit.isUpdate();
+            return this.MenuEdit.isUpdate();
         }
 
         regenerateFormulario() {
-            this.RestaurantEdit.regenerateFormulario();
+            this.MenuEdit.regenerateFormulario();
         }
 
         editarPublicacion(event,card) {
-            this.RestaurantEdit.editarPublicacion(event,card);
+            this.MenuEdit.editarPublicacion(event,card);
         }
-
-        getMedia(event,type) {
-            this.RestaurantEdit.getMedia(event,type);
-        }
-
-        
 
     }
 

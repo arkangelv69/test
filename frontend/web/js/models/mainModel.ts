@@ -11,6 +11,10 @@ interface JQuery {
 	waypoint: any;
 	select2: any;
 	destroy(action?): any;
+	sideNav(params?):any;
+	carousel(params?):any;
+	collapsible(params?):any;
+	characterCounter(params?):any;
 }
 
 interface HTMLElement {

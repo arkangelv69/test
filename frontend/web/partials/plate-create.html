@@ -1,29 +1,28 @@
-<div class="row">
+<div class="row" data-ng-controller="PlateController as plateCtrl">
 	<div class="col s12">
-		<a ui-sref="home" class="return">Volver al mapa</a>
-		<h2 class="header">Crear plato</h2>
+		<div class="row">
+			<a ui-sref="home" class="return">Volver al mapa</a>
+			<h2 class="header">Crear plato</h2>
+		</div>
 	</div>
 	<form class="col s12">
 		<div class="row">
-			<div class="input-field col s6">
-				<input id="first_name" type="text" class="validate">
-				<label for="first_name">First Name</label>
+			<div class="input-field col s12">
+				<p>Dinos el nombre de tu plato:</p>
 			</div>
-			<div class="input-field col s6">
-				<input id="last_name" type="text" class="validate">
-				<label for="last_name">Last Name</label>
+			<div class="input-field col s12">
+				<input id="name" type="text" class="validate" length="15" data-ng-model="plateCtrl.content.attributes.name">
+				<label for="name">Nombre</label>
 			</div>
 		</div>
 		<div class="row">
 			<div class="input-field col s12">
-				<input id="password" type="password" class="validate">
-				<label for="password">Password</label>
+				<fileimage template="plate"></fileimage>
 			</div>
 		</div>
 		<div class="row">
-			<div class="input-field col s12">
-				<input id="email" type="email" class="validate">
-				<label for="email">Email</label>
+			<div class="submit-field col s12">
+				<button id="submit" type="submit" class="waves-effect waves-light btn" progress-button="plateCtrl.progressStart(newPostForm)" data-ng-disabled="!plateCtrl.isSubmitActive()"><i class="material-icons left">cloud</i>Enviar</button>
 			</div>
 		</div>
 	</form>

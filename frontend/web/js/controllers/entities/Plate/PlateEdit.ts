@@ -10,7 +10,7 @@ module ILovePlatos{
     declare var window:any;
     declare var navigator:any;
 
-    export class RestaurantEdit{
+    export class PlatetEdit{
 
         controller:RestaurantController;
 
@@ -18,14 +18,14 @@ module ILovePlatos{
 
         constructor(controller) {
             this.controller = controller;
-            this.dataJson = new DataJsonController('Restaurant',controller.auth);
+            this.dataJson = new DataJsonController('Plate',controller.auth);
         }
 
         initEdit() {
             var self = this;
 
             this.controller.FilesService.resetFiles();
-            this.controller.FilesService.setController('restaurantCtrl');
+            this.controller.FilesService.setController('plateCtrl');
 
         }
 
@@ -59,36 +59,11 @@ module ILovePlatos{
 
             if(!content.attributes.name) {
                 self._main.resetMessages();
-                self._main.setMessage({type:'danger',text:'Tienes que seleccionar un nombre para el local'});
+                self._main.setMessage({type:'danger',text:'Tienes que seleccionar un nombre para el plato'});
 
                 this.progressCancel();
                 return null;
             }
-
-            if(!content.attributes.latitude) {
-                self._main.resetMessages();
-                self._main.setMessage({type:'danger',text:'Tienes que seleccionar un local en el mapa'});
-
-                this.progressCancel();
-                return null;
-            }
-
-            if(!content.attributes.longitude) {
-                self._main.resetMessages();
-                self._main.setMessage({type:'danger',text:'Tienes que seleccionar un local en el mapa'});
-
-                this.progressCancel();
-                return null;
-            }
-
-            if(!content.attributes.address) {
-                self._main.resetMessages();
-                self._main.setMessage({type:'danger',text:'Tienes que seleccionar un local en el mapa'});
-
-                this.progressCancel();
-                return null;
-            }
-
 
             if( !this.controller.FilesService.fileElemImage || this.controller.FilesService.fileElemImage.length < 1 ){
                 self._main.resetMessages();

@@ -1,14 +1,14 @@
 /// <reference path="EntityController.ts" />
 // <reference path="Contenido/ContenidoCard.ts" />
-/// <reference path="Restaurant/RestaurantEdit.ts" />
+/// <reference path="Plate/PlateEdit.ts" />
 
 module ILovePlatos{
 
-    export class RestaurantController extends EntityController{
+    export class PlateController extends EntityController{
 
         static $inject = [
             "config",
-            "RestaurantApirestService",
+            "PlateApirestService",
             "DateService",
             "$rootScope",
             "$stateParams",
@@ -28,12 +28,12 @@ module ILovePlatos{
         images = [];
 
         //ContenidoCard:ContenidoCard;
-        RestaurantEdit:RestaurantEdit;
+        PlateEdit:PlateEdit;
         
         dataAutocomplete:any;
         content = {
                 id:"",
-                type:"Restaurant",
+                type:"Plate",
                 attributes:{
                     name: "",
                     address: {},
@@ -54,7 +54,7 @@ module ILovePlatos{
             var self = this;
 
             //this.ContenidoCard = new ContenidoCard(this);
-            this.RestaurantEdit = new RestaurantEdit(this);
+            this.PlateEdit = new PlateEdit(this);
 
             window.addEventListener('message', function(event) { 
 
@@ -83,97 +83,97 @@ module ILovePlatos{
         }
 
         initEdit() {
-            this.RestaurantEdit.initEdit();
+            this.PlateEdit.initEdit();
         }
 
         syncPreviewCard() {
-            this.RestaurantEdit.syncPreviewCard();
+            this.PlateEdit.syncPreviewCard();
         }
 
         isSubmitActive(){
-            return this.RestaurantEdit.isSubmitActive();
+            return this.PlateEdit.isSubmitActive();
         }
 
         submit(newPostForm,update?) {
-            this.RestaurantEdit.submit(newPostForm,update);
+            this.PlateEdit.submit(newPostForm,update);
         }
 
         formEntity() {
-            this.RestaurantEdit.formEntity();
+            this.PlateEdit.formEntity();
         }
 
         advanceProgressbar() {
-            this.RestaurantEdit.advanceProgressbar();
+            this.PlateEdit.advanceProgressbar();
         }
 
         progressStart(newPostForm) {
-            return this.RestaurantEdit.progressStart(newPostForm);
+            return this.PlateEdit.progressStart(newPostForm);
         }
 
         progressCancel() {
-            this.RestaurantEdit.progressCancel();
+            this.PlateEdit.progressCancel();
         }
 
         changeFiles(files) {
-            this.RestaurantEdit.changeFiles(files);
+            this.PlateEdit.changeFiles(files);
         }
 
         hasImage() {
-            return this.RestaurantEdit.hasImage();
+            return this.PlateEdit.hasImage();
         }
 
         addFiles(files) {
-            this.RestaurantEdit.addFiles(files);   
+            this.PlateEdit.addFiles(files);   
         }
 
         deleteImage(event,index){
-            this.RestaurantEdit.deleteImage(event,index);
+            this.PlateEdit.deleteImage(event,index);
         }
 
         renderRecorteCuadrado(event,target) {
             event.preventDefault();
-            this.RestaurantEdit.renderRecorteCuadrado(target,'.canvasCropper-image');
+            this.PlateEdit.renderRecorteCuadrado(target,'.canvasCropper-image');
         }
 
         renderRecorteApaisado(event,target) {
             event.preventDefault();
-            this.RestaurantEdit.renderRecorteApaisado(target,'.canvasCropper-image');
+            this.PlateEdit.renderRecorteApaisado(target,'.canvasCropper-image');
         }
 
         cropperImage(target) {
-            this.RestaurantEdit.cropperImage(target);
+            this.PlateEdit.cropperImage(target);
         }
 
         croppImageCancel(event) {
-            this.RestaurantEdit.croppImageCancel(event);
+            this.PlateEdit.croppImageCancel(event);
         }
 
         croppImage(event) {
-            this.RestaurantEdit.croppImage(event);
+            this.PlateEdit.croppImage(event);
         }
 
         rotateCropperImage(event,grades) {
-            this.RestaurantEdit.rotateCropperImage(event,grades);
+            this.PlateEdit.rotateCropperImage(event,grades);
         }
 
         getCroppedCanvas(event) {
-            return this.RestaurantEdit.getCroppedCanvas(event);
+            return this.PlateEdit.getCroppedCanvas(event);
         }
 
         isUpdate() {
-            return this.RestaurantEdit.isUpdate();
+            return this.PlateEdit.isUpdate();
         }
 
         regenerateFormulario() {
-            this.RestaurantEdit.regenerateFormulario();
+            this.PlateEdit.regenerateFormulario();
         }
 
         editarPublicacion(event,card) {
-            this.RestaurantEdit.editarPublicacion(event,card);
+            this.PlateEdit.editarPublicacion(event,card);
         }
 
         getMedia(event,type) {
-            this.RestaurantEdit.getMedia(event,type);
+            this.PlateEdit.getMedia(event,type);
         }
 
         
