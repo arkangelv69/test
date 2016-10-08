@@ -199,7 +199,7 @@ module ILovePlatos{
         }
 
         renderRecorteApaisado(target,select) {
-            this.cropperImage(target,'.canvasCropper-image.apaisado',16/9);
+            this.cropperImage(target,'.canvasCropper-image.apaisado',320/160);
         }
 
         cropperImage(target,select,aspectRatio) {
@@ -316,6 +316,7 @@ module ILovePlatos{
                 file = files[i];
                 if(/^image\//i.test(file.type)){
                     if(file.size < this.maxSizeImages){
+                        this.fileElemImage = [];
                         this.fileElemImage.push({type:"file",source:file});
                     }else{
                         archivosTamannoInvalidos.push(file);

@@ -1,6 +1,6 @@
 /// <reference path="EntityController.ts" />
 // <reference path="Contenido/ContenidoCard.ts" />
-/// <reference path="Contenido/ContenidoEdit.ts" />
+/// <reference path="Restaurant/RestaurantEdit.ts" />
 
 module ILovePlatos{
 
@@ -22,76 +22,28 @@ module ILovePlatos{
             "$q"
         ];
 
-        portadas = [];
-        noticiasPrincipales = [];
         mother;
         wall:any;
-        contenidoText:string;
         preview:any;
         images = [];
-        tituloText:string;
-        category:any;
-        showTituloForm = false;
-        showMediaFile = false;
-        imagenDeFondo = 'transparent';
 
         //ContenidoCard:ContenidoCard;
-        ContenidoEdit:ContenidoEdit;
+        RestaurantEdit:RestaurantEdit;
         
         dataAutocomplete:any;
         content = {
-                id:'',
+                id:"",
+                type:"Restaurant",
                 attributes:{
-                    cuerpo:'',
-                    titulo:'',
-                    subtipo:"front",
-                    preview:{
-                        image:''
-                    },
-                    usarImagenDeFondo:"0",
-                    tipoDeModulo:'vertical'
+                    name: "",
+                    address: {},
+                    longitude: 0,
+                    latitude: 0,
+                    date:0,
                 },
                 relationships: {
-                    galerias:{
-                        data:[]
-                    },
                     miniaturas:{
                         data:[]
-                    },
-                    categorias:{
-                        data:[]
-                    },
-                    tags:{
-                        data:[]
-                    },
-                    autores:{
-                        data:[]
-                    },
-                    usuarios:{
-                        data:[]
-                    },
-                    colorDeFondo: {
-                        data: [{
-                            id: "transparent",
-                            css: "transparent"
-                        }]
-                    },
-                    imagenDeFondo: {
-                        data: [{
-                            src: ""
-                        }]
-                    },
-                    colorDeCapaTransparente: {
-                        data: [{
-                            id: "transparent",
-                            css: "transparent"
-                        }]
-                    },
-                    colorTextoContenedorTarjeta: {
-                        data: [{
-                            id: "transparent",
-                            css: "transparent"
-                        }]
                     }
                 }
             };
@@ -102,7 +54,7 @@ module ILovePlatos{
             var self = this;
 
             //this.ContenidoCard = new ContenidoCard(this);
-            this.ContenidoEdit = new ContenidoEdit(this);
+            this.RestaurantEdit = new RestaurantEdit(this);
 
             window.addEventListener('message', function(event) { 
 
@@ -112,6 +64,15 @@ module ILovePlatos{
 
                     // The data sent with postMessage is stored in event.data 
                     self.dataAutocomplete = event.data;
+
+                    self.content.attributes.longitude =  event.data.lng;
+                    self.content.attributes.latitude =  event.data.lat;
+                    self.content.attributes.address =  event.data.address;
+
+                    if(!self.$scope.$$phase) {
+                        self.$scope.$apply();
+                    }
+
                 } else { 
                     // The data hasn't been sent from your site! 
                     // Be careful! Do not use it. 
@@ -122,121 +83,101 @@ module ILovePlatos{
         }
 
         initEdit() {
-            this.ContenidoEdit.initEdit();
-        }
-
-        watchEdit() {
-            this.ContenidoEdit.watchEdit();
+            this.RestaurantEdit.initEdit();
         }
 
         syncPreviewCard() {
-            this.ContenidoEdit.syncPreviewCard();
+            this.RestaurantEdit.syncPreviewCard();
         }
 
         isSubmitActive(){
-            return this.ContenidoEdit.isSubmitActive();
-        }
-
-        getMessageForm() {
-            return this.ContenidoEdit.getMessageForm();
+            return this.RestaurantEdit.isSubmitActive();
         }
 
         submit(newPostForm,update?) {
-            this.ContenidoEdit.submit(newPostForm,update);
+            this.RestaurantEdit.submit(newPostForm,update);
         }
 
         formEntity() {
-            this.ContenidoEdit.formEntity();
+            this.RestaurantEdit.formEntity();
         }
 
         advanceProgressbar() {
-            this.ContenidoEdit.advanceProgressbar();
+            this.RestaurantEdit.advanceProgressbar();
         }
 
         progressStart(newPostForm) {
-            return this.ContenidoEdit.progressStart(newPostForm);
+            return this.RestaurantEdit.progressStart(newPostForm);
         }
 
         progressCancel() {
-            this.ContenidoEdit.progressCancel();
+            this.RestaurantEdit.progressCancel();
         }
 
         selectFile(event,selector) {
-            this.ContenidoEdit.selectFile(event,selector);
+            this.RestaurantEdit.selectFile(event,selector);
         }
 
         changeFiles(files) {
-            this.ContenidoEdit.changeFiles(files);
+            this.RestaurantEdit.changeFiles(files);
         }
 
         hasImage() {
-            return this.ContenidoEdit.hasImage();
+            return this.RestaurantEdit.hasImage();
         }
 
         addFiles(files) {
-            this.ContenidoEdit.addFiles(files);   
+            this.RestaurantEdit.addFiles(files);   
         }
 
         deleteImage(event,index){
-            this.ContenidoEdit.deleteImage(event,index);
+            this.RestaurantEdit.deleteImage(event,index);
         }
 
         renderRecorteCuadrado(event,target) {
             event.preventDefault();
-            this.ContenidoEdit.renderRecorteCuadrado(target,'.canvasCropper-image');
+            this.RestaurantEdit.renderRecorteCuadrado(target,'.canvasCropper-image');
         }
 
         renderRecorteApaisado(event,target) {
             event.preventDefault();
-            this.ContenidoEdit.renderRecorteApaisado(target,'.canvasCropper-image');
+            this.RestaurantEdit.renderRecorteApaisado(target,'.canvasCropper-image');
         }
 
         cropperImage(target) {
-            this.ContenidoEdit.cropperImage(target);
+            this.RestaurantEdit.cropperImage(target);
         }
 
         croppImageCancel(event) {
-            this.ContenidoEdit.croppImageCancel(event);
+            this.RestaurantEdit.croppImageCancel(event);
         }
 
         croppImage(event) {
-            this.ContenidoEdit.croppImage(event);
+            this.RestaurantEdit.croppImage(event);
         }
 
         rotateCropperImage(event,grades) {
-            this.ContenidoEdit.rotateCropperImage(event,grades);
+            this.RestaurantEdit.rotateCropperImage(event,grades);
         }
 
         getCroppedCanvas(event) {
-            return this.ContenidoEdit.getCroppedCanvas(event);
+            return this.RestaurantEdit.getCroppedCanvas(event);
         }
 
         isUpdate() {
-            return this.ContenidoEdit.isUpdate();
-        }
-
-        setCuerpo(cuerpo) {
-            this.ContenidoEdit.setCuerpo(cuerpo);
+            return this.RestaurantEdit.isUpdate();
         }
 
         regenerateFormulario() {
-            this.ContenidoEdit.regenerateFormulario();
-        }
-
-        getImagesRegenerate() {
-            return this.ContenidoEdit.getImagesRegenerate();
-        }
-
-        deleteImageRegenerate(index) {
-            this.ContenidoEdit.deleteImageRegenerate(index);
+            this.RestaurantEdit.regenerateFormulario();
         }
 
         editarPublicacion(event,card) {
-            this.ContenidoEdit.editarPublicacion(event,card);
+            this.RestaurantEdit.editarPublicacion(event,card);
         }
 
         getMedia(event,type) {
-            this.ContenidoEdit.getMedia(event,type);
+            this.RestaurantEdit.getMedia(event,type);
         }
 
         

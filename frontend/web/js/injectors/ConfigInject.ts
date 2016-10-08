@@ -8,12 +8,14 @@ module ILovePlatos{
 
     export class ConfigInject {
         static $inject = [
-            "$interpolateProvider","$locationProvider","$stateProvider","$urlRouterProvider","$translateProvider","authProvider","jwtInterceptorProvider","$httpProvider","$provide"
+            "$interpolateProvider","$locationProvider","$stateProvider","$urlRouterProvider","$translateProvider","authProvider","jwtInterceptorProvider","$httpProvider","$provide","jwtOptionsProvider"
         ];
 
-        constructor($interpolateProvider,$locationProvider,$stateProvider, $urlRouterProvider,$translateProvider,authProvider,jwtInterceptorProvider,$httpProvider,$provide){
+        constructor($interpolateProvider,$locationProvider,$stateProvider, $urlRouterProvider,$translateProvider,authProvider,jwtInterceptorProvider,$httpProvider,$provide,jwtOptionsProvider){
             $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
             $locationProvider.hashPrefix('!');
+
+            jwtOptionsProvider.config({ whiteListedDomains:["*"]});
 
             //Si estamos en una aplicación cordova y para ios.
             if(typeof(cordova) != 'undefined' && typeof(cordova) == 'object') {

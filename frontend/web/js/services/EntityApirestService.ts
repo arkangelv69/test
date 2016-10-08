@@ -56,23 +56,6 @@ module ILovePlatos{
             return d.promise;
         }
 
-        getByCategoria(categoriaId:string,queryString?): ng.IPromise<iEntityApirest>{
-            var d = this.$q.defer();
-            var params = {};
-            params = $.extend({}, queryString, this.getParamsUser());
-
-            this.$http.get(this.$config.protocolApirest+this.$config.domainApirest+"/"+this.getTypeAccess()+"/"+this.type+"?filter[categorias]="+categoriaId, {params:params})
-                .success((data: iEntityApirest) => {
-                    d.resolve(data);
-                })
-                .error((error) => {
-                    this.$log.error(error);
-                    d.reject(error);
-                });
-
-            return d.promise;
-        }
-
         getById(entityId:string|number): ng.IPromise<iEntityApirest>{
             var d = this.$q.defer();
             var params = this.getParamsUser();
@@ -121,13 +104,19 @@ module ILovePlatos{
             return d.promise;
         }
 
-        //@deprecated
         get(id:string): ng.IPromise<iEntityApirest>{
             var d = this.$q.defer();
 
-            return this.getAll('all')
-                .then((contents: iEntityApirest) => {
-                    return contents.data.filter((t) => t.id == id)[0];
+            this.$http({
+                method: 'GET',
+                url: this.$config.protocolApirest+this.$config.domainApirest+"/"+this.getTypeAccess()+"/"+this.type+"/"+id,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                }).success((data: iEntityApirest) => {
+                    d.resolve(data);
+                })
+                .error((error) => {
+                    this.$log.error(error);
+                    d.reject(error);
                 });
 
             return d.promise;
@@ -138,7 +127,7 @@ module ILovePlatos{
 
             this.$http({
                 method: 'POST',
-                url: this.$config.protocolApirest+this.$config.domainApirest+"/"+this.getTypeAccess()+"/"+this.type+"/create",
+                url: this.$config.protocolApirest+this.$config.domainApirest+"/"+this.getTypeAccess()+"/"+this.type,
                 data: entity,
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
                 }).success((data: iEntityApirest) => {
@@ -157,8 +146,8 @@ module ILovePlatos{
             var d = this.$q.defer();
 
             this.$http({
-                method: 'POST',
-                url: this.$config.protocolApirest+this.$config.domainApirest+"/"+this.getTypeAccess()+"/"+this.type+"/delete",
+                method: 'DELETE',
+                url: this.$config.protocolApirest+this.$config.domainApirest+"/"+this.getTypeAccess()+"/"+this.type,
                 data: entity,
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
                 }).success((data: iEntityApirest) => {
@@ -177,8 +166,8 @@ module ILovePlatos{
             var d = this.$q.defer();
 
             this.$http({
-                method: 'POST',
-                url: this.$config.protocolApirest+this.$config.domainApirest+"/"+this.getTypeAccess()+"/"+this.type+"/update",
+                method: 'PUT',
+                url: this.$config.protocolApirest+this.$config.domainApirest+"/"+this.getTypeAccess()+"/"+this.type,
                 data: entity,
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
                 }).success((data: iEntityApirest) => {

@@ -84,7 +84,7 @@ module ILovePlatos{
                 }
             }*/
             addNewRelationships(type:string,params:Object) {
-                var types = ['contenidos','categorias','comentarios','autores','usuarios','leido','seguidores','miniaturas','galerias', 'videos','bloqueados','perfiles','landings','tags'];
+                var types = ['Restaurant','restaurant','relatedTo','relatedFrom'];
                 if( jQuery.inArray(type,types) == -1 ) {
                     return null;
                 }
@@ -92,13 +92,7 @@ module ILovePlatos{
                     return null;
                 }
 
-                if(!jQuery.isArray(params)) {
-                    params = [params]
-                }
-
-                this.output.data.relationships[type] = {
-                        "data": params
-                };
+                this.output.data.relationships[type] = params;
             }
 
             getOutput() {

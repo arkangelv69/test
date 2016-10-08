@@ -11,7 +11,7 @@
 				<p>Dinos el nombre de tu restaurante:</p>
 			</div>
 			<div class="input-field col s12">
-				<input id="name" type="text" class="validate" length="15">
+				<input id="name" type="text" class="validate" length="15" data-ng-model="restaurantCtrl.content.attributes.name">
 				<label for="name">Nombre</label>
 			</div>
 			<div class="input-field col s12">
@@ -23,12 +23,12 @@
 		</div>
 		<div class="row">
 			<div class="input-field col s12">
-				<fileimage template="publicar"></fileimage>
+				<fileimage template="restaurant"></fileimage>
 			</div>
 		</div>
 		<div class="row">
 			<div class="submit-field col s12">
-				<button id="submit" type="submit" class="waves-effect waves-light btn"><i class="material-icons left">cloud</i>Enviar</button>
+				<button id="submit" type="submit" class="waves-effect waves-light btn" progress-button="restaurantCtrl.progressStart(newPostForm)" data-ng-disabled="!restaurantCtrl.isSubmitActive()"><i class="material-icons left">cloud</i>Enviar</button>
 			</div>
 		</div>
 	</form>

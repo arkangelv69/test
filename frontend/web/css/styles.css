@@ -329,6 +329,13 @@ p.item-description {
 .card-image-shadow {
 	width: 100%;
 }
+
+/*---------------------form--------------------*/
+
+/*input-image*/
+.input-filed .fileimage input{
+	display: none;
+}
 /*canvas*/
 #preview canvas {
 	width: 100%;

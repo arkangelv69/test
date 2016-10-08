@@ -404,14 +404,6 @@ module ILovePlatos{
                 event.stopImmediatePropagation();
             }
             this.controller.FilesService.deleteImage(index);
-            var select = this.controller.FilesService.getSelect();
-            if(index == select || (this.controller.FilesService.fileElemImage.length < 1)) {
-                this.controller.FilesService.setSelect(0);
-            }else if(index < select && select - index == 1) {
-                this.controller.FilesService.setSelect(index);
-            }else if(index < select) {
-                this.controller.FilesService.setSelect(select-1);
-            }
         }
 
         hasImage() {
