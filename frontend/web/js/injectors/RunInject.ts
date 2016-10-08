@@ -3,10 +3,10 @@ module ILovePlatos{
 
     export class RunInject {
         static $inject = [
-            "ContenidoApirestService","config","$rootScope","$state","auth", "store", "jwtHelper"
+            "config","$rootScope","$state","auth", "store", "jwtHelper"
         ];
 
-        constructor(ContenidoApirestService,config,$rootScope,$state,auth, store, jwtHelper){
+        constructor(config,$rootScope,$state,auth, store, jwtHelper){
 
             $rootScope.$on('$stateChangeStart', function(event, toState, toParams) {
 

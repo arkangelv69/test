@@ -28,10 +28,11 @@ grunt.initConfig({
         'angular-ui-router',
         'angular-animate',
         'angular-ui-router-anim-in-out',
+        'auth0-lock',
         'auth0-angular',
         'jquery-simplecolorpicker',
-        'jssor-slider',
-        'lightgallery',
+        //'jssor-slider',
+        //'lightgallery',
         'masonry',
         'cropper',
         'underscore',
@@ -43,8 +44,8 @@ grunt.initConfig({
         'tinymce-mention',
         'waypoints',
         'select2',
-        'react',
-        'ngReact',
+        //'react',
+        //'ngReact',
         //'angular-lazy-img',
         //'tether',
         //'tether-drop',
@@ -54,19 +55,17 @@ grunt.initConfig({
         'angular': 'jquery',
         'cropper': 'jquery',
         'ngCordova': 'angular',
-        'ionic': 'angular',
+        //'ionic': 'angular',
         'tinymce': 'jquery',
         'tinymce-mention':'tinymce',
         'select2':'jquery',
-        'ngReact':'react',
+        //'ngReact':'react',
         //'angular-lazy-img':'angular',
         //'tether-tooltip':['tether','tether-drop']
       },
       exclude: [
         'grunt',
         'tinymce-dist',
-        'auth0.js',
-        'auth0-lock',
         'angular-storage'
       ],
       mainFiles: {
@@ -85,6 +84,9 @@ grunt.initConfig({
         ],
         "angular-jwt": [
           "dist/angular-jwt.min.js"
+        ],
+        "auth0-lock": [
+          "build/auth0-lock.min.js"
         ],
         "auth0-angular": [
           "build/auth0-angular.min.js"
@@ -107,7 +109,7 @@ grunt.initConfig({
         "angular-animate": [
           "angular-animate.min.js"
         ],
-        "lightgallery": [
+        /*"lightgallery": [
           "dist/js/lightgallery.min.js",
           "dist/js/lg-fullscreen.min.js",
           "dist/js/lg-thumbnail.min.js",
@@ -115,7 +117,7 @@ grunt.initConfig({
           "dist/js/lg-autoplay.min.js",
           "dist/js/lg-zoom.min.js",
           "dist/css/lightgallery.min.css"
-        ],
+        ],*/
         "masonry": [
           "dist/masonry.pkgd.min.js"
         ],

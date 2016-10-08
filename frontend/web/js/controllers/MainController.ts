@@ -7,16 +7,16 @@ module ILovePlatos{
 
     declare var tinymce:any;
     declare var ga:any;
-    declare var envioSC:any;
     declare var md5:any;
-    declare var _sf_endpt:any;
-    declare var _sf_async_config:any;
     declare var cordova:any;
     declare var mRefresh:any;
     declare var navigator:any;
     declare var ImgCache:any;
     declare var window:any;
     declare var screen:any;
+    declare var map:any;
+    declare var marker:any;
+    declare var strictBounds:any;
 
     export class MainController implements iMainModel{
 
@@ -82,6 +82,7 @@ module ILovePlatos{
             }
 
             $rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
+                $('.button-collapse').sideNav('hide');
             });
 
             $rootScope.$on('$stateNotFound', function(event) {
@@ -112,7 +113,6 @@ module ILovePlatos{
             var opts = { 
                  scrollEl:'body',
                  onBegin: function() {
-                    self.deleteAllCache();
                     self.$state.go(self.$state.current, {}, {reload: true});
                  }, //Function 
                  onEnd: null, //Function 
@@ -122,6 +122,7 @@ module ILovePlatos{
 
         initGeneralEnvent() {
             var self = this;
+
             angular.element('body').on("focusin","input,textarea", function(event) {
                 var name = angular.element(this).attr('name');
                 angular.element('body').addClass('focusin-element focusin-element-'+name);
@@ -179,6 +180,10 @@ module ILovePlatos{
             angular.element(window).resize(function() {
                 setOrientation();
             });
+
+            $(".button-collapse").sideNav({
+                closeOnClick: false,
+            });
         }
 
         getDispositivo() {
@@ -201,91 +206,6 @@ module ILovePlatos{
             if(typeof(ga) != 'undefined') {
                 ga('send', 'pageview');
             }
-        }
-
-        setCache(name) {
-            if(jQuery.inArray(name,this.cache) < 0 ) {
-                this.cache.push(name);
-            } 
-        }
-
-        deleteAllCache() {
-            var self = this;
-            var cache = jQuery.extend([],self.cache);
-            self.cache = [];
-            angular.forEach(cache,function(name,key){
-                self.deleteCache(name);
-            });
-        }
-
-        deleteCache(name) {
-            if(name) {
-                if(this.$state.get(name).templateOldUrl) {
-                    this.$state.get(name).templateUrl = this.$state.get(name).templateOldUrl;
-                }
-                this.$state.get(name).cache = null;
-                this.removeState(name);
-            }
-        }
-
-        generateCache(name) {
-            var self = this;
-            var cache = angular.element('[ui-view]').html();
-
-            if( name == 'home' || name == 'home.inicio') {
-
-                    var cacheDestacado = angular.element('.destacado').html();
-                    var cacheWall = angular.element('.wall').html();
-
-                    if(!self.$state.get('home').templateOldUrl) {
-                        var homeState = jQuery.extend({},this.$state.get('home'));
-                        self.$state.get('home').templateOldUrl = homeState.templateUrl;
-                    }
-                    self.$state.get('home').templateUrl = 'partials/cache/cache-home.html';
-                    self.$state.get('home').cache = {
-                        cacheDestacado: cacheDestacado,
-                        cacheWall: cacheWall
-                    };
-
-                    if(!self.$state.get('home.inicio').templateOldUrl) {
-                        var homeState = jQuery.extend({},this.$state.get('home.inicio'));
-                        self.$state.get('home.inicio').templateOldUrl = homeState.templateUrl;
-                    }
-                    self.$state.get('home.inicio').templateUrl = 'partials/cache/cache-home.html';
-                    self.$state.get('home.inicio').cache = {
-                        cacheDestacado: cacheDestacado,
-                        cacheWall: cacheWall
-                    };
-
-            }else {
-                if(!this.$state.get(name).templateOldUrl) { 
-                    var currentState = jQuery.extend({},this.$state.get(name));
-                    this.$state.get(name).templateOldUrl = currentState.templateUrl;
-                }
-                this.$state.get(name).templateUrl = 'partials/cache/cache-'+name+'.html';
-                
-                this.$state.get(name).cache = {
-                        cacheDestacado: cacheDestacado,
-                        cacheWall: cacheWall
-                    };
-            }
-            
-        }
-
-        getCache() {
-            var name = this.$state.current.name;
-
-            if( name == 'home' || name == 'home.inicio') {
-                var cacheDestacado =  this.$state.current.cache.cacheDestacado;
-                var cacheWall =  this.$state.current.cache.cacheWall;
-                angular.element('.cacheDestacado').replaceWith(cacheDestacado);
-                angular.element('.cacheWall').html(cacheWall);
-            }
-
-            setTimeout(function(){
-                jQuery(".overlayer").addClass("hidden");
-            },50);
-
         }
 
         redirectSignin() {
@@ -696,10 +616,6 @@ module ILovePlatos{
 
         hideLogin() {
             angular.element('.a0-lock-container').hide();
-        }
-
-        showLogin() {
-            angular.element('.a0-lock-container').show();
         }
 
         setMine(isMine) {

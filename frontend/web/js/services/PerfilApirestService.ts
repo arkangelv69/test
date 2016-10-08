@@ -1,7 +1,7 @@
 /// <reference path="../../typings/angularjs/angular.d.ts" />
 /// <reference path="../models/mainModel.ts" />
 /// <reference path="../models/entityModel.ts" />
-/// <reference path="./EntityApirestService.ts" />
+/// <reference path="EntityApirestService.ts" />
 
 module ILovePlatos{
 
