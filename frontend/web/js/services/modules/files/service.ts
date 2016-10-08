@@ -18,40 +18,12 @@ module ILovePlatos{
         _main:IMainScope;
         fileElemImage = [];
         cropImage: any;        
-        fileElemVideo:any;
-        numMaxImages = 20;
+        numMaxImages = 1;
         maxSizeImages = 10485760; //en bytes
         controller = '';
 
-        constructor(protected $config: any, protected $rootScope, protected $http, protected $q,protected $log, protected $httpParamSerializerJQLike, private $compile){
+        constructor(protected $config: any, protected $rootScope, protected $http, protected $q,protected $log, protected $httpParamSerializerJQLike, protected $compile){
             this._main = $rootScope.$$childHead.mainCtrl;
-        }
-
-        uploadVideo(video){
-            var formData= new FormData();
-            var bucket = this.$config.bucket;
-            var bucketSubFolder = btoa(Math.floor((Math.random() * 9999999) + 999).toString())+"/";
-            var url;
-            if(/^video\//i.test(video[0].type)){
-                var fileExt = '.' + video[0].name.split('.').pop();
-                var actual_video_name = btoa(video[0].name);
-                url = "http://"+bucket+".s3.amazonaws.com/"+bucketSubFolder + actual_video_name + fileExt;
-                formData.append(bucketSubFolder + actual_video_name, video[0]);
-            }else{
-                this._main.resetMessages();
-                this._main.setMessage({type:'danger',text: "El archivo "+video[0].name+" no es de un formato válido."});
-            }
-
-            $.ajax({
-                url: "perfil/upload",
-                type: "POST",
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(data){
-                }
-            });
-            return url;
         }
 
         addImage(item) {
@@ -164,25 +136,8 @@ module ILovePlatos{
             preview.innerHTML = '';
 
             if (filesArray && filesArray.length > 0) {
-                this.selectImageByDefault(filesArray);
                 this.nextImage(0,filesArray,callback);
             }
-        }
-
-        isEditable = false;
-        isCropperable = false;
-        isSelectable = false;
-
-        setImagePreviewEditable(isEditable:boolean) {
-            this.isEditable = isEditable;
-        }
-
-        setImagePreviewCropperable(isCropperable:boolean) {
-            this.isCropperable = isCropperable;
-        }
-
-        setImagePreviewSelectable(isSelectable:boolean) {
-            this.isSelectable = isSelectable;
         }
 
         nextImage(i,files,callback?) {
@@ -198,55 +153,13 @@ module ILovePlatos{
             files[i].name = index;
 
             var preview = document.getElementById("preview");
-            var isGroup = 'single';
-            if(files.length > 1) {
-                isGroup = 'group';
-            }
-            wrap.classList.add("wrapImage","wrapImage-"+index,isGroup);
-
-            var deleteButton = "<button type='button' class='btn-eliminar-foto' data-ng-click='"+this.controller+".deleteImage($event,"+i+")' aria-label='Left Align'></button>" ;
             var canvas = document.createElement("canvas");
             canvas.classList.add("fileimage-item", "canvas"+i, "new");
 
-            var loading = document.createElement("div");
-            loading.classList.add("wrapper_loading","hidden");
-            loading.innerHTML = '<span class="loading-file glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>';
+            wrap.classList.add("wrapImage","wrapImage-"+index);
 
-            if(this.isEditable) {
-                var editableButton = "<button type='button' class='btn-edit-foto' onClick='angular.element(this).scope()."+this.controller+".editImage(this)' data-toggle='tooltip' data-placement='bottom' title='Aquí puedes añadir información a la imagen.'></button>" ;
-            }
-
-            if(this.isCropperable) {
-                var cropperableButton = "<button type='button' class='btn-cropper-foto' onClick='angular.element(this).scope()."+this.controller+".cropperImage(this)' data-toggle='tooltip' data-placement='bottom' title='Aquí puedes recortar la foto para mostrar solo lo que a tí te interesa.'></button>" ;
-            }
-
-            if(this.isSelectable &&  files.length > 1) {
-                var selectableButton = "<button type='button' class='btn-select-foto' onClick='angular.element(this).scope()."+this.controller+".selectImage(this)' data-toggle='tooltip' data-placement='bottom' title='Selcciona la imagen que quieres que se muestre en la tarjeta como portada.'></button>" ;
-            }
-            
-            wrap.innerHTML = deleteButton; 
-            if(this.isEditable) {
-                wrap.innerHTML += editableButton; 
-            }
-            if(this.isCropperable) {
-                wrap.innerHTML += cropperableButton; 
-            }
-            if(this.isSelectable) {
-                wrap.innerHTML += selectableButton; 
-            }
             wrap.appendChild(canvas);
-            wrap.appendChild(loading);
             preview.appendChild(wrap); // Assuming that "preview" is the div output where the content will be displayed.
-
-
-            if(this.isSelectable) {
-                if(i == 0 && typeof(this.select) == 'undefined') {
-                    this.select = 0;
-                    $(".wrapImage-"+index).addClass('select');
-                }else if( typeof(this.select) != 'undefined' && i == this.select) {
-                    $(".wrapImage-"+index).addClass('select');
-                }
-            }
 
             $(".wrapImage-"+index+" canvas").data('index',i);
 
@@ -276,95 +189,38 @@ module ILovePlatos{
         }
 
         canvasCropper:any;
-        select:number;
 
-        editImage(target) {
+        renderRecorteRestaurant(target,select) {
+            this.cropperImage(target,'.canvasCropper-image.restaurant',360/240);
+        }
+
+        renderRecorteCuadrado(target,select) {
+            this.cropperImage(target,'.canvasCropper-image.cuadrado',1);
+        }
+
+        renderRecorteApaisado(target,select) {
+            this.cropperImage(target,'.canvasCropper-image.apaisado',320/160);
+        }
+
+        cropperImage(target,select,aspectRatio) {
             var self = this;
 
-            var canvas = angular.element(target).siblings('canvas');
-
-            self.renderImageFromCanvas(target,'.canvasEdit-image');
-
-            var index = angular.element(canvas).data('index');
-
-            if(typeof(index) != 'undefined' && this.fileElemImage.length > 0 && this.fileElemImage[index]) {
-                var attributes = this.fileElemImage[index].attributes;
-                if(!attributes) {
-                    attributes = {};
-                }
-                var titulo = attributes.titulo || '';
-                if(titulo == '-1') {
-                    titulo = '';
-                }
-                var leyenda = attributes.leyenda || '';
-                if(leyenda == '-1') {
-                    leyenda = '';
-                }
-                var copyright = attributes.copyright || '';
-                if(copyright == '-1') {
-                    copyright = '';
-                }
-            }
-
-            angular.element("#canvasEdit-titulo").val(titulo);
-            angular.element("#canvasEdit-leyenda").val(leyenda);
-            angular.element("#canvasEdit-copyright").val(copyright);
-
-            angular.element("#canvasEdit").fadeIn(500);
-        }
-
-        editImageSave() {
-                var titulo = angular.element("#canvasEdit-titulo").val();
-                var leyenda = angular.element("#canvasEdit-leyenda").val();
-                var copyright = angular.element("#canvasEdit-copyright").val();
-
-                var canvas = angular.element('.canvasEdit-image img').data('canvas');
-
-                var index = angular.element(canvas).data('index');
-
-                if(typeof(index) != 'undefined' && this.fileElemImage.length > 0 && this.fileElemImage[index]) {
-                    if(!this.fileElemImage[index].attributes) {
-                        this.fileElemImage[index].attributes = {};
-                    }
-                    this.fileElemImage[index].attributes.titulo = titulo;
-                    this.fileElemImage[index].attributes.leyenda = leyenda;
-                    this.fileElemImage[index].attributes.copyright = copyright;
-                }
-
-                angular.element("#canvasEdit-titulo").val('');
-                angular.element("#canvasEdit-leyenda").val('');
-                angular.element("#canvasEdit-copyright").val('');
-
-                angular.element("#canvasEdit").fadeOut(500);
-        }
-
-        editImageCancel(target) {
-                angular.element("#canvasEdit").fadeOut(500);
-        }
-
-        cropperImage(target) {
-            var self = this;
-
-            var canvas = angular.element(target).siblings('canvas');
+            var canvas = angular.element(target).find('canvas');
             var positionTop = canvas.offset().top - $("body").offset().top;
             var positionLeft = canvas.offset().left - $("body").offset().left;
             var widthTarget = canvas.width();
             var heightTarget = canvas.height();
 
-            self.renderImageFromCanvas(target,'.canvasCropper-image');
+            self.renderImageFromCanvas(target,select);
 
-            self.markCropped(target);
-
-            angular.element("#canvasCropper").fadeIn(500);
-
-            var image = angular.element('#canvasCropper img');
+            var image = angular.element(select + ' img');
             var width = image.width();
             var height = image.height();
 
             var options = {
                 dragMode: 'move',
-                //aspectRatio: 16/9,
-                autoCropArea: 0.8,
+                aspectRatio: aspectRatio,
+                //autoCropArea: 0.8,
                 restore: true,
                 guides: false,
                 rotatable:true,
@@ -382,14 +238,8 @@ module ILovePlatos{
                 minCanvasHeight:height
             };
 
-            self.canvasCropper = angular.element('.canvasCropper-image img').cropper(options);
+            self.canvasCropper = angular.element(select + ' img').cropper(options);
 
-        }
-
-        markCropped(target) {
-            var canvas = angular.element(target).siblings('canvas');
-            var index = canvas.data('index');
-            this.fileElemImage[index].cropped = true;
         }
 
         croppImageCancel() {
@@ -437,70 +287,13 @@ module ILovePlatos{
             this.canvasCropper.cropper('rotate',grades);
         }
 
-        setSelect(indexSelect) {
-            var self = this;
-            this.select = indexSelect;
-
-            angular.element('#preview .wrapImage').each(function(index) {
-                if(!self.fileElemImage[index].attributes) {
-                    self.fileElemImage[index].attributes = {};
-                }
-                self.fileElemImage[index].attributes.select = false;
-                angular.element(this).removeClass("select");
-                if(index == indexSelect) {
-                    self.fileElemImage[index].attributes.select = true;
-                    angular.element(this).addClass("select");
-                }
-            });
-        }
-
-        selectImageByDefault(files) {
-            var hasSelect = false;
-            for(var e = 0;e < files.length;e++) {
-                if(files[e].attributes && files[e].attributes.select) {
-                    hasSelect = true;
-                }
-            }
-            if(!hasSelect) {
-                if(!files[0].attributes) {
-                    files[0].attributes = {};
-                }
-                files[0].attributes.select = true;
-            }
-        }
-
-        selectImage(target) {
-            var self = this;
-            var canvas = angular.element(target).siblings('canvas');
-            var indexClass = canvas.data('index');
-            this.select = indexClass;
-
-            angular.element('#preview .wrapImage').each(function(index) {
-                if(!self.fileElemImage[index].attributes) {
-                    self.fileElemImage[index].attributes = {};
-                }
-                self.fileElemImage[index].attributes.select = false;
-                angular.element(this).removeClass("select");
-                if(index == indexClass) {
-                    self.fileElemImage[index].attributes.select = true;
-                    angular.element(this).addClass("select");
-                }
-            });
-        }
-
-        getSelect() {
-            return this.select;
-        }
-
         renderImageFromCanvas(target,select) {
-            var canvas = angular.element(target).siblings('canvas')[0];
+            var canvas = angular.element(target).find('canvas')[0];
             var url = this.getCanvasUrl(canvas);
             angular.element(select).html('<img src="'+url+'" />');
-            angular.element(select+' img').data('canvas',canvas);
         }
 
         deleteImage(index){
-            this.setSelect(0);
             this.fileElemImage.splice(index,1);
             angular.element('#fileElemImage').val('');
 
@@ -523,6 +316,7 @@ module ILovePlatos{
                 file = files[i];
                 if(/^image\//i.test(file.type)){
                     if(file.size < this.maxSizeImages){
+                        this.fileElemImage = [];
                         this.fileElemImage.push({type:"file",source:file});
                     }else{
                         archivosTamannoInvalidos.push(file);
@@ -553,11 +347,6 @@ module ILovePlatos{
                 this.fileElemImage = this.fileElemImage.slice(0,this.numMaxImages);
                 this._main.setMessage({type:'danger',text: "Hey! que tan solo tengo dos alas, prueba subir menos imágenes."});
             }
-
-            $('#videoSelect').attr("disabled", "disabled");
-
-            //si cargo imágenes no puedo cargar vídeos. Vacío array de vídeos.
-            this.fileElemVideo = null;
 
         }
 

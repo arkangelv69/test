@@ -1,15 +1,11 @@
-/// <reference path="../../../typings/angularjs/angular.d.ts" />
-/// <reference path="../../services/ContenidoApirestService.ts" />
-
 module ILovePlatos{
 
     export class EntityController implements iEntityModel{
         static $inject = [
             "config",
-            "ContenidoApirestService",
+            "RestaurantApirestService",
             "DateService",
             "$rootScope",
-            "$controller",
             "$stateParams",
             "$scope",
             "$state",
@@ -38,8 +34,19 @@ module ILovePlatos{
         type = null;
         isSubmit = false;
 
-        constructor(protected $config:any,protected svc,protected DateService,
-        protected $rootScope: IBuhoRootScopeService,$controller:any,protected $stateParams:any,protected $scope:any,protected $state:any,private $element:any,protected $sce:any, protected auth, protected store){
+        constructor(
+            public $config:any,
+            public svc,
+            public DateService,
+            public $rootScope: IBuhoRootScopeService,
+            public $stateParams:any,
+            public $scope:any,
+            public $state:any,
+            public $element:any,
+            public $sce:any, 
+            public auth,
+            public store
+        ){
             //Seteo el controlador principal
             this._main = $rootScope.$$childHead.mainCtrl;
             this._user = $rootScope.$$childHead.$$childHead.userCtrl;
@@ -311,6 +318,26 @@ module ILovePlatos{
         }
 
         add(entity,user?){
+            if(!entity) {
+                return null;
+            }
+            if(!this.isSubmit ) {
+                this.isSubmit = true;
+                var self = this;
+                return this.svc.add(entity)
+                    .then((response: iEntityApirest) => {
+                        if(response && response.data) {
+                            self.isSubmit = false;
+                            self.contents.push(response.data);
+                        }
+                    },(error: any) => {
+                        self.isSubmit = false;
+                        console.log(error);
+                    });
+            }
+        }
+
+        update(entity,user?){
             if(!entity) {
                 return null;
             }

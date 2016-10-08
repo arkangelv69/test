@@ -8,12 +8,14 @@ module ILovePlatos{
 
     export class ConfigInject {
         static $inject = [
-            "$interpolateProvider","$locationProvider","$stateProvider","$urlRouterProvider","$translateProvider","authProvider","jwtInterceptorProvider","$httpProvider","$provide"
+            "$interpolateProvider","$locationProvider","$stateProvider","$urlRouterProvider","$translateProvider","authProvider","jwtInterceptorProvider","$httpProvider","$provide","jwtOptionsProvider"
         ];
 
-        constructor($interpolateProvider,$locationProvider,$stateProvider, $urlRouterProvider,$translateProvider,authProvider,jwtInterceptorProvider,$httpProvider,$provide){
+        constructor($interpolateProvider,$locationProvider,$stateProvider, $urlRouterProvider,$translateProvider,authProvider,jwtInterceptorProvider,$httpProvider,$provide,jwtOptionsProvider){
             $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
             $locationProvider.hashPrefix('!');
+
+            jwtOptionsProvider.config({ whiteListedDomains:["*"]});
 
             //Si estamos en una aplicación cordova y para ios.
             if(typeof(cordova) != 'undefined' && typeof(cordova) == 'object') {
@@ -36,8 +38,8 @@ module ILovePlatos{
 
             //Para mantener la sesión del usuario indefinida------>
             authProvider.init({
-                domain: configBuho.domain,
-                clientID: configBuho.clientID
+                domain: configILovePlatos.domain,
+                clientID: configILovePlatos.clientID
             });
 
             authProvider.on('loginSuccess', ["$location", "profilePromise", "idToken", "refreshToken", "store",function($location, profilePromise, idToken, refreshToken, store) {
