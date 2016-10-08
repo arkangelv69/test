@@ -1,0 +1,27 @@
+<section class="fileimage">
+	<div class="button action">
+		<input type="file" id="fileElemImage" name="fileElemImage" ng-model="restaurantCtrl.fileElemImage"	 accept="image/*" onchange="angular.element(this).scope().restaurantCtrl.changeFiles(this.files);">
+		<button id="fileSelect" ng-click="restaurantCtrl.selectFile($event,'#fileElemImage')" type="button" class="btn btn-subir-foto">
+				<span>Subir imagen</span>
+		</button>
+	</div>
+	<div class="fileimage-preview" data-ng-show="restaurantCtrl.hasImage()">
+		<div id="preview"></div>
+		<!--button data-ng-click="restaurantCtrl.renderRecorteCuadrado($event,'#preview');">
+			Recorte cuadrado
+		</button>
+		<button data-ng-click="restaurantCtrl.renderRecorteApaisado($event,'#preview');">
+			Recorte cuadrado
+		</button-->
+		<div id="canvasCropper">
+			<p>Necesitamos que realices estos recortes para que tus platos se visualicen correctamente.</p>
+			<p>Así es como verán tu local los usuarios.</p>
+			<h4>Miniatura Restaurante</h4>
+			<div class="canvasCropper-image restaurant"></div>
+			<h4>Miniatura cuadrada</h4>
+			<div class="canvasCropper-image cuadrado"></div>
+			<h4>Miniatura apaisada</h4>
+			<div class="canvasCropper-image apaisado"></div>
+		</div>
+	</div>	
+</section>

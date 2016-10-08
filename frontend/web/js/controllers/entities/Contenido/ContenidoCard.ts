@@ -9,7 +9,7 @@ module ILovePlatos{
 
     export class ContenidoCard{
 
-        controller:ContenidoController;
+        controller:RestaurantController;
 
         constructor(controller) {
             this.controller = controller;

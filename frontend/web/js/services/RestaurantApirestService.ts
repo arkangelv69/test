@@ -1,13 +1,10 @@
-/// <reference path="../../typings/angularjs/angular.d.ts" />
-/// <reference path="../models/mainModel.ts" />
-/// <reference path="../models/entityModel.ts" />
-/// <reference path="./EntityApirestService.ts" />
+/// <reference path="EntityApirestService.ts" />
 
 module ILovePlatos{    
 
-    export class ContenidoApirestService extends EntityApirestService{
+    export class RestaurantApirestService extends EntityApirestService{
 
-        type = 'contenidos';
+        type = 'restaurantes';
 
         constructor($config,$http,$q,$log,auth) {
             super($config,$http,$q,$log,auth);

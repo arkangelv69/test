@@ -36,8 +36,8 @@ module ILovePlatos{
 
             //Para mantener la sesión del usuario indefinida------>
             authProvider.init({
-                domain: configBuho.domain,
-                clientID: configBuho.clientID
+                domain: configILovePlatos.domain,
+                clientID: configILovePlatos.clientID
             });
 
             authProvider.on('loginSuccess', ["$location", "profilePromise", "idToken", "refreshToken", "store",function($location, profilePromise, idToken, refreshToken, store) {

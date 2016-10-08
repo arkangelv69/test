@@ -18,16 +18,20 @@
 
 /// <reference path="controllers/entities/MapController.ts" />
 /// <reference path="controllers/entities/CardController.ts" />
+/// <reference path="controllers/entities/RestaurantController.ts" />
+
 // <reference path="controllers/entities/PerfilController.ts" />
 
 /// <reference path="controllers/data/DataJsonController.ts" />
 
+/// <reference path="services/RestaurantApirestService.ts" />
 /// <reference path="services/PerfilApirestService.ts" />
 /// <reference path="services/DateService.ts" />
 
 /// <reference path="services/modules/files/service.ts" />
 
 /// <reference path="directives/scrollDirective.ts" />
+/// <reference path="directives/modules/fileimage/directive.ts" />
 
 /// <reference path="filters/GeneralFilter.ts" />
 
@@ -40,7 +44,7 @@ module ILovePlatos{
 
     declare var translationsEN_EN:any;
     declare var translationsES_ES:any;
-    declare var configBuho:any;
+    declare var configILovePlatos:any;
 
     // App ILovePlatos.
     ILovePlatosApp = angular.module("ILovePlatos", [
@@ -60,7 +64,7 @@ module ILovePlatos{
     ])
         //Config
         .config(ConfigInject)
-        .constant('config',configBuho)
+        .constant('config',configILovePlatos)
         .run(RunInject)
         // controllers
         .controller("MainController", MainController)
@@ -74,15 +78,17 @@ module ILovePlatos{
         // controllers.entidades
         .controller("MapController", MapController)
         .controller("CardController", CardController)
+        .controller("RestaurantController", RestaurantController)
         //.controller("PerfilController", PerfilController)
         //cotroller.modules
         // service service
-        //.service("ContenidoApirestService", ContenidoApirestService)
+        .service("RestaurantApirestService", RestaurantApirestService)
         .service("PerfilApirestService", PerfilApirestService)
         .service("FilesService", FilesService)
         .service("DateService", DateService)
         //Directives
         .directive('scroll', Scroll)
+        .directive('fileimage', FileImageDirective)
         //Modulos
         //Filter
         .filter('excerpt', Excerpt)
