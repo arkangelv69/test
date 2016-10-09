@@ -10,7 +10,8 @@ module ILovePlatos{
             "$http",
             "$q",
             "$log",
-            "auth"
+            "auth",
+            "store"
         ];
 
         type = 'entities';
@@ -20,10 +21,12 @@ module ILovePlatos{
             protected $http: ng.IHttpService,
             protected $q: ng.IQService,
             protected $log: ng.ILogService,
-            protected auth
+            protected auth,
+            protected store
         )
         {
-            
+            /*var token = store.get("token");
+            $http.common['Authorization'] = "Bearer "+token;*/
         }
 
         getTypeAccess() {

@@ -19,12 +19,16 @@
 /// <reference path="controllers/entities/MapController.ts" />
 /// <reference path="controllers/entities/CardController.ts" />
 /// <reference path="controllers/entities/RestaurantController.ts" />
+/// <reference path="controllers/entities/PlateController.ts" />
+/// <reference path="controllers/entities/MenuController.ts" />
 
 // <reference path="controllers/entities/PerfilController.ts" />
 
 /// <reference path="controllers/data/DataJsonController.ts" />
 
 /// <reference path="services/RestaurantApirestService.ts" />
+/// <reference path="services/PlateApirestService.ts" />
+/// <reference path="services/MenuApirestService.ts" />
 /// <reference path="services/PerfilApirestService.ts" />
 /// <reference path="services/DateService.ts" />
 
@@ -63,6 +67,37 @@ module ILovePlatos{
         'ngMeta'
     ])
         //Config
+        .factory('httpRequestInterceptor', ["store", function(store) {
+          return {
+            request: function (config) {
+
+                var token = null;
+
+                var idToken = store.get('token');
+                var refreshToken = store.get('refreshToken');
+
+                if(idToken && !refreshToken) {
+                  store.remove('profile');
+                  store.remove('token');
+                  store.remove('refreshToken');
+                  var url = window.location;
+                  window.location = url;
+                }
+                else if (!idToken || !refreshToken) {
+                  token = null;
+                }
+                else {
+                  token = idToken;
+                }
+
+                if(token) {
+                    config.headers['Authorization'] = 'Bearer '+token;
+                }
+
+              return config;
+            }
+          };
+        }])
         .config(ConfigInject)
         .constant('config',configILovePlatos)
         .run(RunInject)
@@ -79,10 +114,14 @@ module ILovePlatos{
         .controller("MapController", MapController)
         .controller("CardController", CardController)
         .controller("RestaurantController", RestaurantController)
+        .controller("PlateController", PlateController)
+        .controller("MenuController", MenuController)
         //.controller("PerfilController", PerfilController)
         //cotroller.modules
         // service service
         .service("RestaurantApirestService", RestaurantApirestService)
+        .service("PlateApirestService", PlateApirestService)
+        .service("MenuApirestService", MenuApirestService)
         .service("PerfilApirestService", PerfilApirestService)
         .service("FilesService", FilesService)
         .service("DateService", DateService)

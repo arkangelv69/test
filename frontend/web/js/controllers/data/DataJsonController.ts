@@ -10,9 +10,9 @@ module ILovePlatos{
 
             output = {
                 "data": {
+                    "id":"",
                     "type": "##type_contenido##",
                     "attributes": {
-                        id:''
                     },
                     "relationships": {}
                 }
@@ -39,7 +39,7 @@ module ILovePlatos{
                 this.type = type;
                 this.guid = this.generareGuid();
                 
-
+                this.output.data.id = this.guid;
                 this.output.data.type = this.output.data.type.replace("##type_contenido##",this.type);
 
                 //Obtenemos el usuario
@@ -49,6 +49,11 @@ module ILovePlatos{
                     var sessionToken = auth.idToken;
                     this.addNewRelationships('usuarios',{"userId":userId,"sessionToken":sessionToken});
                 }*/
+            }
+
+            setId(id) {
+                this.guid = id;
+                this.output.data.id = id;
             }
 
             /*@attributes {
@@ -67,9 +72,6 @@ module ILovePlatos{
             addAttributes(attributes) {
                 if(!attributes) {
                     return null;
-                }
-                if(!attributes.id) {
-                    attributes.id = this.guid;
                 }
 
                 this.output.data.attributes = attributes;

@@ -39,8 +39,8 @@ module ILovePlatos{
                 !content.attributes.name || 
                 !content.attributes.address ||
                 !content.attributes.longitude ||
-                !content.attributes.latitude ||
-                this.controller.FilesService.fileElemImage.length < 1
+                !content.attributes.latitude /*||
+                this.controller.FilesService.fileElemImage.length < 1*/
             ){
                 return false
             }
@@ -90,13 +90,13 @@ module ILovePlatos{
             }
 
 
-            if( !this.controller.FilesService.fileElemImage || this.controller.FilesService.fileElemImage.length < 1 ){
+            /*if( !this.controller.FilesService.fileElemImage || this.controller.FilesService.fileElemImage.length < 1 ){
                 self._main.resetMessages();
                 self._main.setMessage({type:'danger',text:'No hay ningún imagen seleccionada'});
 
                 this.progressCancel();
                 return null;
-            }
+            }*/
 
             var uploadImages = $('#preview canvas.new');
 
@@ -189,7 +189,7 @@ module ILovePlatos{
             var id = user.username;
 
             //Relationships del usuario que crea la publicación
-            var paramsUsuario = {"admin":['David']};
+            var paramsUsuario = {"admin":[0]};
             dataJson.addNewRelationships('relatedFrom',paramsUsuario);
 
             //Obtenemos la nueva entidad
@@ -231,6 +231,15 @@ module ILovePlatos{
 
         progressCancel() {
             this.progressbarRes.reject();
+        }
+
+        selectFile(event,selector) {
+            if(event) {
+                event.preventDefault();
+            }
+            if (selector) {
+                angular.element(selector).click();
+            }
         }
 
         changeFiles(files) {

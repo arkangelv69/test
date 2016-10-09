@@ -5,6 +5,20 @@
 	margin:0px;
 }
 
+/*Collection*/
+.collection .collection-item.avatar {
+	min-height: 60px;
+}
+.collection .collection-item.avatar .square {
+    position: absolute;
+    width: 42px;
+    height: 42px;
+    overflow: hidden;
+    left: 15px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
 /*Map*/
 #map-layer {
 	height: 100%;

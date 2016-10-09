@@ -9,8 +9,8 @@ module ILovePlatos{
         
         type = 'perfiles';        
 
-        constructor($config,$http,$q,$log,auth) {
-            super($config,$http,$q,$log,auth);
+        constructor($config,$http,$q,$log,auth,store) {
+            super($config,$http,$q,$log,auth,store);
         }
 
         getByUserId(userId): ng.IPromise<iEntityApirest>{

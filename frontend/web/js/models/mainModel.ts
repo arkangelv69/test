@@ -15,6 +15,9 @@ interface JQuery {
 	carousel(params?):any;
 	collapsible(params?):any;
 	characterCounter(params?):any;
+	material_select(params?):any;
+	materialize_autocomplete(params?):any;
+	pickadate(params?):any;
 }
 
 interface HTMLElement {

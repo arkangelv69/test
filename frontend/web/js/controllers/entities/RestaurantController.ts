@@ -23,8 +23,6 @@ module ILovePlatos{
         ];
 
         mother;
-        wall:any;
-        preview:any;
         images = [];
 
         //ContenidoCard:ContenidoCard;
@@ -39,7 +37,7 @@ module ILovePlatos{
                     address: {},
                     longitude: 0,
                     latitude: 0,
-                    date:0,
+                    date:0
                 },
                 relationships: {
                     miniaturas:{
@@ -112,6 +110,10 @@ module ILovePlatos{
 
         progressCancel() {
             this.RestaurantEdit.progressCancel();
+        }
+
+        selectFile(event,selector) {
+            this.RestaurantEdit.selectFile(event,selector);
         }
 
         changeFiles(files) {

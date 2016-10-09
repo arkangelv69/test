@@ -6,8 +6,8 @@ module ILovePlatos{
 
         type = 'plate';
 
-        constructor($config,$http,$q,$log,auth) {
-            super($config,$http,$q,$log,auth);
+        constructor($config,$http,$q,$log,auth,store) {
+            super($config,$http,$q,$log,auth,store);
         }
 
         getByUserId(entityId:string|number): ng.IPromise<iEntityApirest>{

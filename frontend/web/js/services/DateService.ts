@@ -64,7 +64,7 @@ module ILovePlatos{
 
         getCurrentDateInUnix() {
             //Importantisimo, la fecha tiene que ser en segundos o no lo traga el cloud search.
-            return String(Math.floor( new Date().getTime()/ 1000 ));
+            return Math.floor( new Date().getTime()/ 1000 );
         }
 
     }

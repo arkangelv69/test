@@ -23,8 +23,6 @@ module ILovePlatos{
         ];
 
         mother;
-        wall:any;
-        preview:any;
         images = [];
 
         //ContenidoCard:ContenidoCard;
@@ -36,10 +34,8 @@ module ILovePlatos{
                 type:"Plate",
                 attributes:{
                     name: "",
-                    address: {},
-                    longitude: 0,
-                    latitude: 0,
-                    date:0,
+                    description: "",
+                    date:0
                 },
                 relationships: {
                     miniaturas:{
@@ -55,30 +51,6 @@ module ILovePlatos{
 
             //this.ContenidoCard = new ContenidoCard(this);
             this.PlateEdit = new PlateEdit(this);
-
-            window.addEventListener('message', function(event) { 
-
-                // IMPORTANT: Check the origin of the data! 
-                if (event.data.lat && event.data.lng) { 
-                    // The data has been sent from your site 
-
-                    // The data sent with postMessage is stored in event.data 
-                    self.dataAutocomplete = event.data;
-
-                    self.content.attributes.longitude =  event.data.lng;
-                    self.content.attributes.latitude =  event.data.lat;
-                    self.content.attributes.address =  event.data.address;
-
-                    if(!self.$scope.$$phase) {
-                        self.$scope.$apply();
-                    }
-
-                } else { 
-                    // The data hasn't been sent from your site! 
-                    // Be careful! Do not use it. 
-                    return; 
-                } 
-            }); 
 
         }
 

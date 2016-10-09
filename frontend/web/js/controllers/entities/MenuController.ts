@@ -56,29 +56,174 @@ module ILovePlatos{
             //this.ContenidoCard = new ContenidoCard(this);
             this.MenuEdit = new MenuEdit(this);
 
-            window.addEventListener('message', function(event) { 
+             $('.datepicker').pickadate({
+                selectMonths: true, // Creates a dropdown to control month
+              });
 
-                // IMPORTANT: Check the origin of the data! 
-                if (event.data.lat && event.data.lng) { 
-                    // The data has been sent from your site 
+            $('input.restaurant-autocomplete').materialize_autocomplete({
+                limit: 20,
+                multiple: {
+                    enable: true,
+                },
+                appender: {
+                    el: '',
+                    tagName: 'ul',
+                    className: 'ac-appender',
+                    tagTemplate: '<div class="chip" data-id="<%= item.id %>" data-text="<% item.text %>" data-image="<% item.image %>"><img src="<%= item.image %>" /><span> <%= item.text %>(<%= item.id %>) <i class="material-icons close">close</i></div>'
+                },
+                dropdown: {
+                    el: '',
+                    tagName: 'ul',
+                    className: 'collection',
+                    itemTemplate: '<li class="collection-item avatar" data-id="<%= item.id %>" data-text="<%= item.text %>" data-image="<%= item.image %>"><a href="javascript:void(0)"><img class="square" src="<%= item.image %>" /><span><%= item.text %></span></a></li>',
+                    noItem: ''
+                },
+                getData: function (value, callback) {
+                    var data = [{
+                        id: 0,
+                        text: 'Abe',
+                        image: 'http://lorempixel.com/200/200/food/1/'
+                    },
+                    {
+                        id: 1,
+                        text: 'Ari',
+                        image: 'http://lorempixel.com/200/200/food/2/'
+                    }];
+                    callback(value, data);
+                }
+            });
 
-                    // The data sent with postMessage is stored in event.data 
-                    self.dataAutocomplete = event.data;
+            $('input.entrantes-autocomplete').materialize_autocomplete({
+                limit: 20,
+                multiple: {
+                    enable: true,
+                },
+                appender: {
+                    el: '',
+                    tagName: 'ul',
+                    className: 'ac-appender',
+                    tagTemplate: '<div class="chip" data-id="<%= item.id %>" data-text="<% item.text %>" data-image="<% item.image %>"><img src="<%= item.image %>" /><span> <%= item.text %>(<%= item.id %>) <i class="material-icons close">close</i></div>'
+                },
+                dropdown: {
+                    el: '',
+                    tagName: 'ul',
+                    className: 'collection',
+                    itemTemplate: '<li class="collection-item avatar" data-id="<%= item.id %>" data-text="<%= item.text %>" data-image="<%= item.image %>"><a href="javascript:void(0)"><img class="square" src="<%= item.image %>" /><span><%= item.text %></span></a></li>',
+                    noItem: ''
+                },
+                getData: function (value, callback) {
+                    var data = [{
+                        id: 0,
+                        text: 'Abe',
+                        image: 'http://lorempixel.com/200/200/food/1/'
+                    },
+                    {
+                        id: 1,
+                        text: 'Ari',
+                        image: 'http://lorempixel.com/200/200/food/2/'
+                    }];
+                    callback(value, data);
+                }
+            });
 
-                    self.content.attributes.longitude =  event.data.lng;
-                    self.content.attributes.latitude =  event.data.lat;
-                    self.content.attributes.address =  event.data.address;
+            $('input.primeros-autocomplete').materialize_autocomplete({
+                limit: 20,
+                multiple: {
+                    enable: true,
+                },
+                appender: {
+                    el: '',
+                    tagName: 'ul',
+                    className: 'ac-appender',
+                    tagTemplate: '<div class="chip" data-id="<%= item.id %>" data-text="<% item.text %>" data-image="<% item.image %>"><img src="<%= item.image %>" /><span> <%= item.text %>(<%= item.id %>) <i class="material-icons close">close</i></div>'
+                },
+                dropdown: {
+                    el: '',
+                    tagName: 'ul',
+                    className: 'collection',
+                    itemTemplate: '<li class="collection-item avatar" data-id="<%= item.id %>" data-text="<%= item.text %>" data-image="<%= item.image %>"><a href="javascript:void(0)"><img class="square" src="<%= item.image %>" /><span><%= item.text %></span></a></li>',
+                    noItem: ''
+                },
+                getData: function (value, callback) {
+                    var data = [{
+                        id: 0,
+                        text: 'Abe',
+                        image: 'http://lorempixel.com/200/200/food/1/'
+                    },
+                    {
+                        id: 1,
+                        text: 'Ari',
+                        image: 'http://lorempixel.com/200/200/food/2/'
+                    }];
+                    callback(value, data);
+                }
+            });
 
-                    if(!self.$scope.$$phase) {
-                        self.$scope.$apply();
-                    }
+            $('input.segundos-autocomplete').materialize_autocomplete({
+                limit: 20,
+                multiple: {
+                    enable: true,
+                },
+                appender: {
+                    el: '',
+                    tagName: 'ul',
+                    className: 'ac-appender',
+                    tagTemplate: '<div class="chip" data-id="<%= item.id %>" data-text="<% item.text %>" data-image="<% item.image %>"><img src="<%= item.image %>" /><span> <%= item.text %>(<%= item.id %>) <i class="material-icons close">close</i></div>'
+                },
+                dropdown: {
+                    el: '',
+                    tagName: 'ul',
+                    className: 'collection',
+                    itemTemplate: '<li class="collection-item avatar" data-id="<%= item.id %>" data-text="<%= item.text %>" data-image="<%= item.image %>"><a href="javascript:void(0)"><img class="square" src="<%= item.image %>" /><span><%= item.text %></span></a></li>',
+                    noItem: ''
+                },
+                getData: function (value, callback) {
+                    var data = [{
+                        id: 0,
+                        text: 'Abe',
+                        image: 'http://lorempixel.com/200/200/food/1/'
+                    },
+                    {
+                        id: 1,
+                        text: 'Ari',
+                        image: 'http://lorempixel.com/200/200/food/2/'
+                    }];
+                    callback(value, data);
+                }
+            });
 
-                } else { 
-                    // The data hasn't been sent from your site! 
-                    // Be careful! Do not use it. 
-                    return; 
-                } 
-            }); 
+            $('input.postres-autocomplete').materialize_autocomplete({
+                limit: 20,
+                multiple: {
+                    enable: true,
+                },
+                appender: {
+                    el: '',
+                    tagName: 'ul',
+                    className: 'ac-appender',
+                    tagTemplate: '<div class="chip" data-id="<%= item.id %>" data-text="<% item.text %>" data-image="<% item.image %>"><img src="<%= item.image %>" /><span> <%= item.text %>(<%= item.id %>) <i class="material-icons close">close</i></div>'
+                },
+                dropdown: {
+                    el: '',
+                    tagName: 'ul',
+                    className: 'collection',
+                    itemTemplate: '<li class="collection-item avatar" data-id="<%= item.id %>" data-text="<%= item.text %>" data-image="<%= item.image %>"><a href="javascript:void(0)"><img class="square" src="<%= item.image %>" /><span><%= item.text %></span></a></li>',
+                    noItem: ''
+                },
+                getData: function (value, callback) {
+                    var data = [{
+                        id: 0,
+                        text: 'Abe',
+                        image: 'http://lorempixel.com/200/200/food/1/'
+                    },
+                    {
+                        id: 1,
+                        text: 'Ari',
+                        image: 'http://lorempixel.com/200/200/food/2/'
+                    }];
+                    callback(value, data);
+                }
+            });
 
         }
 

@@ -15,8 +15,6 @@ module ILovePlatos{
             $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
             $locationProvider.hashPrefix('!');
 
-            jwtOptionsProvider.config({ whiteListedDomains:["*"]});
-
             //Si estamos en una aplicación cordova y para ios.
             if(typeof(cordova) != 'undefined' && typeof(cordova) == 'object') {
                 basePath = window.location.pathname;
@@ -50,7 +48,14 @@ module ILovePlatos{
                 });
             }]);
 
-            var refreshingToken = null;
+            jwtOptionsProvider.config({ 
+                whiteListedDomains:["*"],
+                tokenGetter: function(store, jwtHelper, auth) {
+                  return store.get('token');
+                }
+            });
+
+            /*var refreshingToken = null;
             jwtInterceptorProvider.tokenGetter = ["store", "jwtHelper", "auth",function(store, jwtHelper, auth) {
                 var idToken = store.get('token');
                 var refreshToken = store.get('refreshToken');
@@ -72,9 +77,10 @@ module ILovePlatos{
                 } else {
                   return idToken;
                 }
-            }];
+            }];*/
 
-            $httpProvider.interceptors.push('jwtInterceptor');
+            //$httpProvider.interceptors.push('jwtInterceptor');
+            $httpProvider.interceptors.push('httpRequestInterceptor');
             //-----------------------<<<<<
 
             //-----------<<<<<

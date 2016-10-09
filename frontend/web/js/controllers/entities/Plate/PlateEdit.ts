@@ -10,7 +10,7 @@ module ILovePlatos{
     declare var window:any;
     declare var navigator:any;
 
-    export class PlatetEdit{
+    export class PlateEdit{
 
         controller:RestaurantController;
 
