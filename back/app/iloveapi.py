@@ -167,4 +167,4 @@ def getNode(type,id):
         i.delete(graph)
         return "deleted"
 
-app.run(host='0.0.0.0')
+app.run(host='0.0.0.0',debug=True)
