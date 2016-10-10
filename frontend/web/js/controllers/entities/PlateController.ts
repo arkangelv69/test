@@ -86,6 +86,10 @@ module ILovePlatos{
             this.PlateEdit.progressCancel();
         }
 
+        selectFile(event,selector) {
+            this.PlateEdit.selectFile(event,selector);
+        }
+
         changeFiles(files) {
             this.PlateEdit.changeFiles(files);
         }

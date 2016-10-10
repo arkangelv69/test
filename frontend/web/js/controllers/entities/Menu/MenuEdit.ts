@@ -12,7 +12,7 @@ module ILovePlatos{
 
     export class MenuEdit{
 
-        controller:RestaurantController;
+        controller:MenuController;
 
         dataJson:any;
 
@@ -37,10 +37,14 @@ module ILovePlatos{
             var content = this.controller.content;
             if( 
                 !content.attributes.name || 
-                !content.attributes.address ||
-                !content.attributes.longitude ||
-                !content.attributes.latitude ||
-                this.controller.FilesService.fileElemImage.length < 1
+                !content.attributes.price ||
+                !content.attributes.drink ||
+                !content.attributes.drinkDescription ||
+                !content.attributes.desserts ||
+                
+                (( !content.attributes.daily || content.attributes.daily.length < 1) && (!content.attributes.scheduled || !content.attributes.scheduled.init))
+                /*||
+                this.controller.FilesService.fileElemImage.length < 1*/
             ){
                 return false
             }
@@ -59,7 +63,15 @@ module ILovePlatos{
 
             if(!content.attributes.name) {
                 self._main.resetMessages();
-                self._main.setMessage({type:'danger',text:'Tienes que seleccionar un nombre para el plato'});
+                self._main.setMessage({type:'danger',text:'Tienes que seleccionar un nombre para el menú'});
+
+                this.progressCancel();
+                return null;
+            }
+
+            if(!content.attributes.price) {
+                self._main.resetMessages();
+                self._main.setMessage({type:'danger',text:'Tienes que especificar un precio para el menú'});
 
                 this.progressCancel();
                 return null;

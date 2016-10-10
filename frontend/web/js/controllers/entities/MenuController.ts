@@ -23,9 +23,6 @@ module ILovePlatos{
         ];
 
         mother;
-        wall:any;
-        preview:any;
-        images = [];
 
         //ContenidoCard:ContenidoCard;
         MenuEdit:MenuEdit;
@@ -36,12 +33,21 @@ module ILovePlatos{
                 type:"Menu",
                 attributes:{
                     name: "",
-                    address: {},
-                    longitude: 0,
-                    latitude: 0,
-                    date:0,
+                    price: 0,
+                    drink: 0,
+                    drinkDescription: 0,
+                    desserts: 0,
+                    daily: [],
+                    scheduled: {
+                        init: 0,
+                        end: 0,
+                    },
+                    date:0
                 },
                 relationships: {
+                    relatedTo: {
+                        have_plate:[]
+                    },
                     miniaturas:{
                         data:[]
                     }

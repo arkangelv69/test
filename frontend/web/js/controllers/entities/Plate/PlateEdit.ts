@@ -12,7 +12,7 @@ module ILovePlatos{
 
     export class PlateEdit{
 
-        controller:RestaurantController;
+        controller:PlateController;
 
         dataJson:any;
 
@@ -37,10 +37,8 @@ module ILovePlatos{
             var content = this.controller.content;
             if( 
                 !content.attributes.name || 
-                !content.attributes.address ||
-                !content.attributes.longitude ||
-                !content.attributes.latitude ||
-                this.controller.FilesService.fileElemImage.length < 1
+                !content.attributes.description /*||
+                this.controller.FilesService.fileElemImage.length < 1*/
             ){
                 return false
             }
@@ -65,13 +63,21 @@ module ILovePlatos{
                 return null;
             }
 
-            if( !this.controller.FilesService.fileElemImage || this.controller.FilesService.fileElemImage.length < 1 ){
+            if(!content.attributes.description) {
+                self._main.resetMessages();
+                self._main.setMessage({type:'danger',text:'Tienes que escribir una descipción para el plato'});
+
+                this.progressCancel();
+                return null;
+            }
+
+            /*if( !this.controller.FilesService.fileElemImage || this.controller.FilesService.fileElemImage.length < 1 ){
                 self._main.resetMessages();
                 self._main.setMessage({type:'danger',text:'No hay ningún imagen seleccionada'});
 
                 this.progressCancel();
                 return null;
-            }
+            }*/
 
             var uploadImages = $('#preview canvas.new');
 
@@ -206,6 +212,15 @@ module ILovePlatos{
 
         progressCancel() {
             this.progressbarRes.reject();
+        }
+
+        selectFile(event,selector) {
+            if(event) {
+                event.preventDefault();
+            }
+            if (selector) {
+                angular.element(selector).click();
+            }
         }
 
         changeFiles(files) {
