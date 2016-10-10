@@ -1,0 +1,42 @@
+POST http://52.174.57.132:5000/private/restaurant
+
+REQUEST
+
+{
+  "data": {
+    "type": "Restaurant",
+    "attributes": {
+      "name": "Test",
+      "address": "ES Coslada M",
+      "longitude": -3.5372207000000344,
+      "latitude": 40.42366630000001,
+      "date": 1475968719
+    },
+    "relationships": {
+      "relatedFrom": {
+        "admin": [
+          "David"
+        ]
+      }
+    }
+  }
+}
+
+RESPONSE
+
+{
+  "data": {
+    "attributes": {
+      "name": "Test 2",
+      "longitude": -3.5372207000000344,
+      "address": "ES Coslada M",
+      "latitude": 40.42366630000001,
+      "description": null
+    },
+    "type": "Restaurant",
+    "id": 6
+  },
+  "links": {
+    "self": "http://iloveplatos/restaurant/6"
+  }
+}
