@@ -118,7 +118,7 @@ def plateJson(*args, **kwargs):
                     }
                 }
     }
-    for k,v in kwargs.iteritems():
+    for k,v in kwargs.items():
         plate["data"]["attributes"][k]=v
 
     return plate
@@ -138,7 +138,7 @@ def userJson(*args, **kwargs):
                     }
                 }
             }
-    for k,v in kwargs.iteritems():
+    for k,v in kwargs.items():
         user["data"]["attributes"][k]=v
 
     return user
@@ -158,7 +158,7 @@ def menuJson(*args, **kwargs):
                 }
             }
 
-    for k,v in kwargs.iteritems():
+    for k,v in kwargs.items():
         menu["data"]["attributes"][k]=v
 
     return menu

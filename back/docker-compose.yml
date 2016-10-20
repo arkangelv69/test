@@ -1,7 +1,8 @@
 version: "2"
 services:
   neo4j:
-    image: neo4j
+    build: neo4j/
+#    image: neo4j
 #    env_file:
 #     - .neo4j.env
     cap_add:

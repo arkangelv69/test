@@ -14,7 +14,6 @@
   ],
   "dependencies": {
     "angular": "1.5.7",
-    "angular-storage": "latest",
     "angular-cookies": "latest",
     "angular-jwt": "latest",
     "angular-sanitize": "latest",

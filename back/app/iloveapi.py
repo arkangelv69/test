@@ -5,6 +5,7 @@ import os
 import requests
 import jwt
 
+
 from collections import defaultdict
 from flask import Flask, jsonify, abort, make_response, request, current_app, _request_ctx_stack
 from flask.ext.cors import cross_origin
@@ -16,6 +17,7 @@ from pandas import DataFrame
 from werkzeug.local import LocalProxy
 from dotenv import Dotenv
 from model import *
+import sys
 
 ###############################################################
 #                   VARIABLES DE ENTORNO                      #
@@ -111,7 +113,7 @@ def mr_parse(params):
 @app.route("/ping")
 @cross_origin(headers=['Content-Type', 'Authorization'])
 def ping():
-    return "All good. You don't need to be authenticated to call this"
+    return "All good. You don't need to be authenticated to call this " + os.getenv('HOSTAPI',"MICASA")
 
 @app.route("/secured/ping")
 @cross_origin(headers=['Content-Type', 'Authorization'])
@@ -167,4 +169,75 @@ def getNode(type,id):
         i.delete(graph)
         return "deleted"
 
-app.run(host='0.0.0.0',debug=True)
+@app.route('/private/plate/likes/<int:id>', methods=['GET'])
+#@crossdomain(origin='*')
+@cross_origin(headers=['Content-Type', 'Authorization'])
+@cross_origin(headers=['Access-Control-Allow-Origin', '*'])
+@requires_auth
+def getLikes(id):
+    if request.method == 'GET':
+        i = Plate.select(graph, id).first()
+        return str(i.getLikes())
+
+@app.route('/private/user/restaurant/<int:id>', methods=['GET'])
+#@crossdomain(origin='*')
+@cross_origin(headers=['Content-Type', 'Authorization'])
+@cross_origin(headers=['Access-Control-Allow-Origin', '*'])
+#@requires_auth
+def getRestaurants(id):
+    if request.method == 'GET':
+        i = User.select(graph, id).first()
+        return json.dumps(i.getRestaurants())
+
+@app.route('/public/restaurant/<string:lat>/<string:lon>/<string:r>/<string:deviceId>', methods=['GET'])
+#@crossdomain(origin='*')
+@cross_origin(headers=['Content-Type', 'Authorization'])
+@cross_origin(headers=['Access-Control-Allow-Origin', '*'])
+#@requires_auth
+def restaurantsUser(lat,lon,r,deviceId):
+    """ Si necesito operar
+    try:
+        lat, long, r = float(lat), float(long), float(r)
+    except ValueError:
+        abort(404)
+    """
+
+    restaurants = {"data":{}}
+
+    cursor = graph.run("CALL spatial.withinDistance('Restaurants', {latitude:"+lat+",longitude:"+lon+"}, "+r+") YIELD node AS r RETURN ID(r) as restaurantId, r").data()
+    for restaurant in cursor:
+        restaurants["data"]["r_"+str(restaurant["restaurantId"])]=Restaurant.nodeToJson(restaurant["restaurantId"],restaurant["r"])
+
+    cypherQuery = "CALL spatial.withinDistance('Restaurants', {latitude:" + lat + ",longitude:" + lon + "}, " + r + ") YIELD node AS r"" \
+    ""MATCH (r)-[:HAVE_MENU{active:true}]->(m)-[]->(p)<-[x:LIKED]-(u:User)"" \
+    ""RETURN ID(r) as restaurantId, ID(p) as plateId, p, COUNT(x) as points"" \
+    ""ORDER BY COUNT(x) DESC"" \
+    ""LIMIT 10"
+    cursor = graph.run(cypherQuery).data()
+
+    i = 1
+    for record in cursor:
+        jsonIdRestaurant = "r_"+str(record["restaurantId"])
+        restaurants["data"][jsonIdRestaurant]["data"]["relationships"]["top"].append(
+                Plate.nodeToJson(record["plateId"],record["p"],points=record["points"],ranking=i)
+            )
+        i = i + 1
+
+    cypherQuery = "CALL spatial.withinDistance('Restaurants', {latitude:" + lat + ",longitude:" + lon + "}, " + r + ") YIELD node AS r"" \
+        ""MATCH (r)-[:HAVE_MENU{active:true}]->(m)-[]->(p)<-[x:LIKED]-(u:User{deviceId:"+deviceId+"})"" \
+        ""RETURN ID(r) as restaurantId, ID(p) as plateId,p"
+
+    cursor = graph.run(cypherQuery).data()
+
+    for record in cursor:
+        jsonIdRestaurant = "r_" + str(record["restaurantId"])
+        restaurants["data"][jsonIdRestaurant]["data"]["relationships"]["favorites"].append(
+                Plate.nodeToJson(record["plateId"],record["p"])
+        )
+
+
+    return json.dumps(restaurants);
+
+#plateJson(str(record["id"]),record["p.name"],record["p.description"],points=record["points"],ranking=i)
+
+app.run(host='0.0.0.0')
