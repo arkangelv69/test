@@ -42,23 +42,6 @@ module ILovePlatos{
             return params;
         }
 
-        getAll(queryString): ng.IPromise<iEntityApirest>{
-            var d = this.$q.defer();
-            var params = {};
-            params = $.extend({}, queryString, this.getParamsUser());
-
-            this.$http.get(this.$config.protocolApirest+this.$config.domainApirest+"/"+this.getTypeAccess()+"/"+this.type,{params:params})
-                .success((data: iEntityApirest) => {
-                    d.resolve(data);
-                })
-                .error((error) => {
-                    this.$log.error(error);
-                    d.reject(error);
-                });
-
-            return d.promise;
-        }
-
         getById(entityId:string|number): ng.IPromise<iEntityApirest>{
             var d = this.$q.defer();
             var params = this.getParamsUser();

@@ -42,12 +42,11 @@ module ILovePlatos{
             }
 
     	export interface iEntityModel {
-	            contents: Array<any>;
+	           contents: Array<any>;
                         total:number;
                         currentState: iContenidoApirest;
                         nextState: iContenidoApirest;
                         terminadas: iContenidoApirest;
-                        getAll (): ng.IPromise<iContenidoApirest>;
     	}
 
     	export interface iContenidoModel extends iEntityModel{
@@ -71,7 +70,7 @@ module ILovePlatos{
     	}
 
     	export interface iEntityApirestService{
-                getAll(numPage:string|number): ng.IPromise<iEntityApirest>;
+                getAll(lat,lng,rangue,deviceId): ng.IPromise<iEntityApirest>;
                 getById(categoriaId:string): ng.IPromise<iEntityApirest>;
                 getByLink(string): ng.IPromise<iEntityApirest>;
                 getByCategoria(categoriaId:string,numPage:string|number): ng.IPromise<iContenidoApirest>;

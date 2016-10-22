@@ -2,29 +2,12 @@
 
 module ILovePlatos{    
 
-    export class RestaurantApirestService extends EntityApirestService{
+    export class FrontApirestService extends EntityApirestService{
 
-        type = 'restaurant';
+        type = 'menu';
 
         constructor($config,$http,$q,$log,auth,store) {
             super($config,$http,$q,$log,auth,store);
-        }
-
-        //public/restaurant/40.396761351388115/-3.489304971752527/0.3/44
-        getAll(lat,lng,range,deviceId) {
-            var d = this.$q.defer();
-            var params = this.getParamsUser();
-
-            this.$http.get(this.$config.protocolApirest+this.$config.domainApirest+"/public/"+this.type+"/"+lat+"/"+lng+"/"+range+"/"+deviceId, {params:params})
-                .success((data: iEntityApirest) => {
-                    d.resolve(data);
-                })
-                .error((error) => {
-                    this.$log.error(error);
-                    d.reject(error);
-                });
-
-            return d.promise;
         }
 
         getByUserId(entityId:string|number): ng.IPromise<iEntityApirest>{

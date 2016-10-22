@@ -44,8 +44,8 @@ module ILovePlatos{
                 }
             };
 
-        constructor($config,svc,DateService,$rootScope,public $stateParams,public $scope,public $state,$element,$sce,auth,store,public FilesService, public $q){
-            super($config,svc,DateService,$rootScope,$stateParams,$scope,$state,$element,$sce,auth,store);
+        constructor($config,api,DateService,$rootScope,public $stateParams,public $scope,public $state,$element,$sce,auth,store,public FilesService, public $q){
+            super($config,api,DateService,$rootScope,$stateParams,$scope,$state,$element,$sce,auth,store);
 
             var self = this;
 

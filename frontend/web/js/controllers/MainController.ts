@@ -17,6 +17,7 @@ module ILovePlatos{
     declare var map:any;
     declare var marker:any;
     declare var strictBounds:any;
+    declare var position:any;
 
     export class MainController implements iMainModel{
 
@@ -62,6 +63,7 @@ module ILovePlatos{
         intervalPaginaVista:any;
         searched = false;
         cache = [];
+        position:any = {};
 
         //Composición de clases
         SystemMessages:SystemMessages;
@@ -106,6 +108,15 @@ module ILovePlatos{
 
              //Eventos ggeneral
              self.initGeneralEnvent();
+
+             this.localizame();
+
+            var range = this.store.get("range");
+            if(range) {
+                this.position.range = range;
+            }else {
+                this.position.range = 2;
+            }
         }
 
         refreshPage() {
@@ -184,6 +195,17 @@ module ILovePlatos{
             $(".button-collapse").sideNav({
                 closeOnClick: false,
             });
+        }
+
+        localizame() {
+           //navigator.geolocation.getCurrentPosition(this.coordenadas);
+           this.position.lat = 40.396761351388115;
+           this.position.lng = -3.489304971752527;
+        }
+     
+        coordenadas(){
+           this.position.lat = position.coords.latitude;
+           this.position.lng = position.coords.longitude;
         }
 
         getDispositivo() {
@@ -343,46 +365,6 @@ module ILovePlatos{
                 }
                 tinymce.init(options);
             },timeout);
-        }
-
-        updateState(nameState:string, state) {
-            var self =this;
-            if(nameState && typeof(nameState)=='string' && state) {
-                if(!this._state[nameState]) {
-                    this._state[nameState] = {}
-                }
-
-                angular.forEach(state, function(value, key) {
-                    self._state[nameState][key] = value;
-                });
-
-            }
-        }
-
-        removeState(nameState,deleteAllcompose?) {
-            if(!deleteAllcompose) {
-                delete this._state[nameState];
-            }else if(deleteAllcompose) {
-                angular.forEach(this._state,function(value,property){
-                    if(property.indexOf(this._state[nameState]) != -1) {
-                        delete this._state[nameState];
-                    }
-                });
-            }
-        }
-
-        existState(nameState:string) {
-            if(nameState && typeof(nameState)=='string' && this._state[nameState]) {
-                return true;
-            }
-            return false;
-        }
-
-        getState(nameState:string) {
-            if(nameState && typeof(nameState)=='string' && this._state[nameState]) {
-                return this._state[nameState];
-            }
-            return false;
         }
 
         redirect404() {

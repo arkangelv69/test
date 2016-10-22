@@ -22,6 +22,8 @@ module ILovePlatos{
         _main:IMainScope;
         currentUser:any;
         userId:string;
+        //44,3
+        deviceId:any = 3;
         username:string;
         nickname:string;
         description:string;
@@ -42,6 +44,7 @@ module ILovePlatos{
         constructor(private $config:any,$rootScope: IBuhoRootScopeService,private $scope:any,
                     private $state:any,private $window:any,private $stateParams:any,private svc,
                     private auth,private store, jwtHelper,private DateService,private $filter){
+
             var self = this;
 
             this._main = $rootScope.$$childHead.mainCtrl;
