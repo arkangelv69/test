@@ -47,7 +47,8 @@
     "waypoints": "^4.0.0",
     "select2": "^4.0.3",
     "materialize": "^0.97.7",
-    "mdi": "^1.7.22"
+    "mdi": "^1.7.22",
+    "nouislider": "^9.0.0"
   },
   "overrides": {
     "tinymce-dist": {

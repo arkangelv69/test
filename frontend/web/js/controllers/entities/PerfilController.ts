@@ -4,7 +4,7 @@
 module ILovePlatos{
 
 
-    export class PerfilController extends EntityController implements iPerfilModel{
+    export class PerfilController extends EntityController {
         static $inject = [
             "config",
             "PerfilApirestService",
@@ -31,9 +31,9 @@ module ILovePlatos{
         isSubmit = false;
         notInit = false;
 
-        constructor($config,svc,DateService,$rootScope,$controller,$stateParams,$scope,$state,$element,$sce,private $modal,private $log,auth,store, private FilesService){
+        constructor($config,api,DateService,$rootScope,$controller,$stateParams,$scope,$state,$element,$sce,private $modal,private $log,auth,store, private FilesService){
             //Seteo el controlador principal
-            super($config,svc,DateService,$rootScope,$controller,$stateParams,$scope,$state,$element,$sce,auth,store);
+            super($config,api,DateService,$rootScope,$controller,$stateParams,$scope,$state,$element,$sce,auth,store);
             var self = this;            
 
             $scope.animationsEnabled = true;
@@ -156,7 +156,7 @@ module ILovePlatos{
           }
           var self = this;
           this.gettingUser = true;
-            return this.svc.getByUsername(username).then((contents: iEntityApirest) => {
+            return this.api.getByUsername(username).then((contents: iEntityApirest) => {
                 self.currentState = contents;
                 self.contents = jQuery.extend([],contents.data); 
                 self.gettingUser = false;               

@@ -1,3 +1,5 @@
+/// <reference path="../../services/RestaurantApirestService.ts" />
+
 module ILovePlatos{
 
     export class EntityController implements iEntityModel{
@@ -36,7 +38,7 @@ module ILovePlatos{
 
         constructor(
             public $config:any,
-            public svc,
+            public api,
             public DateService,
             public $rootScope: IBuhoRootScopeService,
             public $stateParams:any,
@@ -51,146 +53,23 @@ module ILovePlatos{
             this._main = $rootScope.$$childHead.mainCtrl;
             this._user = $rootScope.$$childHead.$$childHead.userCtrl;
             this._parent = $scope.$parent;
-            $scope.newContents = 0;
         }
 
-        /*{
-            @params:{
-                nameState:string,
-                filterType:string,
-                filterId:number
-                cache:boolean
-            }
-        }*/
-        render(params):any {
-
-            if(!params.nameState) {
-                return '';
-            }
-
-            if( typeof(params.cache) == 'undefined' )  {
-                params.cache = true;
-            }
-
+        getAll(callback) {
             var self:EntityController = this;
-            var svc: ng.IPromise<iEntityApirest>;
-
-            if(!params || !params.filterId) {
-                params.filterId = '';
-            }
-            else if(params && params.filterType == 'userId' && params.filterId == 'auto') {
-                    if(this.$state.current.name == 'perfil') {
-                        params.filterId = this.$stateParams.username;
-                    }else if(this._user.isLogged()){
-                        params.filterId = this._user.username;
-                    }
-            }
-            else if(params && params.filterId == 'auto') {
-                params.filterId = this.$stateParams.id;
-            }
-            this.id  = params.filterId;
-
-            params.nameState = params.nameState || '';
-
-            var nameState:string = params.nameState+params.filterId;
-            this.nameState = nameState;
-
-            if( this._main.existState(nameState) && params.cache) {
-
-                var state:EntityController = this._main.getState(nameState);
-
-                this.setFactory(state);
-
-                this.goToCurrentScrollTop();
-                
-            }else {
-
-                svc = this.getFactory(params);
-
-                if (params.nameState && nameState && svc && svc.then) {
-                    return svc.then(()=>{
-                        self.$scope.newContents ++;
-                        self.goToCurrentScrollTop(0);
-                        self._main.updateState(nameState,{
-                            contents: self.contents,
-                            cola: self.cola,
-                            currentState: self.currentState,
-                            nextState: self.nextState,
-                            scrollTop: self.scrollTop
-                        });
-                    });
-                }
-            }
-        }
-
-        updateStateContent(nameState,content) {
-            if(!nameState || !content || !content.id) {
-                return null;
-            }
-            var name = nameState+content.id;
-            this._main.updateState(name,{
-                content: content
-            });
-        }
-
-        setFactory(state) {
-            this.contents = state.contents;
-            this.cola = state.cola;
-            this.currentState = state.currentState;
-            this.nextState = state.nextState;
-            this.scrollTop = state.scrollTop;
-            this.$scope.newContents ++;
-        }
-
-        getFactory(params) {
-            var svc;
-
-            if(params && params.filterType == 'categoriaId' && params.filterId) {
-                svc = this.getByCategoria(params.filterId);
-            }
-            else if(params && params.filterType == 'userId' && params.filterId) {
-                    svc = this.getByUserId(params.filterId);
-            }
-            else if(params && params.filterType == 'contenidoId' && params.filterId) {
-                svc = this.getByContenidoId(params.filterId);
-            }
-            else if(params && params.filterType == 'id' && params.filterId) {
-                svc = this.getById(params.filterId);
-            }else {
-                svc = this.getAll();
-            }
-            return svc;
-            
-        }
-
-        getAll(): ng.IPromise<any> {
-            var self:EntityController = this;
-            return this.svc.getAll().then((contents: iEntityApirest) => {
-                self.currentState = contents;
+            this.api.getAll().then((contents: iEntityApirest) => {
                 self.contents = jQuery.extend([],contents.data);
-                self.lastUpdate = self.getLastUpdate(contents.data);
-                self.scrollTop = angular.element(document).scrollTop();
 
-                //Cargo en memoria la segunda página
-                var url:string = this.$config.protocolApirest+this.$config.domainApirest+self.currentState.links.next;
-
-                if(!self.isCurrentPageFinish()) {
-                    this.svc.getByLink(url).then((contents: iEntityApirest) => {
-                        self.cola = jQuery.extend([],contents.data);
-                        self.nextState = jQuery.extend({},contents);
-                        self._main.updateState(self.nameState,{
-                            nextState: self.nextState,
-                        });
-                    });
-                }                
+                callback();
 
             });
+            return false;
         };
 
         getByCategoria(entityId:string): ng.IPromise<any> {
 
             var self:EntityController = this;
-            return this.svc.getByCategoria(entityId,this.startPage).then((contents: iEntityApirest) => {
+            return this.api.getByCategoria(entityId,this.startPage).then((contents: iEntityApirest) => {
                 self.currentState = contents;
                 self.contents = jQuery.extend([],contents.data);
                 self.scrollTop = angular.element(document).scrollTop();
@@ -199,7 +78,7 @@ module ILovePlatos{
                 var url:string = this.$config.protocolApirest+this.$config.domainApirest+self.currentState.links.next;
 
                 if(!self.isCurrentPageFinish()) {
-                    this.svc.getByLink(url).then((contents: iEntityApirest) => {
+                    this.api.getByLink(url).then((contents: iEntityApirest) => {
                         self.nextState = jQuery.extend({},contents);
                         self._main.updateState(self.nameState,{
                             nextState: self.nextState,
@@ -213,7 +92,7 @@ module ILovePlatos{
         getByContenidoId(contenidoId:string): ng.IPromise<any> {
 
             var self:EntityController = this;
-            return this.svc.getByContenidoId(contenidoId,this.startPage).then((contents: iEntityApirest) => {
+            return this.api.getByContenidoId(contenidoId,this.startPage).then((contents: iEntityApirest) => {
                 self.currentState = contents;
                 self.contents = jQuery.extend([],contents.data);                
                 self.scrollTop = angular.element(document).scrollTop();
@@ -222,7 +101,7 @@ module ILovePlatos{
                 var url:string = this.$config.protocolApirest+this.$config.domainApirest+self.currentState.links.next;
 
                 if(!self.isCurrentPageFinish()) {
-                    this.svc.getByLink(url).then((contents: iEntityApirest) => {
+                    this.api.getByLink(url).then((contents: iEntityApirest) => {
                         self.nextState = jQuery.extend({},contents);
                         self._main.updateState(self.nameState,{
                             nextState: self.nextState,
@@ -236,7 +115,7 @@ module ILovePlatos{
         getByComentarioId(comentarioId:string): ng.IPromise<any> {
 
             var self:EntityController = this;
-            return this.svc.getByComentarioId(comentarioId).then((contents: iEntityApirest) => {
+            return this.api.getByComentarioId(comentarioId).then((contents: iEntityApirest) => {
                 self.currentState = contents;
                 self.contents = jQuery.extend([],contents.data);
                 self.scrollTop = angular.element(document).scrollTop();
@@ -245,7 +124,7 @@ module ILovePlatos{
                 var url:string = this.$config.protocolApirest+this.$config.domainApirest+self.currentState.links.next;
 
                 if(!self.isCurrentPageFinish()) {
-                    this.svc.getByLink(url).then((contents: iEntityApirest) => {
+                    this.api.getByLink(url).then((contents: iEntityApirest) => {
                         self.nextState = jQuery.extend({},contents);
                         self._main.updateState(self.nameState,{
                             nextState: self.nextState,
@@ -259,7 +138,7 @@ module ILovePlatos{
         getTotalByContenidoId(contenidoId:string): ng.IPromise<any> {
 
             var self:EntityController = this;
-            return this.svc.getTotalByContenidoId(contenidoId).then((total: any) => {
+            return this.api.getTotalByContenidoId(contenidoId).then((total: any) => {
                 if(total && total.data && total.data.attributes && total.data.attributes.total) {
                     self.total = total.data.attributes.total;
                 }
@@ -288,7 +167,7 @@ module ILovePlatos{
         getById(entityId:string): ng.IPromise<any> {
 
             var self:EntityController = this;
-            return this.svc.getById(entityId).then((contents: iEntityApirest) => {
+            return this.api.getById(entityId).then((contents: iEntityApirest) => {
                 self.currentState = contents;
                 self.contents = contents.data;                
             })
@@ -297,7 +176,7 @@ module ILovePlatos{
         getByUserId(userId:string): ng.IPromise<any> {
 
             var self:EntityController = this;
-            return this.svc.getByUserId(userId).then((contents: iEntityApirest) => {
+            return this.api.getByUserId(userId).then((contents: iEntityApirest) => {
                 self.currentState = contents;
                 self.contents = jQuery.extend([],contents.data);
                 self.scrollTop = angular.element(document).scrollTop();
@@ -306,7 +185,7 @@ module ILovePlatos{
                 var url:string = this.$config.protocolApirest+this.$config.domainApirest+self.currentState.links.next;
 
                 if(!self.isCurrentPageFinish()) {
-                    this.svc.getByLink(url).then((contents: iEntityApirest) => {
+                    this.api.getByLink(url).then((contents: iEntityApirest) => {
                         self.nextState = jQuery.extend({},contents);
                         self._main.updateState(self.nameState,{
                             nextState: self.nextState,
@@ -324,7 +203,7 @@ module ILovePlatos{
             if(!this.isSubmit ) {
                 this.isSubmit = true;
                 var self = this;
-                return this.svc.add(entity)
+                return this.api.add(entity)
                     .then((response: iEntityApirest) => {
                         if(response && response.data) {
                             self.isSubmit = false;
@@ -344,7 +223,7 @@ module ILovePlatos{
             if(!this.isSubmit ) {
                 this.isSubmit = true;
                 var self = this;
-                return this.svc.add(entity)
+                return this.api.add(entity)
                     .then((response: iEntityApirest) => {
                         if(response && response.data) {
                             self.isSubmit = false;
@@ -364,7 +243,7 @@ module ILovePlatos{
             if(!this.isSubmit ) {
                 this.isSubmit = true;
                 var self = this;
-                return this.svc.delete(entity)
+                return this.api.delete(entity)
                     .then((response: iEntityApirest) => {
                         if(response && response.data) {
                             self.isSubmit = false;
@@ -387,7 +266,7 @@ module ILovePlatos{
 
         existNewContent() {
             var self:EntityController = this;
-            return this.svc.getAll().then((contents: iEntityApirest) => {
+            return this.api.getAll().then((contents: iEntityApirest) => {
                 var lastUpdate = self.getLastUpdate(contents.data);
                 var currentLastUpdate = self.lastUpdate;
 
@@ -524,7 +403,7 @@ module ILovePlatos{
 
                     if(self.currentState.links.next) {
                         var url:string = this.$config.protocolApirest+this.$config.domainApirest+self.currentState.links.next;
-                        this.svc.getByLink(url).then((contents: iEntityApirest) => {
+                        this.api.getByLink(url).then((contents: iEntityApirest) => {
 
                             self.cola = $.merge(self.cola,jQuery.extend([],contents.data));
                             self.nextState = jQuery.extend({},contents);

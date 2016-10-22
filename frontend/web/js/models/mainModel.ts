@@ -50,6 +50,7 @@ module ILovePlatos{
 	export interface IMainScope extends ng.IScope {
 		_user:any;
 		id:string;
+		position:any;
 		categoria:string;
 		searched:boolean;
 		prevState:string;
@@ -113,6 +114,7 @@ module ILovePlatos{
 		colorBackground:string;
 		completeRegister:boolean;
 		landings:any;
+		deviceId:any;
 		isLogged():any;
 		updateMeta(meta,value);
 		getUsernameByUsuario(item):string;
@@ -123,16 +125,6 @@ module ILovePlatos{
 		saveUserInStorageLocal();
 		updateProfile(attributes);
 	}
-
-	export interface IGalleryScope extends ng.IScope {
-		myInterval:number;
-		noWrapSlides:boolean;
-		slides:Array<any>;
-		addSlide();
-		getSlides();
-		card:iDataApirest;
-	}
-
 	export interface IVideoScope extends ng.IScope {
 	}
 
@@ -142,27 +134,6 @@ module ILovePlatos{
 		finishCuerpo:boolean;
 		finishImages:boolean;
 		finishVideo:boolean;
-	}
-
-	export interface ICalificacionScope extends ng.IScope {
-		type:string;
-		subtype:string;
-		typeRelationships:string;
-		nameState:string;
-		filterId:string;
-		mainCtrl:any;
-		calificacionCtrl:any;
-	}
-
-	export interface IDenunciaScope extends ng.IScope {
-		type:string;
-		subtype:string;
-		typeRelationships:string;
-		nameState:string;
-		filterId:string;
-		button:boolean;
-		mainCtrl:any;
-		denunciaCtrl:any;
 	}
 
 	export interface ICompartirScope extends ng.IScope {
@@ -193,44 +164,6 @@ module ILovePlatos{
 		mainCtrl:IMainScope;
 	}
 
-	export interface ISliderScope extends ng.IScope {
-		id:string;
-		type:string;
-		content:any;
-		mainCtrl:IMainScope;
-		maxWidth:number;
-		maxHeight:number;
-		width:number;
-		height:number;
-		jssor_slider:any;
-		slides:Array<any>;
-		template:string;
-		getSlides();
-		boot();
-		getSizeRecorte(card:iDataApirest);
-		activeWatch();
-	}
-
-	export interface IContenidoScope extends ng.IScope {
-		contents:any;
-		contenidoCtrl:any;
-		mainCtrl:IMainScope;
-	}
-
-	export interface IBuscadorPerfilesScope extends ng.IScope {
-		mainCtrl:IMainScope;
-	}
-
-	export interface ICardScope extends ng.IScope {
-		formato:string;
-		relevancia:string;
-		tipoDeModulo:string;
-		fondoColor:string;
-		transparenciaColor:string;
-		colorTextoContenedorTarjeta:string;
-		color:string;
-		card:any;
-	}
 
 	export interface ILoginScope extends ng.IScope {
 		mainCtrl:IMainScope;
@@ -246,34 +179,6 @@ module ILovePlatos{
 		colorTextoContenedorTarjeta:string;
 		color:string;
 		card:any;
-	}
-
-	export interface ICalificacionAttributes extends ng.IAttributes {
-		type:string;
-		subtype:string;
-		typeRelationships:string;
-		nameState:string;
-		filterId:string;
-	}
-
-	export interface IDenunciaAttributes extends ng.IAttributes {
-		type:string;
-		subtype:string;
-		typeRelationships:string;
-		nameState:string;
-		button:boolean;
-		filterId:string;
-	}
-
-	export interface ICompartirAttributes extends ng.IScope {
-		type:string;
-		url:string;
-		mainCtrl:IMainScope;
-	}
-
-	export interface IRepostAttributes extends ng.IScope {
-		type:string;
-		mainCtrl:IMainScope;
 	}
 
 	export interface IFileImageAttributes extends ng.IScope {

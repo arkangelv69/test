@@ -44,6 +44,7 @@ grunt.initConfig({
         'tinymce-mention',
         'waypoints',
         'select2',
+        'nouislider',
         //'react',
         //'ngReact',
         //'angular-lazy-img',
@@ -59,6 +60,7 @@ grunt.initConfig({
         'tinymce': 'jquery',
         'tinymce-mention':'tinymce',
         'select2':'jquery',
+        'nouislider':'jquery',
         //'ngReact':'react',
         //'angular-lazy-img':'angular',
         //'tether-tooltip':['tether','tether-drop']
@@ -142,6 +144,7 @@ grunt.initConfig({
         'underscore': ["underscore-min.js"],
         'waypoints': ["lib/jquery.waypoints.min.js","lib/shortcuts/infinite.min.js"],
         'select2': ["dist/js/select2.min.js","dist/css/select2.min.css"],
+        'nouislider': ["distribute/nouislider.min.js","distribute/nouislider.min.css"],
         //'angular-lazy-img': ["release/angular-lazy-img.js"],
         //'tether': ["dist/js/tether.min.js"],
         //'tether-drop': ["dist/js/drop.min.js"],
