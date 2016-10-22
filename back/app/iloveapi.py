@@ -281,40 +281,23 @@ def restaurantsUser(lat,lon,r,deviceId):
         abort(404)
     """
 
-    restaurants = {"data":{}}
+    ilove = TodayLove();
+    return json.dumps(ilove.getToday(lat,lon,r,deviceId,graph))
 
-    cursor = graph.run("CALL spatial.withinDistance('Restaurants', {latitude:"+lat+",longitude:"+lon+"}, "+r+") YIELD node AS r RETURN ID(r) as restaurantId, r").data()
-    for restaurant in cursor:
-        restaurants["data"]["r_"+str(restaurant["restaurantId"])]=Restaurant.nodeToJson(restaurant["restaurantId"],restaurant["r"])
+@app.route('/public/restaurant/today/<int:id>', methods=['POST'])
+#@crossdomain(origin='*')
+@cross_origin(headers=['Content-Type', 'Authorization'])
+@cross_origin(headers=['Access-Control-Allow-Origin', '*'])
+#@requires_auth
+def restaurant(id):
+    """ Si necesito operar
+    try:
+        lat, long, r = float(lat), float(long), float(r)
+    except ValueError:
+        abort(404)
+    """
 
-    cypherQuery = "CALL spatial.withinDistance('Restaurants', {latitude:" + lat + ",longitude:" + lon + "}, " + r + ") YIELD node AS r"" \
-    ""MATCH (r)-[:HAVE_MENU{active:true}]->(m)-[]->(p)<-[x:LIKED]-(u:User)"" \
-    ""RETURN ID(r) as restaurantId, ID(p) as plateId, p, COUNT(x) as points"" \
-    ""ORDER BY COUNT(x) DESC"" \
-    ""LIMIT 10"
-    cursor = graph.run(cypherQuery).data()
-
-    i = 1
-    for record in cursor:
-        jsonIdRestaurant = "r_"+str(record["restaurantId"])
-        restaurants["data"][jsonIdRestaurant]["data"]["relationships"]["top"].append(
-                Plate.nodeToJson(record["plateId"],record["p"],points=record["points"],ranking=i)
-            )
-        i = i + 1
-
-    cypherQuery = "CALL spatial.withinDistance('Restaurants', {latitude:" + lat + ",longitude:" + lon + "}, " + r + ") YIELD node AS r"" \
-        ""MATCH (r)-[:HAVE_MENU{active:true}]->(m)-[]->(p)<-[x:LIKED]-(u:User{deviceId:"+deviceId+"})"" \
-        ""RETURN ID(r) as restaurantId, ID(p) as plateId,p"
-
-    cursor = graph.run(cypherQuery).data()
-
-    for record in cursor:
-        jsonIdRestaurant = "r_" + str(record["restaurantId"])
-        restaurants["data"][jsonIdRestaurant]["data"]["relationships"]["favorites"].append(
-                Plate.nodeToJson(record["plateId"],record["p"])
-        )
-
-
-    return json.dumps(restaurants);
+    ilove = TodayLove();
+    return json.dumps(ilove.getRestaurant(graph,id))
 
 app.run(host='0.0.0.0')
