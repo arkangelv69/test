@@ -17,6 +17,7 @@ from pandas import DataFrame
 from werkzeug.local import LocalProxy
 from dotenv import Dotenv
 from model import *
+from flasgger import Swagger
 import sys
 
 ###############################################################
@@ -33,7 +34,7 @@ except IOError:
 
 
 app = Flask(__name__)
-
+Swagger(app)
 ###############################################################
 #                   AUTHENTICATION                            #
 ###############################################################
@@ -133,6 +134,20 @@ graph = Graph(host="neo4j",password=".dgonzalez.")
 @app.route('/', methods=['GET'])
 @cross_origin(headers=['Access-Control-Allow-Origin', '*'])
 def helloWorld():
+    """
+    Api is up?
+    Prueba de concepto para generar acceso al api mediante html
+    ---
+    tags:
+      - Api is up?
+    responses:
+      500:
+        description: Error The language is not awesome!
+      200:
+        description: Yeah!!
+        schema:
+    """
+
     return "API is UP"
 
 
@@ -142,6 +157,25 @@ def helloWorld():
 @cross_origin(headers=['Access-Control-Allow-Origin', '*'])
 #@requires_auth
 def newNode(type):
+    """
+        Get and Delete
+        Obtener y elemininar elementos
+        ---
+        tags:
+          - Post/Put
+        parameters:
+          - name: type
+            in: path
+            type: string
+            required: true
+            description: Type of node (plate,restaurant,user,menu)
+        responses:
+          500:
+            description: Error The language is not awesome!
+          200:
+            description: Crear/actualizar
+            schema:
+        """
     if request.method == 'POST':
         myJson = request.get_json(force=True)
         i = ILoveNode.factory(type.title())
@@ -160,6 +194,51 @@ def newNode(type):
 @cross_origin(headers=['Access-Control-Allow-Origin', '*'])
 #@requires_auth
 def getNode(type,id):
+    """
+        Get and Delete
+        Obtener y elemininar elementos
+        ---
+        tags:
+          - Get/Delete
+        parameters:
+          - name: type
+            in: path
+            type: string
+            required: true
+            description: Type of node (plate,restaurant,user,menu)
+          - name: id
+            in: path
+            type: integer
+            description: Element id
+        responses:
+          500:
+            description: Error The language is not awesome!
+          200:
+            description: Yeah!!
+            schema:
+              links:
+                type: object
+                properties:
+                  self:
+                    type: string
+              data:
+                type: object
+                properties:
+                  id:
+                    type: int
+                  type:
+                    type: string
+                  attributes:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      description:
+                        type: string
+                      image:
+                        type: string
+        """
+
     if request.method == 'GET':
         i = eval(type.title()).select(graph, id).first()
         return json.dumps(i.toJson())
@@ -237,7 +316,5 @@ def restaurantsUser(lat,lon,r,deviceId):
 
 
     return json.dumps(restaurants);
-
-#plateJson(str(record["id"]),record["p.name"],record["p.description"],points=record["points"],ranking=i)
 
 app.run(host='0.0.0.0')

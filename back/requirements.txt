@@ -13,3 +13,4 @@ PyJWT
 flask-cors
 shapely
 requests
+flasgger

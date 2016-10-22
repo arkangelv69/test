@@ -16,6 +16,7 @@ from pandas import DataFrame
 from werkzeug.local import LocalProxy
 from dotenv import Dotenv
 from model import *
+from flasgger import Swagger
 
 ###############################################################
 #                   VARIABLES DE ENTORNO                      #
@@ -31,6 +32,7 @@ except IOError:
 
 
 app = Flask(__name__)
+Swagger(app)
 
 ###############################################################
 #                   AUTHENTICATION                            #
@@ -194,6 +196,42 @@ graph = Graph(host="neo4j",password=".dgonzalez.")
 @app.route('/', methods=['GET'])
 @cross_origin(headers=['Access-Control-Allow-Origin', '*'])
 def helloWorld():
+    """
+    This is the language awesomeness API
+    Call this api passing a language name and get back its features
+    ---
+    tags:
+      - Awesomeness Language API
+    parameters:
+      - name: language
+        in: path
+        type: string
+        required: true
+        description: The language name
+      - name: size
+        in: query
+        type: integer
+        description: size of awesomeness
+    responses:
+      500:
+        description: Error The language is not awesome!
+      200:
+        description: A language with its awesomeness
+        schema:
+          id: awesome
+          properties:
+            language:
+              type: string
+              description: The language name
+              default: Lua
+            features:
+              type: array
+              description: The awesomeness list
+              items:
+                type: string
+              default: ["perfect", "simple", "lovely"]
+
+    """
     return "API is UP"
 
 

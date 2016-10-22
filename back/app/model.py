@@ -368,3 +368,8 @@ class Plate(GraphObject):
         user = User.select(g,userId).first()
         self.liked.add(user)
         g.push(self)
+
+
+class TodayLove:
+    restaurants = {"data":{}}
+
