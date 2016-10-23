@@ -18,6 +18,7 @@ from werkzeug.local import LocalProxy
 from dotenv import Dotenv
 from model import *
 from azurelove import *
+from usersauth import *
 from flasgger import Swagger
 import sys
 
@@ -32,6 +33,7 @@ try:
     client_secret = env["AUTH0_CLIENT_SECRET"]
 except IOError:
   env = os.environ
+
 
 
 app = Flask(__name__)
@@ -297,9 +299,13 @@ def restaurant(id):
     except ValueError:
         abort(404)
     """
-
     ilove = TodayLove();
-    return json.dumps(ilove.getRestaurant(graph,id))
+    #if(request.data):
+    myJson = request.get_json(force=True)
+    return json.dumps(ilove.getRestaurant(graph,id,myJson))
+    #else:
+    #    return json.dumps(ilove.getRestaurant(graph,id))
+
 
 @app.route('/public/image', methods=['POST'])
 #@crossdomain(origin='*')
