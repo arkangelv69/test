@@ -6,6 +6,7 @@ ADD requirements.txt /root/code/
 RUN pip install -r requirements.txt
 ADD app/iloveapi.py /root/code/
 ADD app/model.py /root/code/
+ADD app/azurelove.py /root/code/
 ADD app/env/. /root/code/env/
 ADD startAPI.sh /root/code/
 CMD bash /root/code/startAPI.sh
