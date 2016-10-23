@@ -17,6 +17,7 @@ from pandas import DataFrame
 from werkzeug.local import LocalProxy
 from dotenv import Dotenv
 from model import *
+from azurelove import *
 from flasgger import Swagger
 import sys
 
@@ -299,5 +300,14 @@ def restaurant(id):
 
     ilove = TodayLove();
     return json.dumps(ilove.getRestaurant(graph,id))
+
+@app.route('/public/image', methods=['POST'])
+#@crossdomain(origin='*')
+@cross_origin(headers=['Content-Type', 'Authorization'])
+@cross_origin(headers=['Access-Control-Allow-Origin', '*'])
+#@requires_auth
+def uploadImage():
+    myJson = request.get_json(force=True)
+    return json.dumps(uploadBinary(myJson))
 
 app.run(host='0.0.0.0')
