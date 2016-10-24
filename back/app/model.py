@@ -1,5 +1,6 @@
 from py2neo.ogm import GraphObject, Property, RelatedFrom, RelatedTo
 import os
+import usersauth
 
 class ILoveNode(GraphObject):
     # Create based on class name:
@@ -33,11 +34,11 @@ class ILoveNode(GraphObject):
 class User(GraphObject):
 
     type = "User"
-    name = Property()
-    email = Property()
-    role = Property()
+    name = ""
+    email = ""
+    role = ""
     deviceId = Property()
-    image = Property()
+    image = ""
 
     liked = RelatedTo("Plate", "LIKED")
     admin = RelatedTo("Restaurant", "ADMIN")
@@ -63,9 +64,11 @@ class User(GraphObject):
         return user
 
     def create(self,json,g):
-        for attribute, value in json["data"]["attributes"].items():
-            setattr(self,attribute,value)
+        #for attribute, value in json["data"]["attributes"].items():
+        #    setattr(self,attribute,value)
+        setattr(self, "deviceId", json["data"]["attributes"]["deviceId"])
         g.push(self)
+        usersauth.createUser(self.__primaryvalue__,json["data"]["attributes"]["deviceId"])
 
 
     def update(self, json, g):
@@ -136,6 +139,9 @@ class Restaurant(GraphObject):
         g.run("MATCH (n:" + self.type + ") WHERE ID(n) = " + str(self.__primaryvalue__) + " optional match (n)-[r]-() "" \
                                 "" delete r,n")
 
+    def getMenus(self):
+        return self.have_menu
+
     def toJson(self):
         restaurant = {
             "links": {
@@ -170,7 +176,7 @@ class Restaurant(GraphObject):
                     "description": node["description"],
                     "image": node["image"],
                     "latitude": node["latitude"],
-                    "longitude": node["self.longitude"],
+                    "longitude": node["longitude"],
                     "address": node["address"]
                 },
                 "relationships": {
@@ -247,6 +253,9 @@ class Menu(GraphObject):
         g.run("MATCH (n:"+self.type+") WHERE ID(n) = " + str(self.__primaryvalue__) + " optional match (n)-[r]-() "" \
                         "" delete r,n")
 
+    def getPlates(self):
+        return self.have_plate
+
     def toJson(self):
         menu = {
             "links": {
@@ -269,6 +278,15 @@ class Menu(GraphObject):
                 }
             }
         }
+
+        menu["data"]["relationships"]={}
+        menu["data"]["relationships"]["first"] = []
+        menu["data"]["relationships"]["second"] = []
+        menu["data"]["relationships"]["dessert"] = []
+        menu["data"]["relationships"]["incoming"] = []
+
+        for p in self.have_plate:
+            menu["data"]["relationships"][self.have_plate.get(p,"type")].append(p.toJson())
 
         return menu
 
@@ -373,3 +391,62 @@ class Plate(GraphObject):
 class TodayLove:
     restaurants = {"data":{}}
 
+    def getToday(self,lat,lon,r,deviceId,graph):
+        self.restaurants = {"data":{}}
+
+        cursor = graph.run(
+            "CALL spatial.withinDistance('Restaurants', {latitude:" + lat + ",longitude:" + lon + "}, " + r + ") YIELD node AS r RETURN ID(r) as restaurantId, r").data()
+        for restaurant in cursor:
+            self.restaurants["data"]["r_" + str(restaurant["restaurantId"])] = Restaurant.nodeToJson(
+                restaurant["restaurantId"], restaurant["r"])
+
+        cypherQuery = "CALL spatial.withinDistance('Restaurants', {latitude:" + lat + ",longitude:" + lon + "}, " + r + ") YIELD node AS r"" \
+            ""MATCH (r)-[:HAVE_MENU{active:true}]->(m)-[]->(p)<-[x:LIKED]-(u:User)"" \
+            ""RETURN ID(r) as restaurantId, ID(p) as plateId, p, COUNT(x) as points"" \
+            ""ORDER BY COUNT(x) DESC"" \
+            ""LIMIT 10"
+        cursor = graph.run(cypherQuery).data()
+
+        i = 1
+        for record in cursor:
+            jsonIdRestaurant = "r_" + str(record["restaurantId"])
+            self.restaurants["data"][jsonIdRestaurant]["data"]["relationships"]["top"].append(
+                Plate.nodeToJson(record["plateId"], record["p"], points=record["points"], ranking=i)
+            )
+            i = i + 1
+
+        cypherQuery = "CALL spatial.withinDistance('Restaurants', {latitude:" + lat + ",longitude:" + lon + "}, " + r + ") YIELD node AS r"" \
+                ""MATCH (r)-[:HAVE_MENU{active:true}]->(m)-[]->(p)<-[x:LIKED]-(u:User{deviceId:" + deviceId + "})"" \
+                ""RETURN ID(r) as restaurantId, ID(p) as plateId,p"
+
+        cursor = graph.run(cypherQuery).data()
+
+        for record in cursor:
+            jsonIdRestaurant = "r_" + str(record["restaurantId"])
+            self.restaurants["data"][jsonIdRestaurant]["data"]["relationships"]["favorites"].append(
+                Plate.nodeToJson(record["plateId"], record["p"])
+            )
+
+        return self.restaurants
+
+    def getRestaurant(self,graph,restaurantId,json={"top":[],"favorites":[]}):
+        restaurant = {}
+
+        i = Restaurant.select(graph, restaurantId).first()
+        restaurant = i.toJson()
+        restaurant["data"]["relationships"]={}
+        restaurant["data"]["relationships"]["menus"]={}
+
+        menus = i.getMenus()
+        for m in menus:
+            restaurant["data"]["relationships"]["menus"]["m_"+str(m.__primaryvalue__)] = m.toJson()
+
+        restaurant["data"]["relationships"]["top"] = []
+        restaurant["data"]["relationships"]["favorites"] = []
+
+        for attribute, value in json.items():
+            for i in value:
+                p = Plate.select(graph, i).first()
+                restaurant["data"]["relationships"][attribute].append(p.toJson())
+
+        return restaurant
