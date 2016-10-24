@@ -45,6 +45,7 @@ grunt.initConfig({
         'waypoints',
         'select2',
         'nouislider',
+        //'map-icons',
         //'react',
         //'ngReact',
         //'angular-lazy-img',
@@ -61,6 +62,7 @@ grunt.initConfig({
         'tinymce-mention':'tinymce',
         'select2':'jquery',
         'nouislider':'jquery',
+        'map-icons':'jquery',
         //'ngReact':'react',
         //'angular-lazy-img':'angular',
         //'tether-tooltip':['tether','tether-drop']
@@ -68,7 +70,8 @@ grunt.initConfig({
       exclude: [
         'grunt',
         'tinymce-dist',
-        'angular-storage'
+        'angular-storage',
+        'map-icons',
       ],
       mainFiles: {
         "angular-ui-router-anim-in-out": [
@@ -145,6 +148,7 @@ grunt.initConfig({
         'waypoints': ["lib/jquery.waypoints.min.js","lib/shortcuts/infinite.min.js"],
         'select2': ["dist/js/select2.min.js","dist/css/select2.min.css"],
         'nouislider': ["distribute/nouislider.min.js","distribute/nouislider.min.css"],
+        'map-icons': ["dist/js/map-icons.min.js","dist/css/map-icons.min.css"],
         //'angular-lazy-img': ["release/angular-lazy-img.js"],
         //'tether': ["dist/js/tether.min.js"],
         //'tether-drop': ["dist/js/drop.min.js"],
@@ -196,6 +200,7 @@ grunt.initConfig({
       files: [
         // includes files within path
         {expand: true, cwd: 'web/js/bower_components/font-awesome/fonts', src: ['*'], dest: 'web/built/fonts/'},
+        {expand: true, cwd: 'web/js/bower_components/map-icons/fonts', src: ['*'], dest: 'web/built/fonts/'},
         {expand: true, cwd: 'web/js/bower_components/angular-animate/', src: ['angular-animate.min.js.map'], dest: 'web/built/js/'},
         {expand: true, cwd: 'web/js/bower_components/angular-sanitize/', src: ['angular-sanitize.min.js.map'], dest: 'web/built/js/'},
       ],

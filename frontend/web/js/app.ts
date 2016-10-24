@@ -36,6 +36,7 @@
 
 /// <reference path="directives/scrollDirective.ts" />
 /// <reference path="directives/modules/fileimage/directive.ts" />
+/// <reference path="directives/modules/map/map.ts" />
 
 /// <reference path="filters/GeneralFilter.ts" />
 
@@ -128,6 +129,7 @@ module ILovePlatos{
         //Directives
         .directive('scroll', Scroll)
         .directive('fileimage', FileImageDirective)
+        .directive('map', ['$compile','$http', '$templateCache',MapDirective])
         //Modulos
         //Filter
         .filter('excerpt', Excerpt)

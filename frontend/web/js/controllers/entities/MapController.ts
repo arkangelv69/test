@@ -4,6 +4,7 @@
 module ILovePlatos{
 
     declare var google:any;
+    declare var Marker:any;
 
     export class MapController extends EntityController{
         static $inject = [
@@ -55,7 +56,12 @@ module ILovePlatos{
               disableDefaultUI: true, // a way to quickly hide all controls
               zoomControl: true,
               streetViewControl: true,
-              zoom: minZoomLevel
+              zoom: minZoomLevel,
+              //mapTypeId: google.maps.MapTypeId.ROADMAP,
+              styles: [
+                    {stylers: [{ visibility: 'simplified' }]},
+                    //{elementType: 'labels', stylers: [{ visibility: 'off' }]}
+                ]
             });
 
 
@@ -100,19 +106,31 @@ module ILovePlatos{
 
         renderMarker() {
             var self = this;
-            angular.forEach(self.contents,function(restaurant,key) {
+            angular.forEach(self.contents,function(restaurant,id) {
+
+                var attributes = restaurant.data.attributes;
+                var relationships = restaurant.data.relationships;
+
                 if( 
                     (self.filters.all) ||
                     (!self.filters.all && self.filters.favorites && self.hasFavorites(restaurant.data)) ||
-                    (!self.filters.all && self.filters.top && self.hasTop(restaurant.data))
+                    (!self.filters.all && self.filters.top && self.hasTop(restaurant.data)) &&
+                    attributes.name && 
+                    attributes.latitude && 
+                    attributes.longitude
                 ) {
-                    var attributes = restaurant.data.attributes;
+
                     var position = {lat: attributes.latitude, lng: attributes.longitude};
                     var title = attributes.name;
+                    var favorites = relationships.favorites || [];
+                    var top = relationships.top || [];
                     // Create a marker and set its position.
                     self.addMarker({
                         position:position,
-                        title:title
+                        title:title,
+                        id:id,
+                        favorites:favorites,
+                        top:top
                     });
                 }
 
@@ -134,20 +152,38 @@ module ILovePlatos{
                 self.getAll(function() {
                     self.reloadMap();
                 });
-            },200);
+            },400);
         }
 
         addMarker(params) {
             var self = this;
 
-          var marker = new google.maps.Marker({
+            var LOCATION = "M12 0c-4.198 0-8 3.403-8 7.602 0 4.198 3.469 9.21 8 16.398 4.531-7.188 8-12.2 8-16.398 0-4.199-3.801-7.602-8-7.602zm0 11c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3z";
+            var color = this.getColorMarkerForFilter(params);
+            var classLabel = this.getClassLabelMarkerForFilter(params);
+
+          var marker = new Marker({
             position: params.position,
             map: this.map,
-            title: params.title
+            title: params.title,
+            icon: {
+                path: LOCATION,
+                fillColor: color,
+                fillOpacity: 1,
+                strokeColor: '',
+                strokeWeight: 0,
+                scale:2.5
+            },
+            map_icon_label: '<span class="map-icon '+classLabel+' "></span>'
           });
 
+          var paramsUrl = {
+            id:params.id,
+            favorites:params.favorites,
+            top:params.top
+          };
           marker.addListener('click', function() {
-            self.$state.go('card',{id:'1'});
+            self.$state.go('card',paramsUrl);
           });
 
           this.markers.push(marker);
@@ -173,8 +209,48 @@ module ILovePlatos{
           this.markers = [];
         }
 
-        getMarkerForFilter(restaurant) {
+        getColorMarkerForFilter(params) {
+            var color = "#90caf9"; 
+            if(this.filters.favorites && params && params.favorites && params.favorites.length > 0) {
+                color = "#66bb6a";
+            }
+            else if(this.filters.top && params && params.top && params.top.length > 0) {
+                color = "#d4e157";
+            }
+            /*else if(this.filters.top || this.filters.favorites) {
+                color = '#e0e0e0';
+            }*/
 
+            return color;
+        }
+
+        getClassLabelMarkerForFilter(params) {
+            var classLabel = "";
+            if(this.filters.favorires && params && params.favorites && params.favorites.length > 0) {
+                classLabel += " map-icon-favorites";
+            }
+            if(this.filters.top && params && params.top && params.top.length > 0) {
+                var numberPlatesInTop = 0;
+                angular.forEach(params.top,function(top,index) {
+                    if(top && top.data.attributes && top.data.attributes.ranking == 1) {
+                        classLabel += " map-icon-ranking-1";
+                        numberPlatesInTop++;
+                    }
+                    else if(top && top.data.attributes && top.data.attributes.ranking == 2) {
+                        classLabel += " map-icon-ranking-2";
+                        numberPlatesInTop++;
+                    }
+                    else if(top && top.data.attributes && top.data.attributes.ranking == 3) {
+                        classLabel += " map-icon-ranking-3";
+                        numberPlatesInTop++;
+                    }
+                });
+                if(numberPlatesInTop > 0) {
+                    classLabel += " map-icon-ranking-plates-"+numberPlatesInTop;
+                }
+
+                return classLabel;
+            }
         }
 
         hasFavorites(restaurant) {
@@ -204,6 +280,14 @@ module ILovePlatos{
             });
 
             return false;
+        }
+
+        isHome() {
+            if(this.$state.current.name == 'home' || this.$state.current.name == 'home.inicio' || this.$state.current.name == ''){
+                return true;
+            }else {
+                return false;
+            }
         }
 
     }
