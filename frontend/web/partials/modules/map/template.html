@@ -1,4 +1,4 @@
-<div id="map" class="container" data-ng-show="mapCtrl.isHome();">
+<div id="map" class="container loading" data-ng-show="mainCtrl.isHome() || !mapCtrl.isMapIncluded()">
     <div id="map-layer"></div>
     <div class="map action-buttons">
       <div class="row">

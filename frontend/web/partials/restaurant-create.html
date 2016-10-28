@@ -11,8 +11,15 @@
 				<p>Dinos el nombre de tu restaurante:</p>
 			</div>
 			<div class="input-field col s12">
-				<input id="name" type="text" class="validate" length="15" data-ng-model="restaurantCtrl.content.attributes.name">
+				<input id="name" type="text" class="validate" length="34" data-ng-model="restaurantCtrl.content.attributes.name">
 				<label for="name">Nombre</label>
+			</div>
+			<div class="input-field col s12">
+				<p>Haz una breve descripción de tu restaurante, no es obligatorio:</p>
+			</div>
+			<div class="input-field col s12">
+				<input id="description" type="text" class="validate" length="200" data-ng-model="restaurantCtrl.content.attributes.description">
+				<label for="description">Descrpción</label>
 			</div>
 			<div class="input-field col s12">
 				<p>Escribe tu ubicación o seleccionala en el mapa:</p>

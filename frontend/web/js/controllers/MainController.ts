@@ -197,6 +197,14 @@ module ILovePlatos{
             });
         }
 
+        isHome() {
+            if(this.$state.current.name == 'home' || this.$state.current.name == 'home.inicio' || this.$state.current.name == ''){
+                return true;
+            }else {
+                return false;
+            }
+        }
+
         localizame() {
            //navigator.geolocation.getCurrentPosition(this.coordenadas);
            this.position.lat = 40.396761351388115;

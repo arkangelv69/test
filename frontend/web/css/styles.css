@@ -24,6 +24,10 @@
 	height: 100%;
 	width: 100%;	
 }
+#map.loading {
+	position: relative;
+	visibility: hidden;
+}
 #locationField, #controls {
   position: relative;
   width: 480px;
@@ -360,4 +364,7 @@ p.item-description {
 }
 .canvasCropper-image.cuadrado {
 	margin-bottom: 10px;
+}
+#canvasHidden {
+	display: none;
 }

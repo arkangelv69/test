@@ -86,7 +86,7 @@ module ILovePlatos{
                 }
             }*/
             addNewRelationships(type:string,params:Object) {
-                var types = ['Restaurant','restaurant','relatedTo','relatedFrom'];
+                var types = ['Restaurant','restaurant','relatedTo','relatedFrom','images'];
                 if( jQuery.inArray(type,types) == -1 ) {
                     return null;
                 }
