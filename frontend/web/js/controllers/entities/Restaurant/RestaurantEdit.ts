@@ -344,7 +344,7 @@ module ILovePlatos{
         }
 
         isUpdate() {
-            if(this.controller.$state.current.name == 'editarrestaurante') {
+            if(this.controller.$state.current.name == 'editrestaurant') {
                 return true;
             }else {
                 return false;

@@ -35,7 +35,25 @@ module ILovePlatos{
                 attributes:{
                     name: "",
                     description: "",
-                    date:0
+                    date:0,
+                    images:{
+                        "type":'images',
+                        "name":"",
+                        "original": {
+                            "url":""
+                        },
+                        "thumbnails": {
+                            "main":{
+                                "url":""
+                            },
+                            "square":{
+                                "url":""
+                            },
+                            "landscape":{
+                                "url":""
+                            }
+                        }
+                    }
                 },
                 relationships: {
                     miniaturas:{
