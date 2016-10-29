@@ -15,7 +15,7 @@ def uploadFile(file):
     return algo
 
 def uploadBinary(json):
-    block_blob_service.create_blob_from_bytes("images","plates/"+json["name"],base64.b64decode(json["image"]),content_settings=ContentSettings(content_type="image/png"))
+    block_blob_service.create_blob_from_bytes("images",json["dir"]+"/"+json["name"],base64.b64decode(json["image"]),content_settings=ContentSettings(content_type="image/png"))
     return {"image":"https://iloveplatos.blob.core.windows.net/images/plates/"+json["name"]}
 
 

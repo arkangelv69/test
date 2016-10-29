@@ -251,6 +251,35 @@ def getNode(type,id):
         i.delete(graph)
         return "deleted"
 
+
+@app.route('/private/restaurants/<int:id>', methods=['GET'])
+#@crossdomain(origin='*')
+@cross_origin(headers=['Content-Type', 'Authorization'])
+@cross_origin(headers=['Access-Control-Allow-Origin', '*'])
+#@requires_auth
+def getRestaurantsUser(id):
+    i = User.select(graph, id).first()
+    return json.dumps(i.getRestaurants())
+
+@app.route('/private/menus/<int:id>', methods=['GET'])
+#@crossdomain(origin='*')
+@cross_origin(headers=['Content-Type', 'Authorization'])
+@cross_origin(headers=['Access-Control-Allow-Origin', '*'])
+#@requires_auth
+def getMenusUser(id):
+    i = User.select(graph, id).first()
+    return json.dumps(i.getMenus())
+
+@app.route('/private/plates/<int:id>', methods=['GET'])
+#@crossdomain(origin='*')
+@cross_origin(headers=['Content-Type', 'Authorization'])
+@cross_origin(headers=['Access-Control-Allow-Origin', '*'])
+#@requires_auth
+def getPlatesUser(id):
+    i = User.select(graph, id).first()
+    return json.dumps(i.getPlates())
+
+
 @app.route('/private/plate/likes/<int:id>', methods=['GET'])
 #@crossdomain(origin='*')
 @cross_origin(headers=['Content-Type', 'Authorization'])

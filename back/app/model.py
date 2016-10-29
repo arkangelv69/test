@@ -86,6 +86,19 @@ class User(GraphObject):
             restaurants["r_"+str(restaurant.__primaryvalue__)]=restaurant.toJson()
         return restaurants
 
+    def getMenus(self):
+        menus = {}
+        for restaurant in self.admin:
+            for menu in restaurant.have_menu:
+                menus["m_"+str(menu.__primaryvalue__)]=menu.toJson()
+        return menus
+
+    def getPlates(self):
+        plates = {}
+        for restaurant in self.admin:
+            for plate in restaurant.have_plate:
+                plates["m_"+str(plate.__primaryvalue__)]=plate.toJson()
+        return plates
 
 
 
@@ -109,6 +122,9 @@ class Restaurant(GraphObject):
     name = Property()
     description = Property()
     image = Property()
+    image1 = Property()
+    image2 = Property()
+    image3 = Property()
     latitude = Property()
     longitude = Property()
     address = Property()
@@ -119,7 +135,11 @@ class Restaurant(GraphObject):
 
     def create(self,json,g):
         for attribute, value in json["data"]["attributes"].items():
-            setattr(self,attribute,value)
+            if (attribute == "image"):
+                for nameImage, image in json["data"]["attributes"]["image"].items():
+                    setattr(self, nameImage, image)
+            else:
+                setattr(self,attribute,value)
 
         for userId in json["data"]["relationships"]["relatedFrom"]["admin"]:
             user = User.select(g,userId).first()
@@ -132,7 +152,11 @@ class Restaurant(GraphObject):
 
     def update(self, json, g):
         for attribute, value in json["data"]["attributes"].items():
-            setattr(self, attribute, value)
+            if (attribute == "image"):
+                for nameImage, image in json["data"]["attributes"]["image"].items():
+                    setattr(self, nameImage, image)
+            else:
+                setattr(self,attribute,value)
         g.push(self)
 
     def delete(self,g):
@@ -153,7 +177,11 @@ class Restaurant(GraphObject):
                 "attributes": {
                     "name": self.name,
                     "description": self.description,
-                    "image": self.image,
+                    "image": {
+                        "image1": self.image1,
+                        "image2": self.image2,
+                        "image3": self.image3
+                    },
                     "latitude": self.latitude,
                     "longitude": self.longitude,
                     "address": self.address
