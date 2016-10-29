@@ -37,11 +37,24 @@ module ILovePlatos{
                     address: {},
                     longitude: 0,
                     latitude: 0,
-                    date:0
-                },
-                relationships: {
-                    miniaturas:{
-                        data:[]
+                    date:0,
+                    images:{
+                        "type":'images',
+                        "name":"",
+                        "original": {
+                            "url":""
+                        },
+                        "thumbnails": {
+                            "main":{
+                                "url":""
+                            },
+                            "square":{
+                                "url":""
+                            },
+                            "landscape":{
+                                "url":""
+                            }
+                        }
                     }
                 }
             };
@@ -92,24 +105,12 @@ module ILovePlatos{
             return this.RestaurantEdit.isSubmitActive();
         }
 
-        submit(newPostForm,update?) {
-            this.RestaurantEdit.submit(newPostForm,update);
+        progressStart(newPostForm) {
+            this.RestaurantEdit.progressStart(newPostForm);
         }
 
         formEntity() {
             this.RestaurantEdit.formEntity();
-        }
-
-        advanceProgressbar() {
-            this.RestaurantEdit.advanceProgressbar();
-        }
-
-        progressStart(newPostForm) {
-            return this.RestaurantEdit.progressStart(newPostForm);
-        }
-
-        progressCancel() {
-            this.RestaurantEdit.progressCancel();
         }
 
         selectFile(event,selector) {
@@ -142,8 +143,8 @@ module ILovePlatos{
             this.RestaurantEdit.renderRecorteApaisado(target,'.canvasCropper-image');
         }
 
-        cropperImage(target) {
-            this.RestaurantEdit.cropperImage(target);
+        cropperImage(id,target) {
+            this.RestaurantEdit.cropperImage(id,target);
         }
 
         croppImageCancel(event) {

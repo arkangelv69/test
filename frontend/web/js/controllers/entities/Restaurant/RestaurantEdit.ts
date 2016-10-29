@@ -19,6 +19,28 @@ module ILovePlatos{
         constructor(controller) {
             this.controller = controller;
             this.dataJson = new DataJsonController('Restaurant',controller.auth);
+
+            this.controller.$scope.processPublicarPost = {};
+            this.controller.$scope.processPublicarPost['body'] = false;
+            this.controller.$scope.processPublicarPost['images'] = {};
+            this.controller.$scope.processPublicarPost['images']['original'] = false;
+            this.controller.$scope.processPublicarPost['images']['main'] = false;
+            this.controller.$scope.processPublicarPost['images']['square'] = false;
+            this.controller.$scope.processPublicarPost['images']['landscape'] = false;
+
+            var self = this;
+
+            this.controller.$scope.$watch("processPublicarPost.body + processPublicarPost.images.original + processPublicarPost.images.main + processPublicarPost.images.square + processPublicarPost.images.landscape", function(newValue, oldValue) {
+                if(
+                    self.controller.$scope.processPublicarPost['body'] &&
+                    self.controller.$scope.processPublicarPost['images']['original'] && 
+                    self.controller.$scope.processPublicarPost['images']['main'] && 
+                    self.controller.$scope.processPublicarPost['images']['square'] && 
+                    self.controller.$scope.processPublicarPost['images']['landscape'] 
+                ) {
+                    self.formEntity();
+                }
+            });
         }
 
         initEdit() {
@@ -39,8 +61,8 @@ module ILovePlatos{
                 !content.attributes.name || 
                 !content.attributes.address ||
                 !content.attributes.longitude ||
-                !content.attributes.latitude /*||
-                this.controller.FilesService.fileElemImage.length < 1*/
+                !content.attributes.latitude  ||
+                this.controller.FilesService.fileElemImage.length < 1
             ){
                 return false
             }
@@ -90,88 +112,54 @@ module ILovePlatos{
             }
 
 
-            /*if( !this.controller.FilesService.fileElemImage || this.controller.FilesService.fileElemImage.length < 1 ){
+            if( !this.controller.FilesService.fileElemImage || this.controller.FilesService.fileElemImage.length < 1 ){
                 self._main.resetMessages();
                 self._main.setMessage({type:'danger',text:'No hay ningún imagen seleccionada'});
 
                 this.progressCancel();
                 return null;
-            }*/
+            }
 
             var uploadImages = $('#preview canvas.new');
 
             content.attributes.date = this.controller.DateService.getCurrentDateInUnix();
 
-            //Prepara el data y lo envía.
-            this.formEntity();
+            self.$scope.processPublicarPost['body'] = true;
+            _this.advanceProgressbar();
 
-            return null;
-
-            //TODO -> de momento no paso por aquí.
-            if( false &&  this.controller.FilesService.fileElemImage && 
+            if( this.controller.FilesService.fileElemImage && 
                 this.controller.FilesService.fileElemImage.length > 0) {
 
-                var fileElemImage = this.controller.FilesService.fileElemImage;
+                var images = content.attributes.images;
 
-                for(var e = 0; e < fileElemImage.length; e++) {
-
-                    var item;
-                    var source = fileElemImage[e].source;
-                    var type = fileElemImage[e].type;
-                    var name = fileElemImage[e].name;
-                    var cropped = fileElemImage[e].cropped;
-                    var index = name;
-                    var file = fileElemImage[e];
-                    var binary = uploadImages[e].toDataURL("image/png");
-
-                    _this.progressbarTotal++;
-
-                    //Si es de tipo file lo mandamos al servidor
-                    if(type == 'file' || type == 'image-local' || (type == 'image' && cropped)) {
-                        this.controller.FilesService.uploadImageBinary(binary,file.attributes).then(function(response) {
-
-                            if(response && response.data &&  response.data.length > 0) {
-                                item = {
-                                    "id": _this.dataJson.generareGuid(),
-                                    "url": response.data[0]['original']['url'],
-                                    "type":'imagenes',
-                                    "ancho": response.data[0]['original']['ancho'],
-                                    "alto": response.data[0]['original']['alto'],
-                                    "recortadas": response.data[0]['recortadas'],
-                                };
-                            }
-
-                            _this.dataJson.addNewRelationships('miniaturas',item);
-
-                            self.advanceProgressbar();
-
-                            self.$scope.processPublicarPost['images']++;
-
-                            angular.element('.wrapImage-'+response.data[0].index+' .loading-file').removeClass('glyphicon-refresh glyphicon-refresh-animate');
-                            angular.element('.wrapImage .loading-file').addClass('glyphicon-ok');
-
-                            //Hasta que no se han procesado todas las imágenes no creamos las relacciones
-                            if( self.$scope.processPublicarPost['images'] >= self.FilesService.fileElemImage.length ) {
-                                self.$scope.finishImages = true;
-                            }
-
-                            if(!self.$scope.$$phase) {
-                                self.$scope.$apply();
-                            }
-                        },function(error) {
-                            self.$scope.processPublicarPost['images']++;
-
-                            //Hasta que no se han procesado todas las imágenes no creamos las relacciones
-                            if( self.$scope.processPublicarPost['images'] >= self.FilesService.fileElemImage.length ) {
-                                self.$scope.finishImages = true;
-                            }
-                            
-                            console.log(error);
-                        });
-                    }
-
-
-                }
+                this.controller.FilesService.uploadOriginal('#preview','.canvasCropper-image').then(function(response) {
+                    images.original.url = response.image;
+                    _this.advanceProgressbar();
+                    self.$scope.processPublicarPost['images']['original'] = true;
+                },function(error) {
+                    _this.progressCancel();
+                });
+                this.controller.FilesService.uploadRecorteRestaurant('#preview','.canvasCropper-image').then(function(response) {
+                    images.thumbnails.main.url = response.image;
+                    _this.advanceProgressbar();
+                    self.$scope.processPublicarPost['images']['main'] = true;
+                },function(error) {
+                    _this.progressCancel();
+                });
+                this.controller.FilesService.uploadRecorteCuadrado('#preview','.canvasCropper-image').then(function(response) {
+                    images.thumbnails.square.url = response.image;
+                    _this.advanceProgressbar();
+                    self.$scope.processPublicarPost['images']['square'] = true;
+                },function(error) {
+                    _this.progressCancel();
+                });
+                this.controller.FilesService.uploadRecorteApaisado('#preview','.canvasCropper-image').then(function(response) {
+                    images.thumbnails.landscape.url = response.image;
+                    _this.advanceProgressbar();
+                    self.$scope.processPublicarPost['images']['landscape'] = true;
+                },function(error) {
+                    _this.progressCancel();
+                });
 
             }
 
@@ -189,7 +177,7 @@ module ILovePlatos{
             var id = user.username;
 
             //Relationships del usuario que crea la publicación
-            var paramsUsuario = {"admin":[0]};
+            var paramsUsuario = {"admin":[55]};
             dataJson.addNewRelationships('relatedFrom',paramsUsuario);
 
             //Obtenemos la nueva entidad
@@ -218,13 +206,13 @@ module ILovePlatos{
 
         progressbar = 0;
         progressbarPartial = 0;
-        progressbarTotal = 1;
+        progressbarTotal = 5;
         progressbarRes:any;
 
         progressStart(newPostForm) {
             this.progressbarRes = this.controller.$q.defer();
 
-            this.controller.submit(newPostForm);
+            this.submit(newPostForm);
 
             return this.progressbarRes.promise;
         }
@@ -247,11 +235,11 @@ module ILovePlatos{
             this.controller.FilesService.previewImageUpload({});
             var self = this;
             setTimeout(function() {
-                self.controller.FilesService.renderRecorteRestaurant('#preview','.canvasCropper-image');
-                self.controller.FilesService.renderRecorteCuadrado('#preview','.canvasCropper-image');
-                self.controller.FilesService.renderRecorteApaisado('#preview','.canvasCropper-image');
+                self.controller.FilesService.renderRecorteRestaurant('#preview','.canvasCropper-image.restaurant');
+                self.controller.FilesService.renderRecorteCuadrado('#preview','.canvasCropper-image.cuadrado');
+                self.controller.FilesService.renderRecorteApaisado('#preview','.canvasCropper-image.apaisado');
             },300);
-            this.controller.FilesService.cropperImage('#preview');
+            this.controller.FilesService.cropperImage('original','#preview');
             if( !self.controller.$scope.$$phase  ) {
                 self.controller.$scope.$apply();
             }
@@ -260,7 +248,7 @@ module ILovePlatos{
         addFiles(files) {
             this.controller.FilesService.loadImages(files);
             this.controller.FilesService.previewImageUpload({});
-            this.controller.FilesService.cropperImage('#preview');
+            this.controller.FilesService.cropperImage('original','#preview');
         }
 
         deleteImage(event,index){
@@ -291,6 +279,22 @@ module ILovePlatos{
             this.controller.FilesService.renderRecorteApaisado(target,select);
         }
 
+        uploadOriginal(target,select) {
+            return this.controller.FilesService.uploadOriginal(target,select);
+        }
+
+        uploadRecorteRestaurant(target,select) {
+            return this.controller.FilesService.uploadRecorteRestaurant(target,select);
+        }
+
+        uploadRecorteCuadrado(target,select) {
+            return this.controller.FilesService.uploadRecorteCuadrado(target,select);
+        }
+
+        uploadRecorteApaisado(target,select) {
+            return this.controller.FilesService.uploadRecorteApaisado(target,select);
+        }
+
         editImage(target) {
             this.controller.FilesService.editImage(target);
         }
@@ -303,8 +307,8 @@ module ILovePlatos{
             this.controller.FilesService.editImageCancel(target);
         }
 
-        cropperImage(target) {
-            this.controller.FilesService.cropperImage(target);
+        cropperImage(id,target) {
+            this.controller.FilesService.cropperImage(id,target);
         }
 
         croppImageCancel(event) {
@@ -340,7 +344,7 @@ module ILovePlatos{
         }
 
         isUpdate() {
-            if(this.controller.$state.current.name == 'editarpost') {
+            if(this.controller.$state.current.name == 'editrestaurant') {
                 return true;
             }else {
                 return false;

@@ -108,7 +108,7 @@ module ILovePlatos{
             return d.promise;
         }
 
-        add(entity: iEntityApirest,user?): ng.IPromise<iEntityApirest>{
+        add(entity: iEntityApirest): ng.IPromise<iEntityApirest>{
             var d = this.$q.defer();
 
             this.$http({

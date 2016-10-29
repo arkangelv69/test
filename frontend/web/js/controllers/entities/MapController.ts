@@ -42,12 +42,24 @@ module ILovePlatos{
             }
         }
 
+        mapIncluded = false;
+
+        setMapIncluded() {
+            this.mapIncluded = true;            
+        }
+        
+        isMapIncluded() {
+            return this.mapIncluded;
+        }
+
         initMap() {
             var self = this;
             var minZoomLevel = 15;
             var lat = this._main.position.lat;
             var lng = this._main.position.lng;
             var myLatLng = {lat: lat, lng: lng};
+
+            jQuery("#map").addClass("loading");
 
             // Create a map object and specify the DOM element for display.
             this.map = new google.maps.Map(document.getElementById('map-layer'), {
@@ -63,7 +75,6 @@ module ILovePlatos{
                     //{elementType: 'labels', stylers: [{ visibility: 'off' }]}
                 ]
             });
-
 
             this.getAll(function() {
 
@@ -100,6 +111,10 @@ module ILovePlatos{
                 });
 
                 self.renderMarker();
+
+                self.setMapIncluded();
+
+                jQuery("#map").removeClass("loading");
 
             });
         }
@@ -170,8 +185,8 @@ module ILovePlatos{
                 path: LOCATION,
                 fillColor: color,
                 fillOpacity: 1,
-                strokeColor: '',
-                strokeWeight: 0,
+                strokeColor: '#000000',
+                strokeWeight: 1,
                 scale:2.5
             },
             map_icon_label: '<span class="map-icon '+classLabel+' "></span>'
@@ -215,7 +230,7 @@ module ILovePlatos{
                 color = "#66bb6a";
             }
             else if(this.filters.top && params && params.top && params.top.length > 0) {
-                color = "#d4e157";
+                color = "#ffeb3b";
             }
             /*else if(this.filters.top || this.filters.favorites) {
                 color = '#e0e0e0';
@@ -280,14 +295,6 @@ module ILovePlatos{
             });
 
             return false;
-        }
-
-        isHome() {
-            if(this.$state.current.name == 'home' || this.$state.current.name == 'home.inicio' || this.$state.current.name == ''){
-                return true;
-            }else {
-                return false;
-            }
         }
 
     }
