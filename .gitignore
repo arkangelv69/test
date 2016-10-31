@@ -22,6 +22,7 @@ app/**/*.js.map
 app/node_modules
 app/plugins
 app/platforms
+app/www
 
 # Frontend
 frontend/web/built

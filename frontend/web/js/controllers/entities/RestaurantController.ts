@@ -30,7 +30,7 @@ module ILovePlatos{
         RestaurantEdit:RestaurantEdit;
         
         dataAutocomplete:any;
-        content = {
+        content:any = {
                 id:"",
                 type:"Restaurant",
                 attributes:{
@@ -42,7 +42,6 @@ module ILovePlatos{
                     date:0,
                     images:{
                         "type":'images',
-                        "name":"",
                         "original": {
                             "url":""
                         },

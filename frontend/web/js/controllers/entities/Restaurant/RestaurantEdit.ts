@@ -130,7 +130,26 @@ module ILovePlatos{
             if( this.controller.FilesService.fileElemImage && 
                 this.controller.FilesService.fileElemImage.length > 0) {
 
-                var images = content.attributes.images;
+                if(!content.attributes.images) {
+                    content.attributes.images = {
+                        "type":'images',
+                        "original": {
+                            "url":""
+                        },
+                        "thumbnails": {
+                            "main":{
+                                "url":""
+                            },
+                            "square":{
+                                "url":""
+                            },
+                            "landscape":{
+                                "url":""
+                            }
+                        }
+                    }
+                }
+                var images:any = content.attributes.images;
                 //var slug = self.$filter('clean')(self.$filter('minusculas')(content.attributes.name));
                 var gguid = _this.dataJson.generareGuid();
                 var pathImages = "restaurant/"+gguid;
@@ -359,7 +378,7 @@ module ILovePlatos{
         }
 
         isUpdate() {
-            if(this.controller.$state.current.name == 'editrestaurant') {
+            if(this.controller.$state.current.name == 'restaurant-update') {
                 return true;
             }else {
                 return false;

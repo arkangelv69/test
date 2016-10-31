@@ -216,7 +216,7 @@ module ILovePlatos{
                     .then((response: iEntityApirest) => {
                         if(response && response.data) {
                             self.isSubmit = false;
-                            self.contents = response.data;
+                            self.content = response.data;
                         }
                     },(error: any) => {
                         self.isSubmit = false;
@@ -232,11 +232,11 @@ module ILovePlatos{
             if(!this.isSubmit ) {
                 this.isSubmit = true;
                 var self = this;
-                return this.api.add(entity)
+                return this.api.update(entity)
                     .then((response: iEntityApirest) => {
                         if(response && response.data) {
                             self.isSubmit = false;
-                            self.contents = response.data;
+                            self.content = response.data;
                         }
                     },(error: any) => {
                         self.isSubmit = false;

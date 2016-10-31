@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "deploy para la app en producción",
   "main": "Gruntfile.js",
+  "private": true,
   "dependencies": {
     "grunt": "^1.0.1",
     "grunt-contrib-clean": "^1.0.0",
