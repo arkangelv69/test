@@ -22,6 +22,7 @@ module ILovePlatos{
         _main:IMainScope;
         currentUser:any;
         userId:string;
+        userNeo4j = 55;
         //44,3
         deviceId:any = 3;
         username:string;

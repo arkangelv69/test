@@ -5,6 +5,7 @@ module ILovePlatos{
     export class MenuApirestService extends EntityApirestService{
 
         type = 'menu';
+        typeAll = 'menus';
 
         constructor($config,$http,$q,$log,auth,store) {
             super($config,$http,$q,$log,auth,store);

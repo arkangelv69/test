@@ -163,8 +163,11 @@
                   </div>
                 </li>
                 <li ng-if="userCtrl.isLogged()"><div class="divider"></div></li>
+                <li ng-if="userCtrl.isLogged()"><a ui-sref="restaurant-list">Mis restaurantes</a></li>
                 <li ng-if="userCtrl.isLogged()"><a ui-sref="restaurant-create">Crear restaurante</a></li>
+                <li ng-if="userCtrl.isLogged()"><a ui-sref="plate-list">Mis platos</a></li>
                 <li ng-if="userCtrl.isLogged()"><a ui-sref="plate-create">Crear plato</a></li>
+                <li ng-if="userCtrl.isLogged()"><a ui-sref="menu-list">Mis menus</a></li>
                 <li ng-if="userCtrl.isLogged()"><a ui-sref="menu-create">Crear menu</a></li>
               </ul>
               <a href="#" data-activates="slide-out" class="action-button button-collapse"><i class="material-icons small">menu</i></a>

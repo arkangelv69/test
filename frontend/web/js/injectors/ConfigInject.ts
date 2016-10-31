@@ -112,11 +112,29 @@ module ILovePlatos{
                     controllerAs:'homecardCtrl',
                     templateUrl: "partials/card.html",
                 })
+                 .state('restaurant-list', {
+                    url: "/restaurant/list",
+                    controller: 'HomeRestaurantController',
+                    controllerAs:'homerestaurantCtrl',
+                    templateUrl: "partials/restaurant-list.html",
+                })
                  .state('restaurant-create', {
                     url: "/restaurant/create",
                     controller: 'HomeRestaurantController',
                     controllerAs:'homerestaurantCtrl',
                     templateUrl: "partials/restaurant-create.html",
+                })
+                 .state('restaurant-update', {
+                    url: "/restaurant/update/:id",
+                    controller: 'HomeRestaurantController',
+                    controllerAs:'homerestaurantCtrl',
+                    templateUrl: "partials/restaurant-update.html",
+                })
+                 .state('plate-list', {
+                    url: "/plate/list",
+                    controller: 'HomePlateController',
+                    controllerAs:'homeplateCtrl',
+                    templateUrl: "partials/plate-list.html",
                 })
                  .state('plate-create', {
                     url: "/plate/create",
@@ -124,11 +142,29 @@ module ILovePlatos{
                     controllerAs:'homeplateCtrl',
                     templateUrl: "partials/plate-create.html",
                 })
+                 .state('plate-update', {
+                    url: "/plate/update/:id",
+                    controller: 'HomePlateController',
+                    controllerAs:'homeplateCtrl',
+                    templateUrl: "partials/plate-update.html",
+                })
+                 .state('menu-list', {
+                    url: "/menu/list",
+                    controller: 'HomeMenuController',
+                    controllerAs:'homemenuCtrl',
+                    templateUrl: "partials/menu-list.html",
+                })
                  .state('menu-create', {
                     url: "/menu/create",
                     controller: 'HomeMenuController',
                     controllerAs:'homemenuCtrl',
                     templateUrl: "partials/menu-create.html",
+                })
+                 .state('menu-update', {
+                    url: "/menu/update/:id",
+                    controller: 'HomeMenuController',
+                    controllerAs:'homemenuCtrl',
+                    templateUrl: "partials/menu-update.html",
                 })
                 .state('mi-perfil', {
                     url: "/mi-perfil?reset",

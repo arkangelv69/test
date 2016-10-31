@@ -19,7 +19,8 @@ module ILovePlatos{
             "auth",
             "store",
             "FilesService",
-            "$q"
+            "$q",
+            "$filter"
         ];
 
         mother;
@@ -62,7 +63,7 @@ module ILovePlatos{
                 }
             };
 
-        constructor($config,api,DateService,$rootScope,public $stateParams,public $scope,public $state,$element,$sce,auth,store,public FilesService, public $q){
+        constructor($config,api,DateService,$rootScope,public $stateParams,public $scope,public $state,$element,$sce,auth,store,public FilesService, public $q,public $filter){
             super($config,api,DateService,$rootScope,$stateParams,$scope,$state,$element,$sce,auth,store);
 
             var self = this;

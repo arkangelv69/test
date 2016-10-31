@@ -347,7 +347,7 @@ module ILovePlatos{
                         if (delimiter === '#') {
                             $.getJSON(self.$config.protocolApirest+self.$config.domainApirest+'/public/hashtags', function (data) {
                                 if(query) {
-                                    var queryClean = self.$filter('clean')(self.$filter('minusculas')(query));                                    
+                                    var queryClean = self.$filter('clean')(self.$filter('minusculas')(query));
                                     data.data.unshift({id:queryClean});
                                 }
                                 process(data.data);

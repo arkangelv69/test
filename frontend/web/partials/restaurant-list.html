@@ -1,0 +1,12 @@
+<div class="row" data-ng-controller="RestaurantController as restaurantCtrl">
+	<div class="col s12">
+		<div class="row">
+			<a ui-sref="home" class="return">Volver al mapa</a>
+			<h2 class="header">Mis restaurantes</h2>
+		</div>
+		<a data-ui-sref="restaurant-create" class="btn-action btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
+		<ul class="collection" data-ng-init="restaurantCtrl.getAllByUserId()">
+			<li class="collection-item" data-ng-repeat="item in restaurantCtrl.contents track by $index" data-ng-if="restaurantCtrl.contents.length > 0"><div>{[{restaurantCtrl.getName(item)}]}<a data-ui-sref="restaurant-update({id:item.id})" class="secondary-content"><i class="material-icons">edit</i></a></div></li>
+	       </ul>
+	</div>
+</div>

@@ -5,6 +5,13 @@
 	margin:0px;
 }
 
+/*general*/
+.btn-action {
+	position: absolute;
+	bottom: 20px;
+	right: 20px;
+}
+
 /*Collection*/
 .collection .collection-item.avatar {
 	min-height: 60px;

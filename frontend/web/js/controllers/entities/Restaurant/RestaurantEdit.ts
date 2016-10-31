@@ -131,29 +131,43 @@ module ILovePlatos{
                 this.controller.FilesService.fileElemImage.length > 0) {
 
                 var images = content.attributes.images;
+                //var slug = self.$filter('clean')(self.$filter('minusculas')(content.attributes.name));
+                var gguid = _this.dataJson.generareGuid();
+                var pathImages = "restaurant/"+gguid;
+                var params = {
+                    "dir":pathImages,
+                    "name":""
+                };
 
-                this.controller.FilesService.uploadOriginal('#preview','.canvasCropper-image').then(function(response) {
+                params.name = "original";
+                this.controller.FilesService.uploadOriginal('#preview','.canvasCropper-image',params).then(function(response) {
                     images.original.url = response.image;
                     _this.advanceProgressbar();
                     self.$scope.processPublicarPost['images']['original'] = true;
                 },function(error) {
                     _this.progressCancel();
                 });
-                this.controller.FilesService.uploadRecorteRestaurant('#preview','.canvasCropper-image').then(function(response) {
+
+                params.name = "main";
+                this.controller.FilesService.uploadRecorteRestaurant('#preview','.canvasCropper-image',params).then(function(response) {
                     images.thumbnails.main.url = response.image;
                     _this.advanceProgressbar();
                     self.$scope.processPublicarPost['images']['main'] = true;
                 },function(error) {
                     _this.progressCancel();
                 });
-                this.controller.FilesService.uploadRecorteCuadrado('#preview','.canvasCropper-image').then(function(response) {
+
+                params.name = "square";
+                this.controller.FilesService.uploadRecorteCuadrado('#preview','.canvasCropper-image',params).then(function(response) {
                     images.thumbnails.square.url = response.image;
                     _this.advanceProgressbar();
                     self.$scope.processPublicarPost['images']['square'] = true;
                 },function(error) {
                     _this.progressCancel();
                 });
-                this.controller.FilesService.uploadRecorteApaisado('#preview','.canvasCropper-image').then(function(response) {
+
+                params.name = "landscape";
+                this.controller.FilesService.uploadRecorteApaisado('#preview','.canvasCropper-image',params).then(function(response) {
                     images.thumbnails.landscape.url = response.image;
                     _this.advanceProgressbar();
                     self.$scope.processPublicarPost['images']['landscape'] = true;
@@ -175,9 +189,10 @@ module ILovePlatos{
 
             var user = this.controller._user.currentUser;
             var id = user.username;
+            var idNeo4j = this.controller._user.userNeo4j;
 
             //Relationships del usuario que crea la publicación
-            var paramsUsuario = {"admin":[55]};
+            var paramsUsuario = {"admin":[idNeo4j]};
             dataJson.addNewRelationships('relatedFrom',paramsUsuario);
 
             //Obtenemos la nueva entidad
@@ -279,20 +294,20 @@ module ILovePlatos{
             this.controller.FilesService.renderRecorteApaisado(target,select);
         }
 
-        uploadOriginal(target,select) {
-            return this.controller.FilesService.uploadOriginal(target,select);
+        uploadOriginal(target,select,name) {
+            return this.controller.FilesService.uploadOriginal(target,select,name);
         }
 
-        uploadRecorteRestaurant(target,select) {
-            return this.controller.FilesService.uploadRecorteRestaurant(target,select);
+        uploadRecorteRestaurant(target,select,name) {
+            return this.controller.FilesService.uploadRecorteRestaurant(target,select,name);
         }
 
-        uploadRecorteCuadrado(target,select) {
+        uploadRecorteCuadrado(target,select,name) {
             return this.controller.FilesService.uploadRecorteCuadrado(target,select);
         }
 
-        uploadRecorteApaisado(target,select) {
-            return this.controller.FilesService.uploadRecorteApaisado(target,select);
+        uploadRecorteApaisado(target,select,name) {
+            return this.controller.FilesService.uploadRecorteApaisado(target,select,name);
         }
 
         editImage(target) {

@@ -110,22 +110,25 @@ module ILovePlatos{
                 this.controller.FilesService.fileElemImage.length > 0) {
 
                 var images = content.attributes.images;
+                //var slug = self.$filter('clean')(self.$filter('minusculas')(content.attributes.name));
+                var gguid = _this.dataJson.generareGuid();
+                var pathImages = "plate/"+gguid;
 
-                this.controller.FilesService.uploadOriginal('#preview','.canvasCropper-image').then(function(response) {
+                this.controller.FilesService.uploadOriginal('#preview','.canvasCropper-image',pathImages+'/original').then(function(response) {
                     images.original.url = response.image;
                     _this.advanceProgressbar();
                     self.$scope.processPublicarPost['images']['original'] = true;
                 },function(error) {
                     _this.progressCancel();
                 });
-                this.controller.FilesService.uploadRecorteCuadrado('#preview','.canvasCropper-image').then(function(response) {
+                this.controller.FilesService.uploadRecorteCuadrado('#preview','.canvasCropper-image',pathImages+'/square').then(function(response) {
                     images.thumbnails.square.url = response.image;
                     _this.advanceProgressbar();
                     self.$scope.processPublicarPost['images']['square'] = true;
                 },function(error) {
                     _this.progressCancel();
                 });
-                this.controller.FilesService.uploadRecorteApaisado('#preview','.canvasCropper-image').then(function(response) {
+                this.controller.FilesService.uploadRecorteApaisado('#preview','.canvasCropper-image',pathImages+'/landscape').then(function(response) {
                     images.thumbnails.landscape.url = response.image;
                     _this.advanceProgressbar();
                     self.$scope.processPublicarPost['images']['landscape'] = true;
@@ -147,9 +150,10 @@ module ILovePlatos{
 
             var user = this.controller._user.currentUser;
             var id = user.username;
+            var idNeo4j = this.controller._user.userNeo4j;
 
             //Relationships del usuario que crea la publicación
-            var paramsUsuario = {"admin":['David']};
+            var paramsUsuario = {"admin":[idNeo4j]};
             dataJson.addNewRelationships('relatedFrom',paramsUsuario);
 
             //Obtenemos la nueva entidad
@@ -246,16 +250,16 @@ module ILovePlatos{
             this.controller.FilesService.renderRecorteApaisado(target,select);
         }
 
-        uploadOriginal(target,select) {
-            return this.controller.FilesService.uploadOriginal(target,select);
+        uploadOriginal(target,select,name) {
+            return this.controller.FilesService.uploadOriginal(target,select,name);
         }
 
-        uploadRecorteCuadrado(target,select) {
-            return this.controller.FilesService.uploadRecorteCuadrado(target,select);
+        uploadRecorteCuadrado(target,select,name) {
+            return this.controller.FilesService.uploadRecorteCuadrado(target,select,name);
         }
 
-        uploadRecorteApaisado(target,select) {
-            return this.controller.FilesService.uploadRecorteApaisado(target,select);
+        uploadRecorteApaisado(target,select,name) {
+            return this.controller.FilesService.uploadRecorteApaisado(target,select,name);
         }
 
         editImage(target) {

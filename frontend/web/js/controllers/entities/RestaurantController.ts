@@ -1,5 +1,5 @@
 /// <reference path="EntityController.ts" />
-// <reference path="Contenido/ContenidoCard.ts" />
+/// <reference path="Contenido/ContenidoCard.ts" />
 /// <reference path="Restaurant/RestaurantEdit.ts" />
 
 module ILovePlatos{
@@ -19,13 +19,14 @@ module ILovePlatos{
             "auth",
             "store",
             "FilesService",
-            "$q"
+            "$q",
+            "$filter"
         ];
 
         mother;
         images = [];
 
-        //ContenidoCard:ContenidoCard;
+        ContenidoCard:ContenidoCard;
         RestaurantEdit:RestaurantEdit;
         
         dataAutocomplete:any;
@@ -34,7 +35,8 @@ module ILovePlatos{
                 type:"Restaurant",
                 attributes:{
                     name: "",
-                    address: {},
+                    address: "",
+                    addressName: "",
                     longitude: 0,
                     latitude: 0,
                     date:0,
@@ -59,12 +61,12 @@ module ILovePlatos{
                 }
             };
 
-        constructor($config,api,DateService,$rootScope,public $stateParams,public $scope,public $state,$element,$sce,auth,store,public FilesService, public $q){
+        constructor($config,api,DateService,$rootScope,public $stateParams,public $scope,public $state,$element,$sce,auth,store,public FilesService, public $q,public $filter){
             super($config,api,DateService,$rootScope,$stateParams,$scope,$state,$element,$sce,auth,store);
 
             var self = this;
 
-            //this.ContenidoCard = new ContenidoCard(this);
+            this.ContenidoCard = new ContenidoCard(this);
             this.RestaurantEdit = new RestaurantEdit(this);
 
             window.addEventListener('message', function(event) { 
@@ -79,6 +81,7 @@ module ILovePlatos{
                     self.content.attributes.longitude =  event.data.lng;
                     self.content.attributes.latitude =  event.data.lat;
                     self.content.attributes.address =  event.data.address;
+                    self.content.attributes.addressName =  event.data.name;
 
                     if(!self.$scope.$$phase) {
                         self.$scope.$apply();
@@ -91,6 +94,29 @@ module ILovePlatos{
                 } 
             }); 
 
+        }
+
+        renderIframeMap() {
+            var url = this.getUrlIframe();
+            var template = '<iframe width="100%" height="500px" src="'+url+'"></iframe>';
+            angular.element('#renderIframeMap').replaceWith(template);
+        }
+
+        getUrlIframe() {
+            return "https://s3.eu-central-1.amazonaws.com/production-frontend/test/maps/index-2.html"+this.getQueryIframe();
+        }
+
+        getQueryIframe() {
+            var attributes = this.content.attributes;
+            var lat = attributes.latitude;
+            var lng = attributes.longitude;
+            var address = attributes.address || "";
+            var addressName = attributes.addressName || "";
+            return "?lat="+lat+"&lng="+lng+"&address="+address+"&addressName="+addressName;
+        }
+
+        getName(card) {
+            return this.ContenidoCard.getName(card);
         }
 
         initEdit() {

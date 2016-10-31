@@ -10,7 +10,7 @@ module ILovePlatos{
         return{
           link: function($scope:ng.IScope, $element:ng.IAugmentedJQuery, $attributes:IScrollAttributes,$controller: any[]){
 
-            var wrapperScroll = document;
+            /*var wrapperScroll = document;
             var scrollWallSelector = $attributes.scrollWallSelector;
 
             var position = 0;
@@ -46,17 +46,17 @@ module ILovePlatos{
                     if(angular.element(this)[0] && angular.element(this)[0].nodeName == '#document') {
                       if( $(window).scrollTop() !== 0 &&  (  ($(window).scrollTop() + $(window).height())/$(document).height() > 0.7) ) {
                             position = $(document).scrollTop();
-                            scontroller.addElementToContent();
+                            //scontroller.addElementToContent();
                       }
                     }else {
                       if( $(this).scrollTop() !== 0  && ( $(this).scrollTop()/$(this).height() > 0.7 ) ) {
                             position = $(this).scrollTop();
-                            scontroller.addElementToContent();
+                            //scontroller.addElementToContent();
                       }
                     }
                     position = $(this).scrollTop();
                   }
-            });
+            });*/
           }
         };
     }
