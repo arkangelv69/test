@@ -232,9 +232,7 @@ module ILovePlatos{
         }
         hideNewCropAction(event) {
             this.RestaurantEdit.hideNewCropAction(event);
-        }
-
-        
+        }        
 
     }
 

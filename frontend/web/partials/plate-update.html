@@ -1,11 +1,11 @@
-<div class="row" data-ng-controller="PlateController as plateCtrl">
+<div class="row" data-ng-controller="PlateController as plateCtrl" data-ng-init="plateCtrl.getById();">
 	<div class="col s12">
 		<div class="row">
 			<a ui-sref="plate-create" class="return">Volver</a>
 			<h2 class="header">Crear plato</h2>
 		</div>
 	</div>
-	<form class="col s12">
+	<form class="col s12" data-ng-if="plateCtrl.content.id" data-ng-init="plateCtrl.regenerateForm()">
 		<div class="row">
 			<div class="input-field col s12">
 				<p>Dinos el nombre de tu plato:</p>

@@ -49,10 +49,6 @@ module ILovePlatos{
 
         }
 
-        syncPreviewCard() {
-            
-        }
-
         isSubmitActive(){
             var content = this.controller.content;
             if( 
@@ -107,28 +103,39 @@ module ILovePlatos{
             _this.advanceProgressbar();
 
             if( this.controller.FilesService.fileElemImage && 
-                this.controller.FilesService.fileElemImage.length > 0) {
+                this.controller.FilesService.fileElemImage.length > 0 &&
+                ( this.showNewCrop || this.isChangeFiles )
+            ) {
 
                 var images = content.attributes.images;
                 //var slug = self.$filter('clean')(self.$filter('minusculas')(content.attributes.name));
                 var gguid = _this.dataJson.generareGuid();
                 var pathImages = "plate/"+gguid;
+                var params = {
+                    "dir":pathImages,
+                    "name":""
+                };
 
-                this.controller.FilesService.uploadOriginal('#preview','.canvasCropper-image',pathImages+'/original').then(function(response) {
+                params.name = "original";
+                this.controller.FilesService.uploadOriginal('#preview','.canvasCropper-image',params).then(function(response) {
                     images.original.url = response.image;
                     _this.advanceProgressbar();
                     self.$scope.processPublicarPost['images']['original'] = true;
                 },function(error) {
                     _this.progressCancel();
                 });
-                this.controller.FilesService.uploadRecorteCuadrado('#preview','.canvasCropper-image',pathImages+'/square').then(function(response) {
+
+                params.name = "square";
+                this.controller.FilesService.uploadRecorteCuadrado('#preview','.canvasCropper-image',params).then(function(response) {
                     images.thumbnails.square.url = response.image;
                     _this.advanceProgressbar();
                     self.$scope.processPublicarPost['images']['square'] = true;
                 },function(error) {
                     _this.progressCancel();
                 });
-                this.controller.FilesService.uploadRecorteApaisado('#preview','.canvasCropper-image',pathImages+'/landscape').then(function(response) {
+
+                params.name = "landscape";
+                this.controller.FilesService.uploadRecorteApaisado('#preview','.canvasCropper-image',params).then(function(response) {
                     images.thumbnails.landscape.url = response.image;
                     _this.advanceProgressbar();
                     self.$scope.processPublicarPost['images']['landscape'] = true;
@@ -136,6 +143,13 @@ module ILovePlatos{
                     _this.progressCancel();
                 });
 
+            }else if( this.controller.content.attributes && this.controller.content.attributes.images && !this.showNewCrop && !this.isChangeFiles ){
+                _this.advanceProgressbar();
+                self.$scope.processPublicarPost['images']['original'] = true;
+                _this.advanceProgressbar();
+                self.$scope.processPublicarPost['images']['square'] = true;
+                _this.advanceProgressbar();
+                self.$scope.processPublicarPost['images']['landscape'] = true;
             }
 
         }
@@ -153,8 +167,11 @@ module ILovePlatos{
             var idNeo4j = this.controller._user.userNeo4j;
 
             //Relationships del usuario que crea la publicación
-            var paramsUsuario = {"admin":[idNeo4j]};
-            dataJson.addNewRelationships('relatedFrom',paramsUsuario);
+            var params = {
+                "admin":[idNeo4j],
+                "have_plate_restaurant":[61]
+            };
+            dataJson.addNewRelationships('relatedFrom',params);
 
             //Obtenemos la nueva entidad
             var newEntity = dataJson.getOutput();
@@ -206,9 +223,11 @@ module ILovePlatos{
             }
         }
 
+        isChangeFiles = false;
         changeFiles(files) {
             this.controller.FilesService.loadImages(files);
             this.controller.FilesService.previewImageUpload({});
+            this.isChangeFiles = true;
             var self = this;
             setTimeout(function() {
                 self.controller.FilesService.renderRecorteCuadrado('#preview','.canvasCropper-image.cuadrado');
@@ -318,8 +337,35 @@ module ILovePlatos{
             }
         }
 
-        regenerateFormulario() {
-            
+        regenerateForm() {
+            var self = this;
+
+            var original:any = this.controller.getImageOriginal(this.controller.content);
+
+            var images = [{type:"image",source:original.url}];
+
+            setTimeout(function() {
+                self.controller.FilesService.previewImageUpload(images);
+            },100);
+        }
+
+        showNewCrop = false;
+        isShowNewCrop() {
+            return this.showNewCrop;
+        }
+        showNewCropAction(event) {
+            event.preventDefault();
+            this.showNewCrop = true;
+            var self = this;
+            setTimeout(function() {
+                self.controller.FilesService.renderRecorteRestaurant('#preview','.canvasCropper-image.restaurant');
+                self.controller.FilesService.renderRecorteCuadrado('#preview','.canvasCropper-image.cuadrado');
+                self.controller.FilesService.renderRecorteApaisado('#preview','.canvasCropper-image.apaisado');
+            },0);
+        }
+        hideNewCropAction(event) {
+            event.preventDefault();
+            this.showNewCrop = false;   
         }
 
         editarPublicacion(event,card) {

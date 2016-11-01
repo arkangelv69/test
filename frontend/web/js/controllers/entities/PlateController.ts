@@ -1,5 +1,5 @@
 /// <reference path="EntityController.ts" />
-// <reference path="Contenido/ContenidoCard.ts" />
+/// <reference path="Contenido/ContenidoCard.ts" />
 /// <reference path="Plate/PlateEdit.ts" />
 
 module ILovePlatos{
@@ -26,7 +26,7 @@ module ILovePlatos{
         mother;
         images = [];
 
-        //ContenidoCard:ContenidoCard;
+        ContenidoCard:ContenidoCard;
         PlateEdit:PlateEdit;
         
         dataAutocomplete:any;
@@ -39,14 +39,10 @@ module ILovePlatos{
                     date:0,
                     images:{
                         "type":'images',
-                        "name":"",
                         "original": {
                             "url":""
                         },
                         "thumbnails": {
-                            "main":{
-                                "url":""
-                            },
                             "square":{
                                 "url":""
                             },
@@ -68,17 +64,37 @@ module ILovePlatos{
 
             var self = this;
 
-            //this.ContenidoCard = new ContenidoCard(this);
+            this.ContenidoCard = new ContenidoCard(this);
             this.PlateEdit = new PlateEdit(this);
 
         }
 
-        initEdit() {
-            this.PlateEdit.initEdit();
+        getImageOriginal(card) {
+            return this.ContenidoCard.getImageOriginal(card);
         }
 
-        syncPreviewCard() {
-            this.PlateEdit.syncPreviewCard();
+        getUrlImgOriginal(card) {
+            return this.ContenidoCard.getUrlImgOriginal(card);
+        }
+
+        getUrlImgMain(card) {
+            return this.ContenidoCard.getUrlImgMain(card);
+        }
+
+        getUrlImgSquare(card) {
+            return this.ContenidoCard.getUrlImgSquare(card);
+        }
+
+        getUrlImgLandscape(card) {
+            return this.ContenidoCard.getUrlImgLandscape(card);
+        }
+
+        getName(card) {
+            return this.ContenidoCard.getName(card);
+        }
+
+        initEdit() {
+            this.PlateEdit.initEdit();
         }
 
         isSubmitActive(){
@@ -160,7 +176,7 @@ module ILovePlatos{
         }
 
         regenerateFormulario() {
-            this.PlateEdit.regenerateFormulario();
+            this.PlateEdit.regenerateForm();
         }
 
         editarPublicacion(event,card) {
@@ -171,6 +187,19 @@ module ILovePlatos{
             this.PlateEdit.getMedia(event,type);
         }
 
+        isChangeFiles() {
+            return this.PlateEdit.isChangeFiles;
+        }
+
+        isShowNewCrop() {
+            return this.PlateEdit.isShowNewCrop();
+        }
+        showNewCropAction(event) {
+            this.PlateEdit.showNewCropAction(event);
+        }
+        hideNewCropAction(event) {
+            this.PlateEdit.hideNewCropAction(event);
+        }
         
 
     }
