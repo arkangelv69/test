@@ -1,0 +1,27 @@
+<section class="fileimage">
+	<div class="button action">
+		<input type="file" id="fileElemImage" name="fileElemImage" ng-model="restaurantCtrl.fileElemImage"	 accept="image/*" onchange="angular.element(this).scope().restaurantCtrl.changeFiles(this.files);">
+		<button id="fileSelect" ng-click="restaurantCtrl.selectFile($event,'#fileElemImage')" type="button" class="btn btn-subir-foto">
+				<span>Subir imagen</span>
+		</button>
+	</div>
+	<div class="fileimage-preview" data-ng-show="restaurantCtrl.hasImage()">
+		<div id="preview"></div>
+		<div id="images-cuts" data-ng-show="!restaurantCtrl.isShowNewCrop() && !restaurantCtrl.isChangeFiles()">
+			<div class="image-cut cut-main"><img data-ng-src="{[{restaurantCtrl.getUrlImgMain(restaurantCtrl.content)}]}" /></div>
+			<div class="image-cut cut-square"><img data-ng-src="{[{restaurantCtrl.getUrlImgSquare(restaurantCtrl.content)}]}" /></div>
+			<div class="image-cut cut-landscape"><img data-ng-src="{[{restaurantCtrl.getUrlImgLandscape(restaurantCtrl.content)}]}" /></div>
+		</div>
+		<button data-ng-show="!restaurantCtrl.isShowNewCrop() && !restaurantCtrl.isChangeFiles()" type="button" class="btn btn-subir-foto" data-ng-click="restaurantCtrl.showNewCropAction($event)">Volver a recortar</button>
+		<div id="canvasCropper" data-ng-show="restaurantCtrl.isShowNewCrop() || restaurantCtrl.isChangeFiles()">
+			<button data-ng-show="!restaurantCtrl.isChangeFiles()" type="button" class="btn btn-subir-foto" data-ng-click="restaurantCtrl.hideNewCropAction($event)">Cancelar recorte</button>
+			<p>Necesitamos que realices estos recortes para que tu local se visualice correctamente.</p>
+			<h4>Miniatura Restaurante</h4>
+			<div class="canvasCropper-image restaurant"></div>
+			<h4>Miniatura cuadrada</h4>
+			<div class="canvasCropper-image cuadrado"></div>
+			<h4>Miniatura apaisada</h4>
+			<div class="canvasCropper-image apaisado"></div>
+		</div>
+	</div>	
+</section>

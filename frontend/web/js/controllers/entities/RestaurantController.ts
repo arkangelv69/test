@@ -114,16 +114,32 @@ module ILovePlatos{
             return "?lat="+lat+"&lng="+lng+"&address="+address+"&addressName="+addressName;
         }
 
+        getImageOriginal(card) {
+            return this.ContenidoCard.getImageOriginal(card);
+        }
+
+        getUrlImgOriginal(card) {
+            return this.ContenidoCard.getUrlImgOriginal(card);
+        }
+
+        getUrlImgMain(card) {
+            return this.ContenidoCard.getUrlImgMain(card);
+        }
+
+        getUrlImgSquare(card) {
+            return this.ContenidoCard.getUrlImgSquare(card);
+        }
+
+        getUrlImgLandscape(card) {
+            return this.ContenidoCard.getUrlImgLandscape(card);
+        }
+
         getName(card) {
             return this.ContenidoCard.getName(card);
         }
 
         initEdit() {
             this.RestaurantEdit.initEdit();
-        }
-
-        syncPreviewCard() {
-            this.RestaurantEdit.syncPreviewCard();
         }
 
         isSubmitActive(){
@@ -192,8 +208,8 @@ module ILovePlatos{
             return this.RestaurantEdit.isUpdate();
         }
 
-        regenerateFormulario() {
-            this.RestaurantEdit.regenerateFormulario();
+        regenerateForm() {
+            this.RestaurantEdit.regenerateForm();
         }
 
         editarPublicacion(event,card) {
@@ -202,6 +218,20 @@ module ILovePlatos{
 
         getMedia(event,type) {
             this.RestaurantEdit.getMedia(event,type);
+        }
+
+        isChangeFiles() {
+            return this.RestaurantEdit.isChangeFiles;
+        }
+
+        isShowNewCrop() {
+            return this.RestaurantEdit.isShowNewCrop();
+        }
+        showNewCropAction(event) {
+            this.RestaurantEdit.showNewCropAction(event);
+        }
+        hideNewCropAction(event) {
+            this.RestaurantEdit.hideNewCropAction(event);
         }
 
         

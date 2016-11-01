@@ -36,6 +36,46 @@ module ILovePlatos{
             return url;
         }
 
+        getImageOriginal(card) {
+            var original = {};
+            if(card && card.attributes && card.attributes.images && card.attributes.images.original) {
+                original = card.attributes.images.original;
+            }
+            return original;
+        }
+
+        getUrlImgOriginal(card) {
+            var url = "";
+            if(card && card.attributes && card.attributes.images && card.attributes.images.original) {
+                url = card.attributes.images.original.url;
+            }
+            return url;
+        }
+
+        getUrlImgMain(card) {
+            var url = "";
+            if(card && card.attributes && card.attributes.images && card.attributes.images.thumbnails && card.attributes.images.thumbnails.main) {
+                url = card.attributes.images.thumbnails.main.url;
+            }
+            return url;
+        }
+
+        getUrlImgSquare(card) {
+            var url = "";
+            if(card && card.attributes && card.attributes.images && card.attributes.images.thumbnails && card.attributes.images.thumbnails.square) {
+                url = card.attributes.images.thumbnails.square.url;
+            }
+            return url;
+        }
+
+        getUrlImgLandscape(card) {
+            var url = "";
+            if(card && card.attributes && card.attributes.images && card.attributes.images.thumbnails && card.attributes.images.thumbnails.landscape) {
+                url = card.attributes.images.thumbnails.landscape.url;
+            }
+            return url;
+        }
+
         getName(card) {
             if(card && card.attributes && card.attributes.name) {
                 return card.attributes.name;

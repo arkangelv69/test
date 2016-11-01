@@ -51,10 +51,6 @@ module ILovePlatos{
 
         }
 
-        syncPreviewCard() {
-            
-        }
-
         isSubmitActive(){
             var content = this.controller.content;
             if( 
@@ -128,7 +124,9 @@ module ILovePlatos{
             _this.advanceProgressbar();
 
             if( this.controller.FilesService.fileElemImage && 
-                this.controller.FilesService.fileElemImage.length > 0) {
+                this.controller.FilesService.fileElemImage.length > 0 &&
+                ( this.showNewCrop || this.isChangeFiles )
+            ) {
 
                 if(!content.attributes.images) {
                     content.attributes.images = {
@@ -194,6 +192,15 @@ module ILovePlatos{
                     _this.progressCancel();
                 });
 
+            }else if( this.controller.content.attributes && this.controller.content.attributes.images && !this.showNewCrop && !this.isChangeFiles ){
+                _this.advanceProgressbar();
+                self.$scope.processPublicarPost['images']['original'] = true;
+                _this.advanceProgressbar();
+                self.$scope.processPublicarPost['images']['main'] = true;
+                _this.advanceProgressbar();
+                self.$scope.processPublicarPost['images']['square'] = true;
+                _this.advanceProgressbar();
+                self.$scope.processPublicarPost['images']['landscape'] = true;
             }
 
         }
@@ -264,16 +271,17 @@ module ILovePlatos{
             }
         }
 
+        isChangeFiles = false;
         changeFiles(files) {
             this.controller.FilesService.loadImages(files);
             this.controller.FilesService.previewImageUpload({});
+            this.isChangeFiles = true;
             var self = this;
             setTimeout(function() {
                 self.controller.FilesService.renderRecorteRestaurant('#preview','.canvasCropper-image.restaurant');
                 self.controller.FilesService.renderRecorteCuadrado('#preview','.canvasCropper-image.cuadrado');
                 self.controller.FilesService.renderRecorteApaisado('#preview','.canvasCropper-image.apaisado');
             },300);
-            this.controller.FilesService.cropperImage('original','#preview');
             if( !self.controller.$scope.$$phase  ) {
                 self.controller.$scope.$apply();
             }
@@ -385,8 +393,35 @@ module ILovePlatos{
             }
         }
 
-        regenerateFormulario() {
-            
+        regenerateForm() {
+            var self = this;
+
+            var original:any = this.controller.getImageOriginal(this.controller.content);
+
+            var images = [{type:"image",source:original.url}];
+
+            setTimeout(function() {
+                self.controller.FilesService.previewImageUpload(images);
+            },100);
+        }
+
+        showNewCrop = false;
+        isShowNewCrop() {
+            return this.showNewCrop;
+        }
+        showNewCropAction(event) {
+            event.preventDefault();
+            this.showNewCrop = true;
+            var self = this;
+            setTimeout(function() {
+                self.controller.FilesService.renderRecorteRestaurant('#preview','.canvasCropper-image.restaurant');
+                self.controller.FilesService.renderRecorteCuadrado('#preview','.canvasCropper-image.cuadrado');
+                self.controller.FilesService.renderRecorteApaisado('#preview','.canvasCropper-image.apaisado');
+            },0);
+        }
+        hideNewCropAction(event) {
+            event.preventDefault();
+            this.showNewCrop = false;   
         }
 
         editarPublicacion(event,card) {

@@ -5,7 +5,7 @@
 			<h2 class="header">Crear restaurante</h2>
 		</div>
 	</div>
-	<form class="col s12">
+	<form class="col s12" data-ng-if="restaurantCtrl.content.id" data-ng-init="restaurantCtrl.regenerateForm()">
 		<div class="row">
 			<div class="input-field col s12">
 				<p>Dinos el nombre de tu restaurante:</p>
@@ -30,7 +30,7 @@
 		</div>
 		<div class="row">
 			<div class="input-field col s12">
-				<fileimage template="restaurant"></fileimage>
+				<fileimage template="restaurant-update"></fileimage>
 			</div>
 		</div>
 		<div class="row">
