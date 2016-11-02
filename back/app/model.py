@@ -121,10 +121,10 @@ class Restaurant(GraphObject):
     type = "Restaurant"
     name = Property()
     description = Property()
-    image = Property()
-    image1 = Property()
-    image2 = Property()
-    image3 = Property()
+    image_original = Property()
+    image_main= Property()
+    image_square = Property()
+    image_landscape = Property()
     latitude = Property()
     longitude = Property()
     address = Property()
@@ -135,9 +135,12 @@ class Restaurant(GraphObject):
 
     def create(self,json,g):
         for attribute, value in json["data"]["attributes"].items():
-            if (attribute == "image"):
-                for nameImage, image in json["data"]["attributes"]["image"].items():
-                    setattr(self, nameImage, image)
+            if (attribute == "images"):
+                #for nameImage, image in json["data"]["attributes"]["images"].items():
+                setattr(self, "image_original", json["data"]["attributes"]["images"]["original"]["url"])
+                setattr(self, "image_main", json["data"]["attributes"]["images"]["thumbnails"]["main"]["url"])
+                setattr(self, "image_square", json["data"]["attributes"]["images"]["thumbnails"]["square"]["url"])
+                setattr(self, "image_landscape", json["data"]["attributes"]["images"]["thumbnails"]["landscape"]["url"])
             else:
                 setattr(self,attribute,value)
 
@@ -152,9 +155,12 @@ class Restaurant(GraphObject):
 
     def update(self, json, g):
         for attribute, value in json["data"]["attributes"].items():
-            if (attribute == "image"):
-                for nameImage, image in json["data"]["attributes"]["image"].items():
-                    setattr(self, nameImage, image)
+            if (attribute == "images"):
+                #for nameImage, image in json["data"]["attributes"]["images"].items():
+                setattr(self, "image_original", json["data"]["attributes"]["images"]["original"]["url"])
+                setattr(self, "image_main", json["data"]["attributes"]["images"]["thumbnails"]["main"]["url"])
+                setattr(self, "image_square", json["data"]["attributes"]["images"]["thumbnails"]["square"]["url"])
+                setattr(self, "image_landscape", json["data"]["attributes"]["images"]["thumbnails"]["landscape"]["url"])
             else:
                 setattr(self,attribute,value)
         g.push(self)
@@ -177,10 +183,22 @@ class Restaurant(GraphObject):
                 "attributes": {
                     "name": self.name,
                     "description": self.description,
-                    "image": {
-                        "image1": self.image1,
-                        "image2": self.image2,
-                        "image3": self.image3
+                    "images": {
+                        "type": "images",
+                        "original": {
+                            "url":self.image_original
+                        },
+                        "thumbnails":{
+                            "main":{
+                                "url": self.image_main
+                            },
+                            "square": {
+                                "url": self.image_square
+                            },
+                            "landscape": {
+                                "url": self.image_landscape
+                            }
+                        }
                     },
                     "latitude": self.latitude,
                     "longitude": self.longitude,
@@ -202,7 +220,23 @@ class Restaurant(GraphObject):
                 "attributes": {
                     "name": node["name"],
                     "description": node["description"],
-                    "image": node["image"],
+                    "images": {
+                        "type": "images",
+                        "original": {
+                            "url": node["image_original"]
+                        },
+                        "thumbnails":{
+                            "main":{
+                                "url": node["image_main"]
+                            },
+                            "square": {
+                                "url": node["image_square"]
+                            },
+                            "landscape": {
+                                "url": node["image_landscape"]
+                            }
+                        }
+                    },
                     "latitude": node["latitude"],
                     "longitude": node["longitude"],
                     "address": node["address"]
@@ -338,7 +372,9 @@ class Plate(GraphObject):
     type = "Plate"
     name = Property()
     description = Property()
-    image = Property()
+    image_original = Property()
+    image_square = Property()
+    image_landscape = Property()
 
     liked = RelatedFrom("User", "LIKED")
     have_plate_menu = RelatedFrom("Menu", "HAVE_PLATE")
@@ -356,7 +392,20 @@ class Plate(GraphObject):
                 "attributes": {
                     "name": node["name"],
                     "description": node["description"],
-                    "image": node["image"]
+                    "images": {
+                        "type": "images",
+                        "original": {
+                            "url": node["image_original"]
+                        },
+                        "thumbnails": {
+                            "square": {
+                                "url": node["image_square"]
+                            },
+                            "landscape": {
+                                "url": node["image_landscape"]
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -375,7 +424,20 @@ class Plate(GraphObject):
                 "attributes": {
                     "name": self.name,
                     "description": self.description,
-                    "image": self.image
+                    "images": {
+                        "type": "images",
+                        "original": {
+                            "url":self.image_original
+                        },
+                        "thumbnails":{
+                            "square": {
+                                "url": self.image_square
+                            },
+                            "landscape": {
+                                "url": self.image_landscape
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -384,7 +446,13 @@ class Plate(GraphObject):
 
     def create(self,json,g):
         for attribute, value in json["data"]["attributes"].items():
-            setattr(self,attribute,value)
+            if (attribute == "images"):
+                #for nameImage, image in json["data"]["attributes"]["images"].items():
+                setattr(self, "image_original", json["data"]["attributes"]["images"]["original"]["url"])
+                setattr(self, "image_square", json["data"]["attributes"]["images"]["thumbnails"]["square"]["url"])
+                setattr(self, "image_landscape", json["data"]["attributes"]["images"]["thumbnails"]["landscape"]["url"])
+            else:
+                setattr(self,attribute,value)
 
         for restaurantId in json["data"]["relationships"]["relatedFrom"]["have_plate_restaurant"]:
             restaurant = Restaurant.select(g,restaurantId).first()
@@ -394,7 +462,13 @@ class Plate(GraphObject):
 
     def update(self,json,g):
         for attribute, value in json["data"]["attributes"].items():
-            setattr(self,attribute,value)
+            if (attribute == "images"):
+                #for nameImage, image in json["data"]["attributes"]["images"].items():
+                setattr(self, "image_original", json["data"]["attributes"]["images"]["original"]["url"])
+                setattr(self, "image_square", json["data"]["attributes"]["images"]["thumbnails"]["square"]["url"])
+                setattr(self, "image_landscape", json["data"]["attributes"]["images"]["thumbnails"]["landscape"]["url"])
+            else:
+                setattr(self,attribute,value)
 
         #Pendiente ver si en el update hay que actualizar las relaciones
         """for restaurantId in json["data"]["relationships"]["relatedFrom"]["have_menu"]:
