@@ -20,7 +20,8 @@ module ILovePlatos{
             "store",
             "FilesService",
             "$q",
-            "$filter"
+            "$filter",
+            "RestaurantApirestService",
         ];
 
         mother;
@@ -59,7 +60,7 @@ module ILovePlatos{
                 }
             };
 
-        constructor($config,api,DateService,$rootScope,public $stateParams,public $scope,public $state,$element,$sce,auth,store,public FilesService, public $q,public $filter){
+        constructor($config,api,DateService,$rootScope,public $stateParams,public $scope,public $state,$element,$sce,auth,store,public FilesService, public $q,public $filter,public RestaurantApi){
             super($config,api,DateService,$rootScope,$stateParams,$scope,$state,$element,$sce,auth,store);
 
             var self = this;
@@ -175,7 +176,7 @@ module ILovePlatos{
             return this.PlateEdit.isUpdate();
         }
 
-        regenerateFormulario() {
+        regenerateForm() {
             this.PlateEdit.regenerateForm();
         }
 

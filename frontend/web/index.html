@@ -141,6 +141,8 @@
     <body class="appNative browser" ng-class="[mainCtrl.customClass]" id="{[{mainCtrl.id}]}">
         <div data-ng-controller="UserController as userCtrl" ng-class="{'no-login':!userCtrl.currentUser,'login':userCtrl.currentUser}">
             <div id="main-menu">
+              <a class="back ng-hide" data-ng-show="mainCtrl.title != 'Home'" data-ng-click="mainCtrl.goBack();"><i class="mdi mdi-chevron-left"></i></a>
+              <h1 class="ng-hide" data-ng-show="mainCtrl.title != 'Home' ">{[{mainCtrl.title}]}</h1>
               <ul id="slide-out" class="side-nav">
                 <li ng-if="userCtrl.isLogged()">
                   <div class="userView">
@@ -163,17 +165,18 @@
                   </div>
                 </li>
                 <li ng-if="userCtrl.isLogged()"><div class="divider"></div></li>
+                <li ng-if="userCtrl.isLogged()"><a ui-sref="home" class="return">Volver al mapa</a></li>
+                <li ng-if="userCtrl.isLogged()"><div class="divider"></div></li>
                 <li ng-if="userCtrl.isLogged()"><a ui-sref="restaurant-list">Mis restaurantes</a></li>
-                <li ng-if="userCtrl.isLogged()"><a ui-sref="restaurant-create">Crear restaurante</a></li>
                 <li ng-if="userCtrl.isLogged()"><a ui-sref="plate-list">Mis platos</a></li>
-                <li ng-if="userCtrl.isLogged()"><a ui-sref="plate-create">Crear plato</a></li>
                 <li ng-if="userCtrl.isLogged()"><a ui-sref="menu-list">Mis menus</a></li>
-                <li ng-if="userCtrl.isLogged()"><a ui-sref="menu-create">Crear menu</a></li>
               </ul>
               <a href="#" data-activates="slide-out" class="action-button button-collapse"><i class="material-icons small">menu</i></a>
             </div>
-            <div data-ui-view class="anim-in-out anim-slide-below-fade" data-anim-speed="1000" data-anim-sync="true"></div>
-            <map></map>
+            <div class="content-view">
+                <div data-ui-view data-anim-speed="1000" data-anim-sync="true"></div>
+                <map></map>
+            </div>
         </div>
 
         <script>

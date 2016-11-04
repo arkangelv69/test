@@ -1,12 +1,12 @@
-<div class="row" data-ng-controller="PlateController as plateCtrl">
+<div class="plate-list row" data-ng-controller="PlateController as plateCtrl">
 	<div class="col s12">
-		<div class="row">
-			<a ui-sref="home" class="return">Volver al mapa</a>
-			<h2 class="header">Mis platos</h2>
-		</div>
 		<a data-ui-sref="plate-create" class="btn-action btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
 		<ul class="collection" data-ng-init="plateCtrl.getAllByUserId()">
-			<li class="collection-item" data-ng-repeat="item in plateCtrl.contents track by $index" data-ng-if="plateCtrl.contents.length > 0"><div>{[{plateCtrl.getName(item)}]}<a data-ui-sref="plate-update({id:item.id})" class="secondary-content"><i class="material-icons">edit</i></a></div></li>
-	       </ul>
+			<li class="collection-item avatar" data-ng-repeat="item in plateCtrl.contents track by $index" data-ng-if="plateCtrl.contents.length > 0">
+				<img data-ng-src="{[{plateCtrl.getUrlImgSquare(item)}]}" class="circle" />
+				<span class="title">{[{plateCtrl.getName(item)}]}</span>
+				<a data-ui-sref="plate-update({id:item.id})" class="secondary-content"><i class="material-icons">edit</i></a>
+			</li>
+		</ul>
 	</div>
 </div>

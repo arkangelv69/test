@@ -15,10 +15,194 @@ module ILovePlatos{
         controller:MenuController;
 
         dataJson:any;
+        autocompleteRestaurant:any;
+        autocompleteStarters;
+        autocompleteFirsts;
+        autocompleteSeconds;
+        autocompleteDesserts;
 
         constructor(controller) {
             this.controller = controller;
             this.dataJson = new DataJsonController('Menu',controller.auth);
+
+            $('.datepicker').pickadate({
+                selectMonths: true, // Creates a dropdown to control month
+              });
+
+            var self = this;
+            var userId = this.controller._user.userNeo4j;
+
+            //Para los restaurantes
+            this.controller.RestaurantApi.getAllByUserId(userId).then(function(content) {
+                var data = [];
+                angular.forEach(content,function(restaurant,index) {
+                    data.push({
+                        id:restaurant.data.id,
+                        text:restaurant.data.attributes.name,
+                        image:restaurant.data.attributes.images.thumbnails.square.url
+                    });
+                });
+
+                if(data.length <= 1) {
+                    self.autocompleteRestaurant = $('input.restaurant-autocomplete').materialize_autocomplete({
+                        limit: 20,
+                        multiple: {
+                            enable: true,
+                        },
+                        appender: {
+                            el: '',
+                            tagName: 'ul',
+                            className: 'ac-appender',
+                            tagTemplate: '<div class="chip" data-id="<%= item.id %>" data-text="<% item.text %>" data-image="<% item.image %>"><img src="<%= item.image %>" /><span> <%= item.text %>(<%= item.id %>) <i class="material-icons close">close</i></div>'
+                        },
+                        dropdown: {
+                            el: '',
+                            tagName: 'ul',
+                            className: 'collection',
+                            itemTemplate: '<li class="collection-item avatar" data-id="<%= item.id %>" data-text="<%= item.text %>" data-image="<%= item.image %>"><a href="javascript:void(0)"><img class="square" src="<%= item.image %>" /><span><%= item.text %></span></a></li>',
+                            noItem: ''
+                        },
+                        getData: function (value, callback) {
+                            callback(value, data);
+                        }
+                    });
+                    self.autocompleteRestaurant.setValue(data[0]);
+
+                }else if(content){
+                    self.autocompleteRestaurant = $('input.restaurant-autocomplete').materialize_autocomplete({
+                        limit: 20,
+                        multiple: {
+                            enable: true,
+                        },
+                        appender: {
+                            el: '',
+                            tagName: 'ul',
+                            className: 'ac-appender',
+                            tagTemplate: '<div class="chip" data-id="<%= item.id %>" data-text="<% item.text %>" data-image="<% item.image %>"><img src="<%= item.image %>" /><span> <%= item.text %>(<%= item.id %>) <i class="material-icons close">close</i></div>'
+                        },
+                        dropdown: {
+                            el: '',
+                            tagName: 'ul',
+                            className: 'collection',
+                            itemTemplate: '<li class="collection-item avatar" data-id="<%= item.id %>" data-text="<%= item.text %>" data-image="<%= item.image %>"><a href="javascript:void(0)"><img class="square" src="<%= item.image %>" /><span><%= item.text %></span></a></li>',
+                            noItem: ''
+                        },
+                        getData: function (value, callback) {
+                            callback(value, data);
+                        }
+                    });
+                }
+
+            });
+
+            //Para los platos
+            this.controller.PlateApi.getAllByUserId(userId).then(function(content) {
+                var data = [];
+                angular.forEach(content,function(plate,index) {
+                    data.push({
+                        id:plate.data.id,
+                        text:plate.data.attributes.name,
+                        image:plate.data.attributes.images.thumbnails.square.url
+                    });
+                });
+
+                if(data.length > 0) {
+                    self.autocompleteStarters = $('input.starters-autocomplete').materialize_autocomplete({
+                        limit: 20,
+                        multiple: {
+                            enable: true,
+                        },
+                        appender: {
+                            el: '',
+                            tagName: 'ul',
+                            className: 'ac-appender',
+                            tagTemplate: '<div class="chip" data-id="<%= item.id %>" data-text="<% item.text %>" data-image="<% item.image %>"><img src="<%= item.image %>" /><span> <%= item.text %>(<%= item.id %>) <i class="material-icons close">close</i></div>'
+                        },
+                        dropdown: {
+                            el: '',
+                            tagName: 'ul',
+                            className: 'collection',
+                            itemTemplate: '<li class="collection-item avatar" data-id="<%= item.id %>" data-text="<%= item.text %>" data-image="<%= item.image %>"><a href="javascript:void(0)"><img class="square" src="<%= item.image %>" /><span><%= item.text %></span></a></li>',
+                            noItem: ''
+                        },
+                        getData: function (value, callback) {
+                            callback(value, data);
+                        }
+                    });
+
+                    self.autocompleteFirsts = $('input.firsts-autocomplete').materialize_autocomplete({
+                        limit: 20,
+                        multiple: {
+                            enable: true,
+                        },
+                        appender: {
+                            el: '',
+                            tagName: 'ul',
+                            className: 'ac-appender',
+                            tagTemplate: '<div class="chip" data-id="<%= item.id %>" data-text="<% item.text %>" data-image="<% item.image %>"><img src="<%= item.image %>" /><span> <%= item.text %>(<%= item.id %>) <i class="material-icons close">close</i></div>'
+                        },
+                        dropdown: {
+                            el: '',
+                            tagName: 'ul',
+                            className: 'collection',
+                            itemTemplate: '<li class="collection-item avatar" data-id="<%= item.id %>" data-text="<%= item.text %>" data-image="<%= item.image %>"><a href="javascript:void(0)"><img class="square" src="<%= item.image %>" /><span><%= item.text %></span></a></li>',
+                            noItem: ''
+                        },
+                        getData: function (value, callback) {
+                            callback(value, data);
+                        }
+                    });
+
+                    self.autocompleteSeconds = $('input.seconds-autocomplete').materialize_autocomplete({
+                        limit: 20,
+                        multiple: {
+                            enable: true,
+                        },
+                        appender: {
+                            el: '',
+                            tagName: 'ul',
+                            className: 'ac-appender',
+                            tagTemplate: '<div class="chip" data-id="<%= item.id %>" data-text="<% item.text %>" data-image="<% item.image %>"><img src="<%= item.image %>" /><span> <%= item.text %>(<%= item.id %>) <i class="material-icons close">close</i></div>'
+                        },
+                        dropdown: {
+                            el: '',
+                            tagName: 'ul',
+                            className: 'collection',
+                            itemTemplate: '<li class="collection-item avatar" data-id="<%= item.id %>" data-text="<%= item.text %>" data-image="<%= item.image %>"><a href="javascript:void(0)"><img class="square" src="<%= item.image %>" /><span><%= item.text %></span></a></li>',
+                            noItem: ''
+                        },
+                        getData: function (value, callback) {
+                            callback(value, data);
+                        }
+                    });
+
+                    self.autocompleteDesserts = $('input.desserts-autocomplete').materialize_autocomplete({
+                        limit: 20,
+                        multiple: {
+                            enable: true,
+                        },
+                        appender: {
+                            el: '',
+                            tagName: 'ul',
+                            className: 'ac-appender',
+                            tagTemplate: '<div class="chip" data-id="<%= item.id %>" data-text="<% item.text %>" data-image="<% item.image %>"><img src="<%= item.image %>" /><span> <%= item.text %>(<%= item.id %>) <i class="material-icons close">close</i></div>'
+                        },
+                        dropdown: {
+                            el: '',
+                            tagName: 'ul',
+                            className: 'collection',
+                            itemTemplate: '<li class="collection-item avatar" data-id="<%= item.id %>" data-text="<%= item.text %>" data-image="<%= item.image %>"><a href="javascript:void(0)"><img class="square" src="<%= item.image %>" /><span><%= item.text %></span></a></li>',
+                            noItem: ''
+                        },
+                        getData: function (value, callback) {
+                            callback(value, data);
+                        }
+                    });
+
+                }
+
+            });
+
         }
 
         initEdit() {
@@ -38,11 +222,8 @@ module ILovePlatos{
             if( 
                 !content.attributes.name || 
                 !content.attributes.price ||
-                !content.attributes.drink ||
-                !content.attributes.drinkDescription ||
-                !content.attributes.desserts ||
-                
-                (( !content.attributes.daily || content.attributes.daily.length < 1) && (!content.attributes.scheduled || !content.attributes.scheduled.init))
+                !content.attributes.desserts
+                //(( !content.attributes.daily || content.attributes.daily.length < 1) && (!content.attributes.scheduled || !content.attributes.scheduled.init))
                 /*||
                 this.controller.FilesService.fileElemImage.length < 1*/
             ){
@@ -55,6 +236,14 @@ module ILovePlatos{
             var self = this.controller;
             var _this = this;
             var content = this.controller.content;
+
+            if(!_this.autocompleteRestaurant || !_this.autocompleteRestaurant.value || _this.autocompleteRestaurant.value.length < 1) {
+                self._main.resetMessages();
+                self._main.setMessage({type:'danger',text:'Tienes que seleccionar un restaurante'});
+
+                this.progressCancel();
+                return null;
+            }
 
             if(!this.controller._user.isLogged()) {
                 this.progressCancel();
@@ -96,10 +285,30 @@ module ILovePlatos{
 
             var user = this.controller._user.currentUser;
             var id = user.username;
+            var idNeo4j = this.controller._user.userNeo4j;
 
             //Relationships del usuario que crea la publicación
-            var paramsUsuario = {"admin":['David']};
-            dataJson.addNewRelationships('relatedFrom',paramsUsuario);
+            var restaurants = this.autocompleteRestaurant.value;
+            var ids = [];
+            angular.forEach(restaurants,function(restaurant) {
+                ids.push(restaurant.id);
+            })
+            var params = {
+                "admin":[idNeo4j],
+                "have_menu": ids
+            };
+
+            dataJson.addNewRelationships('relatedFrom',params);
+
+            var paramsPlates = {
+               "have_plate": {
+                    "starters":[],
+                    "firsts":[],
+                    "seconds":[],
+                    "desserts":[]
+                }
+            };
+            dataJson.addNewRelationships('relatedTo',paramsPlates);            
 
             //Obtenemos la nueva entidad
             var newEntity = dataJson.getOutput();

@@ -66,9 +66,12 @@ module ILovePlatos{
             return false;
         };
 
-        getAllByUserId() {
+        getAllByUserId(userId) {
             var self:EntityController = this;
-            var userId = this._user.userNeo4j;
+
+            if(!userId) {
+                userId = this._user.userNeo4j;
+            }
             this.api.getAllByUserId(userId).then((contents: iEntityApirest) => {
 
                 for(var item in contents) {

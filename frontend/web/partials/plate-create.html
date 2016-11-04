@@ -1,17 +1,18 @@
 <div class="row" data-ng-controller="PlateController as plateCtrl">
-	<div class="col s12">
-		<div class="row">
-			<a ui-sref="plate-create" class="return">Volver</a>
-			<h2 class="header">Crear plato</h2>
-		</div>
-	</div>
 	<form class="col s12">
 		<div class="row">
+			<div class="input-field col s12">
+				<p>Lo primero es asociar este plato a uno o varios restaurantes</p>
+			</div>
+			<div class="input-field col s12">
+				<input type="text" id="restaurant-input" class="restaurant-autocomplete">
+				<label for="restaurant-input">Restaurantes</label>
+			</div>
 			<div class="input-field col s12">
 				<p>Dinos el nombre de tu plato:</p>
 			</div>
 			<div class="input-field col s12">
-				<input id="name" type="text" class="validate" length="15" data-ng-model="plateCtrl.content.attributes.name">
+				<input id="name" type="text" class="validate" length="74" data-ng-model="plateCtrl.content.attributes.name">
 				<label for="name">Nombre</label>
 			</div>
 			<div class="input-field col s12">

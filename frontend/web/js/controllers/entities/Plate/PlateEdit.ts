@@ -15,6 +15,7 @@ module ILovePlatos{
         controller:PlateController;
 
         dataJson:any;
+        autocomplete
 
         constructor(controller) {
             this.controller = controller;
@@ -39,6 +40,72 @@ module ILovePlatos{
                     self.formEntity();
                 }
             });
+
+            var userId = this.controller._user.userNeo4j;
+            this.controller.RestaurantApi.getAllByUserId(userId).then(function(content) {
+                var data = [];
+                angular.forEach(content,function(restaurant,index) {
+                    data.push({
+                        id:restaurant.data.id,
+                        text:restaurant.data.attributes.name,
+                        image:restaurant.data.attributes.images.thumbnails.square.url
+                    });
+                });
+
+                if(data.length <= 1) {
+                    self.autocomplete = $('input.restaurant-autocomplete').materialize_autocomplete({
+                        limit: 20,
+                        multiple: {
+                            enable: true,
+                        },
+                        appender: {
+                            el: '',
+                            tagName: 'ul',
+                            className: 'ac-appender',
+                            tagTemplate: '<div class="chip" data-id="<%= item.id %>" data-text="<% item.text %>" data-image="<% item.image %>"><img src="<%= item.image %>" /><span> <%= item.text %>(<%= item.id %>) <i class="material-icons close">close</i></div>'
+                        },
+                        dropdown: {
+                            el: '',
+                            tagName: 'ul',
+                            className: 'collection',
+                            itemTemplate: '<li class="collection-item avatar" data-id="<%= item.id %>" data-text="<%= item.text %>" data-image="<%= item.image %>"><a href="javascript:void(0)"><img class="square" src="<%= item.image %>" /><span><%= item.text %></span></a></li>',
+                            noItem: ''
+                        },
+                        getData: function (value, callback) {
+                            callback(value, data);
+                        }
+                    });
+                    self.autocomplete.setValue(data[0]);
+
+                    //angular.element('.restaurant-autocomplete').val(data[0].id);
+
+                }else if(content){
+                    self.autocomplete = $('input.restaurant-autocomplete').materialize_autocomplete({
+                        limit: 20,
+                        multiple: {
+                            enable: true,
+                        },
+                        appender: {
+                            el: '',
+                            tagName: 'ul',
+                            className: 'ac-appender',
+                            tagTemplate: '<div class="chip" data-id="<%= item.id %>" data-text="<% item.text %>" data-image="<% item.image %>"><img src="<%= item.image %>" /><span> <%= item.text %>(<%= item.id %>) <i class="material-icons close">close</i></div>'
+                        },
+                        dropdown: {
+                            el: '',
+                            tagName: 'ul',
+                            className: 'collection',
+                            itemTemplate: '<li class="collection-item avatar" data-id="<%= item.id %>" data-text="<%= item.text %>" data-image="<%= item.image %>"><a href="javascript:void(0)"><img class="square" src="<%= item.image %>" /><span><%= item.text %></span></a></li>',
+                            noItem: ''
+                        },
+                        getData: function (value, callback) {
+                            callback(value, data);
+                        }
+                    });
+                }
+
+            });
+
         }
 
         initEdit() {
@@ -67,6 +134,14 @@ module ILovePlatos{
             var content = this.controller.content;
 
             if(!this.controller._user.isLogged()) {
+                this.progressCancel();
+                return null;
+            }
+
+            if(!_this.autocomplete || !_this.autocomplete.value || _this.autocomplete.value.length < 1) {
+                self._main.resetMessages();
+                self._main.setMessage({type:'danger',text:'Tienes que seleccionar un restaurante'});
+
                 this.progressCancel();
                 return null;
             }
@@ -167,9 +242,14 @@ module ILovePlatos{
             var idNeo4j = this.controller._user.userNeo4j;
 
             //Relationships del usuario que crea la publicación
+            var restaurants = this.autocomplete.value;
+            var ids = [];
+            angular.forEach(restaurants,function(restaurant) {
+                ids.push(restaurant.id);
+            })
             var params = {
                 "admin":[idNeo4j],
-                "have_plate_restaurant":[61]
+                "have_plate_restaurant": ids
             };
             dataJson.addNewRelationships('relatedFrom',params);
 

@@ -1,17 +1,11 @@
 <div class="row" data-ng-controller="RestaurantController as restaurantCtrl">
-	<div class="col s12">
-		<div class="row">
-			<a ui-sref="restaurant-list" class="return">Volver</a>
-			<h2 class="header">Crear restaurante</h2>
-		</div>
-	</div>
 	<form class="col s12">
 		<div class="row">
 			<div class="input-field col s12">
 				<p>Dinos el nombre de tu restaurante:</p>
 			</div>
 			<div class="input-field col s12">
-				<input id="name" type="text" class="validate" length="34" data-ng-model="restaurantCtrl.content.attributes.name">
+				<input id="name" type="text" class="validate" length="74" data-ng-model="restaurantCtrl.content.attributes.name">
 				<label for="name">Nombre</label>
 			</div>
 			<div class="input-field col s12">
