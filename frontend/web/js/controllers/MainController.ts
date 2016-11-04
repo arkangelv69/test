@@ -248,7 +248,9 @@ module ILovePlatos{
         intervalRefresh = null;
 
         getProcessBarRefresh() {
-            return this.processBarRefresh.toString();
+            if(this.processBarRefresh) {
+                return this.processBarRefresh.toString();
+            }
         }
 
         onReload() {
