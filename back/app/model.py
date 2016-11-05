@@ -273,11 +273,14 @@ class Menu(GraphObject):
     image = Property()
     price = Property()
     bread = Property()
+    drink = Property()
+    drinkDescription = Property()
     wine = Property()
-    dessert = Property()
+    desserts = Property()
     coffe = Property()
     daily = Property()
     scheduled = Property()
+    date = Property()
 
     have_plate = RelatedTo("Plate", "HAVE_PLATE")
     have_menu = RelatedFrom("Restaurant", "HAVE_MENU")
@@ -290,24 +293,50 @@ class Menu(GraphObject):
             restaurant = Restaurant.select(g,restaurantId).first()
             self.have_menu.add(restaurant)
 
-        """for plateId in json["data"]["relationships"]["relatedTo"]["have_plate"]["entrantes"]:
+        for plateId in json["data"]["relationships"]["relatedTo"]["have_plate"]["starters"]:
             plate = Plate.select(g,plateId).first()
-            self.have_plate.add(plate,"tipo"=a)
+            self.have_plate.add(plate,properties=None,type="starters")
 
-        for plateId in json["data"]["relationships"]["relatedTo"]["have_plate"]["primeros"]:
+        for plateId in json["data"]["relationships"]["relatedTo"]["have_plate"]["firsts"]:
             plate = Plate.select(g,plateId).first()
-            self.have_plate.add(plate)"""
+            self.have_plate.add(plate,properties=None,type="firsts")
+
+        for plateId in json["data"]["relationships"]["relatedTo"]["have_plate"]["seconds"]:
+            plate = Plate.select(g,plateId).first()
+            self.have_plate.add(plate,properties=None,type="seconds")
+
+        for plateId in json["data"]["relationships"]["relatedTo"]["have_plate"]["desserts"]:
+            plate = Plate.select(g,plateId).first()
+            self.have_plate.add(plate,properties=None,type="desserts")
 
         g.push(self)
 
     def update(self,json,g):
+        self.have_menu.clear()
+        self.have_plate.clear()
+
         for attribute, value in json["data"]["attributes"].items():
             setattr(self,attribute,value)
 
-        #Pendiente ver si en el update hay que actualizar las relaciones
-        """for restaurantId in json["data"]["relationships"]["relatedFrom"]["have_menu"]:
+        for restaurantId in json["data"]["relationships"]["relatedFrom"]["have_menu"]:
             restaurant = Restaurant.select(g,restaurantId).first()
-            self.have_menu.add(restaurant)"""
+            self.have_menu.add(restaurant)
+
+        for plateId in json["data"]["relationships"]["relatedTo"]["have_plate"]["starters"]:
+            plate = Plate.select(g,plateId).first()
+            self.have_plate.add(plate,properties=None,type="starters")
+
+        for plateId in json["data"]["relationships"]["relatedTo"]["have_plate"]["firsts"]:
+            plate = Plate.select(g,plateId).first()
+            self.have_plate.add(plate,properties=None,type="firsts")
+
+        for plateId in json["data"]["relationships"]["relatedTo"]["have_plate"]["seconds"]:
+            plate = Plate.select(g,plateId).first()
+            self.have_plate.add(plate,properties=None,type="seconds")
+
+        for plateId in json["data"]["relationships"]["relatedTo"]["have_plate"]["desserts"]:
+            plate = Plate.select(g,plateId).first()
+            self.have_plate.add(plate,properties=None,type="desserts")
 
         g.push(self)
 
@@ -328,27 +357,26 @@ class Menu(GraphObject):
                 "id": self.__primaryvalue__,
                 "attributes": {
                     "name": self.name,
-                    "description": self.description,
-                    "image": self.image,
                     "price": self.price,
-                    "bread": self.bread,
-                    "wine": self.wine,
-                    "dessert": self.dessert,
-                    "coffe": self.coffe,
+                    "drink": self.drink,
+                    "drinkDescription": self.drinkDescription,
+                    "desserts": self.desserts,
                     "daily": self.daily,
-                    "scheduled": self.image
+                    "scheduled": self.scheduled
                 }
             }
         }
 
         menu["data"]["relationships"]={}
-        menu["data"]["relationships"]["first"] = []
-        menu["data"]["relationships"]["second"] = []
-        menu["data"]["relationships"]["dessert"] = []
-        menu["data"]["relationships"]["incoming"] = []
+        menu["data"]["relationships"]["relatedTo"] = {}
+        menu["data"]["relationships"]["relatedTo"]["have_plate"] = {}
+        menu["data"]["relationships"]["relatedTo"]["have_plate"]["firsts"] = []
+        menu["data"]["relationships"]["relatedTo"]["have_plate"]["seconds"] = []
+        menu["data"]["relationships"]["relatedTo"]["have_plate"]["desserts"] = []
+        menu["data"]["relationships"]["relatedTo"]["have_plate"]["starters"] = []
 
         for p in self.have_plate:
-            menu["data"]["relationships"][self.have_plate.get(p,"type")].append(p.toJson())
+            menu["data"]["relationships"]["relatedTo"]["have_plate"][self.have_plate.get(p,"type")].append(p.toJson())
 
         return menu
 

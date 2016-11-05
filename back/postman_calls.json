@@ -153,7 +153,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"data\":{\n    \t\"type\":\"Menu\",\n        \"attributes\":{\n        \t\"name\":\"MenuDavid\",\n            \"description\":\"testMenu\",\n            \"image\":\"url\",\n            \"price\":12.5,\n            \"bread\":true,\n            \"wine\":false,\n            \"dessert\":true,\n            \"coffe\":false,\n            \"daily\":[\"X,V\"],\n            \"scheduled\":[1,1,1,1,1]\n        },\n        \"relationships\":{\n        \t\"relatedFrom\":{\n            \t\"have_menu\":[8]\n            }\n        }\n    }\n}"
+					"raw": "{\n  \"data\": {\n    \"type\": \"Menu\",\n    \"attributes\": {\n      \"name\": \"TestOK\",\n      \"price\": 10,\n      \"drink\": true,\n      \"drinkDescription\": \"Prueba\",\n      \"desserts\": \"onlydessert\",\n      \"daily\": \"L,M\",\n      \"scheduled\": \"fecha\",\n      \"date\": 1478336509\n    },\n    \"relationships\": {\n      \"relatedFrom\": {\n        \"have_menu\": [\n          1\n        ]\n      },\n      \"relatedTo\": {\n        \"have_plate\": {\n          \"starters\": [],\n          \"firsts\": [\n            18\n          ],\n          \"seconds\": [\n            19\n          ],\n          \"desserts\": [\n            20\n          ]\n        }\n      }\n    }\n  }\n}"
 				},
 				"description": ""
 			},
