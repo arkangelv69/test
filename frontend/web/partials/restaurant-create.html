@@ -1,17 +1,11 @@
 <div class="row" data-ng-controller="RestaurantController as restaurantCtrl">
-	<div class="col s12">
-		<div class="row">
-			<a ui-sref="home" class="return">Volver al mapa</a>
-			<h2 class="header">Crear restaurante</h2>
-		</div>
-	</div>
 	<form class="col s12">
 		<div class="row">
 			<div class="input-field col s12">
 				<p>Dinos el nombre de tu restaurante:</p>
 			</div>
 			<div class="input-field col s12">
-				<input id="name" type="text" class="validate" length="34" data-ng-model="restaurantCtrl.content.attributes.name">
+				<input id="name" type="text" class="validate" length="74" data-ng-model="restaurantCtrl.content.attributes.name">
 				<label for="name">Nombre</label>
 			</div>
 			<div class="input-field col s12">
@@ -25,7 +19,7 @@
 				<p>Escribe tu ubicación o seleccionala en el mapa:</p>
 			</div>
 			<div class="input-field col s12">
-				<iframe width="100%" height="500px" src="//s3.eu-central-1.amazonaws.com/production-frontend/test/maps/index-2.html"></iframe>
+				<iframe width="100%" height="500px" src="https://s3.eu-central-1.amazonaws.com/production-frontend/test/maps/index-2.html"></iframe>
 			</div>
 		</div>
 		<div class="row">

@@ -21,8 +21,8 @@ module ILovePlatos{
         _parent:IMainScope;
         _main:IMainScope;
         _user:IUserScope;
-        contents: any;
-        cola = [];
+        contents = [];
+        content = {};
         total = 0;
         lastUpdate: Date;
         nameState: string;
@@ -61,6 +61,22 @@ module ILovePlatos{
                 self.contents = jQuery.extend([],contents.data);
 
                 callback();
+
+            });
+            return false;
+        };
+
+        getAllByUserId(userId) {
+            var self:EntityController = this;
+
+            if(!userId) {
+                userId = this._user.userNeo4j;
+            }
+            this.api.getAllByUserId(userId).then((contents: iEntityApirest) => {
+
+                for(var item in contents) {
+                    self.contents.push(contents[item].data);
+                }
 
             });
             return false;
@@ -154,22 +170,18 @@ module ILovePlatos{
              return false;
         }
 
-
-        getLastUpdate(data) {
-            if( data[0] && data[0].attributes && data[0].attributes.fecha) {                
-                var date = this.DateService.getDateFromFecha(data[0].attributes.fecha);
-
-                return date;
-            }
-            return new Date();
-        }
-
         getById(entityId:string): ng.IPromise<any> {
 
-            var self:EntityController = this;
+            if(!entityId) {
+                entityId = this.$stateParams.id;
+            }
+
+            var self = this;
+
             return this.api.getById(entityId).then((contents: iEntityApirest) => {
-                self.currentState = contents;
-                self.contents = contents.data;                
+
+                self.content = contents.data;
+
             })
         }
 
@@ -207,7 +219,7 @@ module ILovePlatos{
                     .then((response: iEntityApirest) => {
                         if(response && response.data) {
                             self.isSubmit = false;
-                            self.contents = response.data;
+                            self.content = response.data;
                         }
                     },(error: any) => {
                         self.isSubmit = false;
@@ -223,11 +235,11 @@ module ILovePlatos{
             if(!this.isSubmit ) {
                 this.isSubmit = true;
                 var self = this;
-                return this.api.add(entity)
+                return this.api.update(entity)
                     .then((response: iEntityApirest) => {
                         if(response && response.data) {
                             self.isSubmit = false;
-                            self.contents = response.data;
+                            self.content = response.data;
                         }
                     },(error: any) => {
                         self.isSubmit = false;
@@ -262,21 +274,6 @@ module ILovePlatos{
                         console.log(error);
                     });
             }
-        }
-
-        existNewContent() {
-            var self:EntityController = this;
-            return this.api.getAll().then((contents: iEntityApirest) => {
-                var lastUpdate = self.getLastUpdate(contents.data);
-                var currentLastUpdate = self.lastUpdate;
-
-                if(lastUpdate.getTime() > currentLastUpdate.getTime()) {
-                    console.log('existe nuevo contenido');
-                }else {
-                    console.log('no existe nuevo contenido');
-                }
-
-            });
         }
 
         askByNewContent() {
@@ -354,73 +351,6 @@ module ILovePlatos{
                 return true;
             }
             return false;
-        }
-
-        addElementToContent(retryCount?) {
-            var self = this;
-            if(this.cola.length > 0) {
-
-                self.contents = $.merge(self.contents,self.cola);
-                self.cola = [];
-
-                //this.contents.push(this.cola[0]);
-                //this.cola.shift();
-                setTimeout(function() {
-                    self.refreshRenderPageWithNextContent();
-                },10);
-
-                self._main.regenereWall('.wall');
-
-            }else {                
-                this.refreshRenderPageWithNextContent();
-            }
-        }
-
-        refreshRenderPageWithNextContent() {
-            var self = this;
-
-            if(!this.isCurrentPageFinish() && !self.isProcessUpdate && self.nextState && self.nextState.data) {
-
-                self.isProcessUpdate = true;
-
-                var contents = jQuery.extend([],self.nextState.data);
-                if(contents && contents.length > 0) {
-                    self.currentState = jQuery.extend({},self.nextState);
-
-                    self.$scope.newContents ++;
-
-                    if( !this.$scope.$$phase  ) {
-                        this.$scope.$apply();
-                    }
-
-                    self._main.updateState(self.nameState,{
-                        contents: self.contents,
-                        cola: self.cola,
-                        currentState: jQuery.extend({},self.currentState),
-                    });
-
-                    self.isProcessUpdate = false;
-
-                    if(self.currentState.links.next) {
-                        var url:string = this.$config.protocolApirest+this.$config.domainApirest+self.currentState.links.next;
-                        this.api.getByLink(url).then((contents: iEntityApirest) => {
-
-                            self.cola = $.merge(self.cola,jQuery.extend([],contents.data));
-                            self.nextState = jQuery.extend({},contents);
-
-                            self._main.updateState(self.nameState,{
-                                nextState: jQuery.extend({},self.nextState) 
-                            });
-
-                        });
-                    }else {
-                        self.isProcessUpdate = false;                        
-                    }
-
-                }else {
-                    self.isProcessUpdate = false;
-                }
-            }
         }
 
         isCurrentPageFinish() {

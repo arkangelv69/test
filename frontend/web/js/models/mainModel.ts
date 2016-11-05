@@ -106,6 +106,7 @@ module ILovePlatos{
 
 	export interface IUserScope extends ng.IScope {
 		currentUser:any;
+		userNeo4j:number;
 		username:string;
 		nickname:string;
 		description:string;

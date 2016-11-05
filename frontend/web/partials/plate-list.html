@@ -1,0 +1,12 @@
+<div class="plate-list row" data-ng-controller="PlateController as plateCtrl">
+	<div class="col s12">
+		<a data-ui-sref="plate-create" class="btn-action btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
+		<ul class="collection" data-ng-init="plateCtrl.getAllByUserId()">
+			<li class="collection-item avatar" data-ng-repeat="item in plateCtrl.contents track by $index" data-ng-if="plateCtrl.contents.length > 0">
+				<img data-ng-src="{[{plateCtrl.getUrlImgSquare(item)}]}" class="circle" />
+				<span class="title">{[{plateCtrl.getName(item)}]}</span>
+				<a data-ui-sref="plate-update({id:item.id})" class="secondary-content"><i class="material-icons">edit</i></a>
+			</li>
+		</ul>
+	</div>
+</div>

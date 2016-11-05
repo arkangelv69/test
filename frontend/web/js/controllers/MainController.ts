@@ -248,7 +248,9 @@ module ILovePlatos{
         intervalRefresh = null;
 
         getProcessBarRefresh() {
-            return this.processBarRefresh.toString();
+            if(this.processBarRefresh) {
+                return this.processBarRefresh.toString();
+            }
         }
 
         onReload() {
@@ -347,7 +349,7 @@ module ILovePlatos{
                         if (delimiter === '#') {
                             $.getJSON(self.$config.protocolApirest+self.$config.domainApirest+'/public/hashtags', function (data) {
                                 if(query) {
-                                    var queryClean = self.$filter('clean')(self.$filter('minusculas')(query));                                    
+                                    var queryClean = self.$filter('clean')(self.$filter('minusculas')(query));
                                     data.data.unshift({id:queryClean});
                                 }
                                 process(data.data);
@@ -553,7 +555,8 @@ module ILovePlatos{
                     this.$state.go(this.prevState ,this.previousParams);
                 }
             }else{
-                this.$state.go(this.previousType ,this.previousParams);
+                //this.$state.go(this.previousType ,this.previousParams);
+                this.$window.history.back();
             }
 
         }

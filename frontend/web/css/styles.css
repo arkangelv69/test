@@ -5,6 +5,21 @@
 	margin:0px;
 }
 
+/*general*/
+#home .content-view, #card .content-view {
+	padding-top: 0px;
+}
+.content-view {
+	padding-top: 52px;
+	background: url("../images/patterns.png");
+	min-height: 100vh;
+}
+.btn-action {
+	position: absolute;
+	bottom: 20px;
+	right: 20px;
+}
+
 /*Collection*/
 .collection .collection-item.avatar {
 	min-height: 60px;
@@ -70,19 +85,40 @@
 /*main-menu*/
 #home #main-menu {
 	display: block;
+	background: rgba(255,255,255,0.6);
 }
 #main-menu {
 	position: absolute;
 	z-index: 999;
-	background: rgba(255,255,255,0.6);
+	background: rgba(0,0,0,0.2);
 	width: calc(100% - 20px);
 	margin: 10px;
+	display: block;
+}
+#card #main-menu{
 	display: none;
+}
+#main-menu h1 {
+	font-size: 15px;
+	float: left;
+	margin: 0;
+	padding: 10px;
+	font-weight: bold;
+}
+#main-menu a.back {
+	font-size: 24px;
+	float: left;
+	color: black;
+	padding: 0 0px 0 9px;
+}
+#home #main-menu a.action-button{
+	position: relative;
 }
 #main-menu a.action-button{
 	position: relative;
 	top: 4px;
-    	left: 4px;
+    	float: right;
+    	margin-right: 5px;
 }
 #main-menu a.action-button i{
 	font-size: 30px;
@@ -367,4 +403,12 @@ p.item-description {
 }
 #canvasHidden {
 	display: none;
+}
+
+/***********plates***************/
+.plate-list .collection .collection-item img{
+	width: 60px;
+	height: auto;
+	display: inline;
+	margin-right: 10px;
 }

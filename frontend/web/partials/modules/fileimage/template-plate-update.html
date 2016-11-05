@@ -1,0 +1,24 @@
+<section class="fileimage">
+	<div class="button action">
+		<input type="file" id="fileElemImage" name="fileElemImage" ng-model="plateCtrl.fileElemImage"	 accept="image/*" onchange="angular.element(this).scope().plateCtrl.changeFiles(this.files);">
+		<button id="fileSelect" ng-click="plateCtrl.selectFile($event,'#fileElemImage')" type="button" class="btn btn-subir-foto">
+				<span>Subir imagen</span>
+		</button>
+	</div>
+	<div class="fileimage-preview" data-ng-show="plateCtrl.hasImage()">
+		<div id="preview"></div>
+		<div id="images-cuts" data-ng-show="!plateCtrl.isShowNewCrop() && !plateCtrl.isChangeFiles()">
+			<div class="image-cut cut-square"><img data-ng-src="{[{plateCtrl.getUrlImgSquare(plateCtrl.content)}]}" /></div>
+			<div class="image-cut cut-landscape"><img data-ng-src="{[{plateCtrl.getUrlImgLandscape(plateCtrl.content)}]}" /></div>
+		</div>
+		<button data-ng-show="!plateCtrl.isShowNewCrop() && !plateCtrl.isChangeFiles()" type="button" class="btn btn-subir-foto" data-ng-click="plateCtrl.showNewCropAction($event)">Volver a recortar</button>
+		<div id="canvasCropper" data-ng-show="plateCtrl.isShowNewCrop() || plateCtrl.isChangeFiles()">
+			<button data-ng-show="!plateCtrl.isChangeFiles()" type="button" class="btn btn-subir-foto" data-ng-click="plateCtrl.hideNewCropAction($event)">Cancelar recorte</button>
+			<p>Necesitamos que realices estos recortes para que tu plato se visualice correctamente.</p>
+			<h4>Miniatura cuadrada</h4>
+			<div class="canvasCropper-image cuadrado"></div>
+			<h4>Miniatura apaisada</h4>
+			<div class="canvasCropper-image apaisado"></div>
+		</div>
+	</div>	
+</section>

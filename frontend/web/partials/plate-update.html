@@ -1,0 +1,34 @@
+<div class="row" data-ng-controller="PlateController as plateCtrl" data-ng-init="plateCtrl.getById();">
+	<form class="col s12" data-ng-if="plateCtrl.content.id" data-ng-init="plateCtrl.regenerateForm()">
+		<div class="row">
+			<div class="input-field col s12">
+				<p>Lo primero es asociar este plato a uno o varios restaurantes</p>
+			</div>
+			<div class="input-field col s12">
+				<input type="text" id="restaurant-input" class="restaurant-autocomplete">
+				<label for="restaurant-input">Restaurantes</label>
+			</div>
+			<div class="input-field col s12">
+				<p>Dinos el nombre de tu plato:</p>
+			</div>
+			<div class="input-field col s12">
+				<input id="name" type="text" class="validate" length="74" data-ng-model="plateCtrl.content.attributes.name">
+				<label for="name">Nombre</label>
+			</div>
+			<div class="input-field col s12">
+				<textarea name="" id="description" type="text" class="materialize-textarea validate" row="15" data-ng-model="plateCtrl.content.attributes.description"></textarea>
+				<label for="name">Descripción</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-field col s12">
+				<fileimage template="plate-update"></fileimage>
+			</div>
+		</div>
+		<div class="row">
+			<div class="submit-field col s12">
+				<button id="submit" type="submit" class="waves-effect waves-light btn" progress-button="plateCtrl.progressStart(newPostForm)" data-ng-disabled="!plateCtrl.isSubmitActive()"><i class="material-icons left">cloud</i>Enviar</button>
+			</div>
+		</div>
+	</form>
+</div>

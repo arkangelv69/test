@@ -1,0 +1,12 @@
+<div class="row" data-ng-controller="RestaurantController as restaurantCtrl">
+	<div class="col s12">
+		<a data-ui-sref="restaurant-create" class="btn-action btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
+		<ul class="collection" data-ng-init="restaurantCtrl.getAllByUserId()">
+			<li class="collection-item avatar" data-ng-repeat="item in restaurantCtrl.contents track by $index" data-ng-if="restaurantCtrl.contents.length > 0">
+				<img data-ng-src="{[{restaurantCtrl.getUrlImgSquare(item)}]}" class="circle" />
+				<span class="title">{[{restaurantCtrl.getName(item)}]}</span>
+				<a data-ui-sref="restaurant-update({id:item.id})" class="secondary-content"><i class="material-icons">edit</i></a>
+			</li>
+		</ul>
+	</div>
+</div>

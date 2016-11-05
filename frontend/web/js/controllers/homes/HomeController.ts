@@ -21,7 +21,7 @@ module ILovePlatos{
             
             this._main = $rootScope.$$childHead.mainCtrl;
             this._main.resetMessages();
-            this._main.setTitle('Buhos');
+            this._main.setTitle('Home');
             this._main.setId('home');
             this._main.setPrevious('home');
             this._main.setMenuId('default');

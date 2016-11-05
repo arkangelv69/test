@@ -1,0 +1,36 @@
+<div class="row" data-ng-controller="RestaurantController as restaurantCtrl" data-ng-init="restaurantCtrl.getById();">
+	<form class="col s12" data-ng-if="restaurantCtrl.content.id" data-ng-init="restaurantCtrl.regenerateForm()">
+		<div class="row">
+			<div class="input-field col s12">
+				<p>Dinos el nombre de tu restaurante:</p>
+			</div>
+			<div class="input-field col s12">
+				<input id="name" type="text" class="validate" length="74" data-ng-model="restaurantCtrl.content.attributes.name">
+				<label for="name">Nombre</label>
+			</div>
+			<div class="input-field col s12">
+				<p>Haz una breve descripción de tu restaurante, no es obligatorio:</p>
+			</div>
+			<div class="input-field col s12">
+				<input id="description" type="text" class="validate" length="200" data-ng-model="restaurantCtrl.content.attributes.description">
+				<label for="description">Descrpción</label>
+			</div>
+			<div class="input-field col s12">
+				<p>Escribe tu ubicación o seleccionala en el mapa:</p>
+			</div>
+			<div class="input-field col s12" data-ng-if="restaurantCtrl.content.attributes.latitude && restaurantCtrl.content.attributes.longitude">
+				<div id="renderIframeMap" data-ng-init="restaurantCtrl.renderIframeMap();"></div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-field col s12">
+				<fileimage template="restaurant-update"></fileimage>
+			</div>
+		</div>
+		<div class="row">
+			<div class="submit-field col s12">
+				<button id="submit" type="submit" class="waves-effect waves-light btn" progress-button="restaurantCtrl.progressStart(newPostForm)" data-ng-disabled="!restaurantCtrl.isSubmitActive()"><i class="material-icons left">cloud</i>Enviar</button>
+			</div>
+		</div>
+	</form>
+</div>

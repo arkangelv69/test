@@ -5,6 +5,7 @@ module ILovePlatos{
     export class PlateApirestService extends EntityApirestService{
 
         type = 'plate';
+        typeAll = 'plates';
 
         constructor($config,$http,$q,$log,auth,store) {
             super($config,$http,$q,$log,auth,store);
