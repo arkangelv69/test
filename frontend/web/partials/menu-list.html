@@ -2,7 +2,12 @@
 	<div class="col s12">
 		<a data-ui-sref="menu-create" class="btn-action btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
 		<ul class="collection" data-ng-init="menuCtrl.getAllByUserId()">
-			<li class="collection-item" data-ng-repeat="item in menuCtrl.contents track by $index" data-ng-if="menuCtrl.contents.length > 0"><div>{[{menuCtrl.getName(item)}]}<a data-ui-sref="menu-update({id:item.id})" class="secondary-content"><i class="material-icons">edit</i></a></div></li>
+			<li class="collection-item" data-ng-if="menuCtrl.contents.length > 0" data-ng-repeat="item in menuCtrl.contents track by $index">
+				<a class="collection-item-link" data-ui-sref="menu-update({id:item.id})">
+					<div>{[{menuCtrl.getName(item)}]}<div class="secondary-content"><i class="material-icons">edit</i></div></div>
+				</a>
+			</li>
+			<li class="collection-item" data-ng-if="menuCtrl.contents.length < 1"><div>Todavia no has añadido ningún menú</div></li>
 	       </ul>
 	</div>
 </div>

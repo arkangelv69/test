@@ -1,17 +1,6 @@
-<div class="row" data-ng-controller="MenuController as menuCtrl">
-	<form class="col s12">
+<div class="row" data-ng-controller="MenuController as menuCtrl" data-ng-init="menuCtrl.getById();">
+	<form class="col s12" data-ng-if="menuCtrl.content.id" data-ng-init="menuCtrl.regenerateForm()">
 		<div class="row">
-			<div class="input-field col s12">
-				<p>Hablanos sobre tu menú:</p>
-			</div>
-			<div class="input-field col s12">
-				<input id="name" type="text" class="validate" length="15" data-ng-model="menuCtrl.content.attributes.name">
-				<label for="name">Nombre</label>
-			</div>
-			<div class="input-field col s12">
-				<input id="price" type="number" class="validate" max-length="3" length="3" data-ng-model="menuCtrl.content.attributes.price">
-				<label for="name">Precio</label>
-			</div>
 			<div class="input-field col s12">
 				<p>Asocia este menú a un restaurante o a varios</p>
 			</div>
@@ -20,35 +9,46 @@
 				<label for="restaurant-input">Restaurantes</label>
 			</div>
 			<div class="input-field col s12">
+				<p>Hablanos sobre tu menú:</p>
+			</div>
+			<div class="input-field col s12">
+				<input id="name" type="text" class="validate" length="74" data-ng-model="menuCtrl.content.attributes.name">
+				<label for="name">Nombre</label>
+			</div>
+			<div class="input-field col s12">
+				<input id="price" type="number" class="validate" max-length="3" length="3" data-ng-model="menuCtrl.content.attributes.price">
+				<label for="name">Precio</label>
+			</div>
+			<div class="input-field col s12">
 				<p>Selecciona los platos que aparecen en cada sección del menú, puedes dejar secciones vacías.</p>
 			</div>
 			<div class="input-field col s12">
-				<input type="text" id="entrantes-input" class="entrantes-autocomplete">
-				<label for="entrantes-input">Entrantes</label>
+				<input type="text" id="starters-input" class="starters-autocomplete">
+				<label for="starters-input">Entrantes</label>
 			</div>
 			<div class="input-field col s12">
-				<input type="text" id="primeros-input" class="primeros-autocomplete">
-				<label for="primeros-input">Primeros</label>
+				<input type="text" id="firsts-input" class="firsts-autocomplete">
+				<label for="firsts-input">Primeros</label>
 			</div>
 			<div class="input-field col s12">
-				<input type="text" id="segundos-input" class="segundos-autocomplete">
-				<label for="segundos-input">Segundos</label>
+				<input type="text" id="seconds-input" class="seconds-autocomplete">
+				<label for="seconds-input">Segundos</label>
 			</div>
 			<div class="input-field col s12">
-				<input type="text" id="postres-input" class="postres-autocomplete">
-				<label for="postres-input">Postres</label>
+				<input type="text" id="desserts-input" class="desserts-autocomplete">
+				<label for="desserts-input">Postres</label>
 			</div>
 			<div class="input-field col s12">
 				<p>Cuentanos acerca de la bebida.</p>
 			</div>
 			<div class="input-field col s12">
 				<p>
-					<input type="checkbox" id="bebida" />
+					<input type="checkbox" id="bebida" data-ng-model="menuCtrl.content.attributes.drink"/>
 					<label for="bebida">Bebida</label>
 				</p>
 			</div>
 			<div class="input-field col s12">
-				<input id="bebidaDescription" type="text" class="validate" length="30" data-ng-model="menuCtrl.content.attributes.bebidaDescription">
+				<input id="bebidaDescription" type="text" class="validate" length="140" data-ng-model="menuCtrl.content.attributes.drinkDescription">
 				<label for="bebidaDescription">Si quieres puedes especificar la bebida</label>
 			</div>
 			<div class="input-field col s12">
@@ -56,50 +56,50 @@
 			</div>
 			<div class="input-field col s12">
 				<p>
-					<input name="postrecafe" type="radio" id="postre" />
+					<input name="postrecafe" type="radio" id="postre" data-ng-model="menuCtrl.content.attributes.desserts" value="onlydessert"/>
 					<label for="postre">Solo postre</label>
 				</p>
 				<p>
-					<input name="postrecafe" type="radio" id="cafe" />
+					<input name="postrecafe" type="radio" id="cafe" data-ng-model="menuCtrl.content.attributes.desserts" value="onlycoffee"/>
 					<label for="cafe">Solo cafe</label>
 				</p>
 				<p>
-					<input name="postrecafe" type="radio" id="postreocafe" />
+					<input name="postrecafe" type="radio" id="postreocafe" data-ng-model="menuCtrl.content.attributes.desserts" value="dessertorcoffee"/>
 					<label for="postreocafe">Postre o cafe</label>
 				</p>
 				<p>
-					<input name="postrecafe" type="radio" id="postreycafe" />
-					<label for="postreycafe">Postre y cafe</label>
+					<input name="postrecafe" type="radio" id="postreycafe" data-ng-model="menuCtrl.content.attributes.desserts"/>
+					<label for="postreycafe" value="dessertandcoffee">Postre y cafe</label>
 				</p>
 			</div>
 			<div class="input-field col s12">
 				<p>Si este menú se repite el mismo día todas las semanas, puedes elegir los días en los que quieres que este activo.</p>
 				<p>
-					<input type="checkbox" id="monday" />
+					<input type="checkbox" id="monday" data-ng-model="menuCtrl.content.attributes.dailyForm.L" value="L"/>
 					<label for="monday">Lunes</label>
 				</p>
 				<p>
-					<input type="checkbox" id="tuesday" />
+					<input type="checkbox" id="tuesday" data-ng-model="menuCtrl.content.attributes.dailyForm.M" value="M"/>
 					<label for="tuesday">Martes</label>
 				</p>
 				<p>
-					<input type="checkbox" id="wednesday" />
+					<input type="checkbox" id="wednesday" data-ng-model="menuCtrl.content.attributes.dailyForm.X" value="X"/>
 					<label for="wednesday">Miércoles</label>
 				</p>
 				<p>
-					<input type="checkbox" id="thursday" />
+					<input type="checkbox" id="thursday" data-ng-model="menuCtrl.content.attributes.dailyForm.J" value="J"/>
 					<label for="thursday">Jueves</label>
 				</p>
 				<p>
-					<input type="checkbox" id="friday" />
+					<input type="checkbox" id="friday" data-ng-model="menuCtrl.content.attributes.dailyForm.V" value="V" />
 					<label for="friday">Viernes</label>
 				</p>
 				<p>
-					<input type="checkbox" id="saturday" />
+					<input type="checkbox" id="saturday" data-ng-model="menuCtrl.content.attributes.dailyForm.S" value="S"/>
 					<label for="saturday">Sábado</label>
 				</p>
 				<p>
-					<input type="checkbox" id="sunday" />
+					<input type="checkbox" id="sunday" data-ng-model="menuCtrl.content.attributes.dailyForm.D" value="D"/>
 					<label for="sunday">Domingo</label>
 				</p>
 			</div>

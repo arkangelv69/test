@@ -30,7 +30,6 @@ module ILovePlatos{
 
             setTimeout(function()  {
                 self.setWayPoing();
-                $('input#name').characterCounter();
             },50);
 
         }

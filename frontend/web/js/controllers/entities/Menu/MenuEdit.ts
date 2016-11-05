@@ -9,6 +9,7 @@ module ILovePlatos{
     declare var Camera:any;
     declare var window:any;
     declare var navigator:any;
+    declare var Materialize:any;
 
     export class MenuEdit{
 
@@ -68,7 +69,7 @@ module ILovePlatos{
                             el: '',
                             tagName: 'ul',
                             className: 'ac-appender',
-                            tagTemplate: '<div class="chip" data-id="<%= item.id %>" data-text="<% item.text %>" data-image="<% item.image %>"><img src="<%= item.image %>" /><span> <%= item.text %>(<%= item.id %>) <i class="material-icons close">close</i></div>'
+                            tagTemplate: '<div class="chip" data-id="<%= item.id %>" data-text="<% item.text %>" data-image="<% item.image %>"><img src="<%= item.image %>" /><span> <%= item.text %> <i class="material-icons close">close</i></div>'
                         },
                         dropdown: {
                             el: '',
@@ -78,7 +79,8 @@ module ILovePlatos{
                             noItem: ''
                         },
                         getData: function (value, callback) {
-                            callback(value, data);
+                            var dataSet = self.controller.$filter('filter')(data, value);
+                            callback(value, dataSet);
                         }
                     });
                     self.autocompleteRestaurant.setValue(data[0]);
@@ -93,7 +95,7 @@ module ILovePlatos{
                             el: '',
                             tagName: 'ul',
                             className: 'ac-appender',
-                            tagTemplate: '<div class="chip" data-id="<%= item.id %>" data-text="<% item.text %>" data-image="<% item.image %>"><img src="<%= item.image %>" /><span> <%= item.text %>(<%= item.id %>) <i class="material-icons close">close</i></div>'
+                            tagTemplate: '<div class="chip" data-id="<%= item.id %>" data-text="<% item.text %>" data-image="<% item.image %>"><img src="<%= item.image %>" /><span> <%= item.text %> <i class="material-icons close">close</i></div>'
                         },
                         dropdown: {
                             el: '',
@@ -103,7 +105,8 @@ module ILovePlatos{
                             noItem: ''
                         },
                         getData: function (value, callback) {
-                            callback(value, data);
+                            var dataSet = self.controller.$filter('filter')(data, value);
+                            callback(value, dataSet);
                         }
                     });
                 }
@@ -131,7 +134,7 @@ module ILovePlatos{
                             el: '',
                             tagName: 'ul',
                             className: 'ac-appender',
-                            tagTemplate: '<div class="chip" data-id="<%= item.id %>" data-text="<% item.text %>" data-image="<% item.image %>"><img src="<%= item.image %>" /><span> <%= item.text %>(<%= item.id %>) <i class="material-icons close">close</i></div>'
+                            tagTemplate: '<div class="chip" data-id="<%= item.id %>" data-text="<% item.text %>" data-image="<% item.image %>"><img src="<%= item.image %>" /><span> <%= item.text %> <i class="material-icons close">close</i></div>'
                         },
                         dropdown: {
                             el: '',
@@ -141,7 +144,8 @@ module ILovePlatos{
                             noItem: ''
                         },
                         getData: function (value, callback) {
-                            callback(value, data);
+                            var dataSet = self.controller.$filter('filter')(data, value);
+                            callback(value, dataSet);
                         }
                     });
 
@@ -154,7 +158,7 @@ module ILovePlatos{
                             el: '',
                             tagName: 'ul',
                             className: 'ac-appender',
-                            tagTemplate: '<div class="chip" data-id="<%= item.id %>" data-text="<% item.text %>" data-image="<% item.image %>"><img src="<%= item.image %>" /><span> <%= item.text %>(<%= item.id %>) <i class="material-icons close">close</i></div>'
+                            tagTemplate: '<div class="chip" data-id="<%= item.id %>" data-text="<% item.text %>" data-image="<% item.image %>"><img src="<%= item.image %>" /><span> <%= item.text %> <i class="material-icons close">close</i></div>'
                         },
                         dropdown: {
                             el: '',
@@ -164,7 +168,8 @@ module ILovePlatos{
                             noItem: ''
                         },
                         getData: function (value, callback) {
-                            callback(value, data);
+                            var dataSet = self.controller.$filter('filter')(data, value);
+                            callback(value, dataSet);
                         }
                     });
 
@@ -177,7 +182,7 @@ module ILovePlatos{
                             el: '',
                             tagName: 'ul',
                             className: 'ac-appender',
-                            tagTemplate: '<div class="chip" data-id="<%= item.id %>" data-text="<% item.text %>" data-image="<% item.image %>"><img src="<%= item.image %>" /><span> <%= item.text %>(<%= item.id %>) <i class="material-icons close">close</i></div>'
+                            tagTemplate: '<div class="chip" data-id="<%= item.id %>" data-text="<% item.text %>" data-image="<% item.image %>"><img src="<%= item.image %>" /><span> <%= item.text %> <i class="material-icons close">close</i></div>'
                         },
                         dropdown: {
                             el: '',
@@ -187,7 +192,8 @@ module ILovePlatos{
                             noItem: ''
                         },
                         getData: function (value, callback) {
-                            callback(value, data);
+                            var dataSet = self.controller.$filter('filter')(data, value);
+                            callback(value, dataSet);
                         }
                     });
 
@@ -200,7 +206,7 @@ module ILovePlatos{
                             el: '',
                             tagName: 'ul',
                             className: 'ac-appender',
-                            tagTemplate: '<div class="chip" data-id="<%= item.id %>" data-text="<% item.text %>" data-image="<% item.image %>"><img src="<%= item.image %>" /><span> <%= item.text %>(<%= item.id %>) <i class="material-icons close">close</i></div>'
+                            tagTemplate: '<div class="chip" data-id="<%= item.id %>" data-text="<% item.text %>" data-image="<% item.image %>"><img src="<%= item.image %>" /><span> <%= item.text %> <i class="material-icons close">close</i></div>'
                         },
                         dropdown: {
                             el: '',
@@ -210,13 +216,18 @@ module ILovePlatos{
                             noItem: ''
                         },
                         getData: function (value, callback) {
-                            callback(value, data);
+                            var dataSet = self.controller.$filter('filter')(data, value);
+                            callback(value, dataSet);
                         }
                     });
 
                 }
 
             });
+
+            setTimeout(function() {
+                Materialize.updateTextFields();
+            },200);
 
         }
 
@@ -295,10 +306,13 @@ module ILovePlatos{
             var content = this.controller.content;
             var dataJson = this.dataJson;
             var attributes = content.attributes;
+            var daily = [];
 
             angular.forEach(attributes.dailyForm,function(value,day) {
-                attributes.daily.push(day);
+                daily.push(day);
             });
+
+            attributes.daily = daily.toString();
 
             dataJson.addAttributes(attributes);
 
@@ -399,8 +413,10 @@ module ILovePlatos{
             }
         }
 
-        regenerateFormulario() {
-            
+        regenerateForm() {
+            setTimeout(function() {
+                Materialize.updateTextFields();
+            },100);   
         }
 
         editarPublicacion(event,card) {

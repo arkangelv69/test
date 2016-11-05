@@ -21,7 +21,8 @@ module ILovePlatos{
             "FilesService",
             "$q",
             "RestaurantApirestService",
-            "PlateApirestService"
+            "PlateApirestService",
+            "$filter"
         ];
 
         mother;
@@ -39,7 +40,7 @@ module ILovePlatos{
                     drinkDescription: "",
                     desserts: "onlydessert",
                     dailyForm: {},
-                    daily:[],
+                    daily:"",
                     scheduled: {
                         init: 0,
                         end: 0,
@@ -56,7 +57,7 @@ module ILovePlatos{
                 }
             };
 
-        constructor($config,api,DateService,$rootScope,public $stateParams,public $scope,public $state,$element,$sce,auth,store,public FilesService, public $q,public RestaurantApi,public PlateApi){
+        constructor($config,api,DateService,$rootScope,public $stateParams,public $scope,public $state,$element,$sce,auth,store,public FilesService, public $q,public RestaurantApi,public PlateApi,public $filter){
             super($config,api,DateService,$rootScope,$stateParams,$scope,$state,$element,$sce,auth,store);
 
             var self = this;
@@ -64,6 +65,10 @@ module ILovePlatos{
             this.ContenidoCard = new ContenidoCard(this);
             this.MenuEdit = new MenuEdit(this);
 
+        }
+
+        getName(card) {
+            return this.ContenidoCard.getName(card);
         }
 
         initEdit() {
@@ -102,8 +107,8 @@ module ILovePlatos{
             return this.MenuEdit.isUpdate();
         }
 
-        regenerateFormulario() {
-            this.MenuEdit.regenerateFormulario();
+        regenerateForm() {
+            this.MenuEdit.regenerateForm();
         }
 
         editarPublicacion(event,card) {

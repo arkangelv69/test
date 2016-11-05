@@ -33,6 +33,14 @@
     display: inline-block;
     vertical-align: middle;
 }
+.collection .collection-item-link {
+	width: 100%;
+	height: 40px;
+	display: block;
+}
+#menu .collection .collection-item-link {
+	height: auto;
+}
 
 /*Map*/
 #map-layer {
@@ -128,10 +136,17 @@
 /*map action-buttons*/
 .map.action-buttons {
 	position: absolute;
-	bottom: 0px;
-	left: 0px;
+	bottom: 10px;
+	left: 10px;
 	background: rgba(255, 255, 255, 0.6);
-	padding: 10px 35px 0 35px;
+	padding: 10px 25px 0 25px;
+	/* transform: scale(0.8); */
+	width: 132px;
+}
+.map.action-buttons .row{
+	margin-bottom: 10px;
+}
+.map.action-buttons .switch{
 	transform: scale(0.8);
 }
 .map.action-buttons label i{
@@ -402,6 +417,10 @@ p.item-description {
 	margin-bottom: 10px;
 }
 #canvasHidden {
+	display: none;
+}
+
+.input-field .collection {
 	display: none;
 }
 
