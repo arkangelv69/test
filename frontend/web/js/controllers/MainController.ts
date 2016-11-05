@@ -555,7 +555,8 @@ module ILovePlatos{
                     this.$state.go(this.prevState ,this.previousParams);
                 }
             }else{
-                this.$state.go(this.previousType ,this.previousParams);
+                //this.$state.go(this.previousType ,this.previousParams);
+                this.$window.history.back();
             }
 
         }

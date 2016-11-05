@@ -35,10 +35,11 @@ module ILovePlatos{
                 attributes:{
                     name: "",
                     price: 0,
-                    drink: 0,
-                    drinkDescription: 0,
-                    desserts: 0,
-                    daily: {},
+                    drink: false,
+                    drinkDescription: "",
+                    desserts: "onlydessert",
+                    dailyForm: {},
+                    daily:[],
                     scheduled: {
                         init: 0,
                         end: 0,

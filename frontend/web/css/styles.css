@@ -12,7 +12,7 @@
 .content-view {
 	padding-top: 52px;
 	background: url("../images/patterns.png");
-	height: 100vh;
+	min-height: 100vh;
 }
 .btn-action {
 	position: absolute;

@@ -43,12 +43,12 @@
 			</div>
 			<div class="input-field col s12">
 				<p>
-					<input type="checkbox" id="bebida" />
+					<input type="checkbox" id="bebida" data-ng-model="menuCtrl.content.attributes.drink"/>
 					<label for="bebida">Bebida</label>
 				</p>
 			</div>
 			<div class="input-field col s12">
-				<input id="bebidaDescription" type="text" class="validate" length="140" data-ng-model="menuCtrl.content.attributes.bebidaDescription">
+				<input id="bebidaDescription" type="text" class="validate" length="140" data-ng-model="menuCtrl.content.attributes.drinkDescription">
 				<label for="bebidaDescription">Si quieres puedes especificar la bebida</label>
 			</div>
 			<div class="input-field col s12">
@@ -75,31 +75,31 @@
 			<div class="input-field col s12">
 				<p>Si este menú se repite el mismo día todas las semanas, puedes elegir los días en los que quieres que este activo.</p>
 				<p>
-					<input type="checkbox" id="monday" data-ng-model="menuCtrl.content.attributes.daily.monday"/>
+					<input type="checkbox" id="monday" data-ng-model="menuCtrl.content.attributes.dailyForm.L" value="L"/>
 					<label for="monday">Lunes</label>
 				</p>
 				<p>
-					<input type="checkbox" id="tuesday" data-ng-model="menuCtrl.content.attributes.daily.tuesday"/>
+					<input type="checkbox" id="tuesday" data-ng-model="menuCtrl.content.attributes.dailyForm.M" value="M"/>
 					<label for="tuesday">Martes</label>
 				</p>
 				<p>
-					<input type="checkbox" id="wednesday" data-ng-model="menuCtrl.content.attributes.daily.wednesday"/>
+					<input type="checkbox" id="wednesday" data-ng-model="menuCtrl.content.attributes.dailyForm.X" value="X"/>
 					<label for="wednesday">Miércoles</label>
 				</p>
 				<p>
-					<input type="checkbox" id="thursday" data-ng-model="menuCtrl.content.attributes.daily.thursday"/>
+					<input type="checkbox" id="thursday" data-ng-model="menuCtrl.content.attributes.dailyForm.J" value="J"/>
 					<label for="thursday">Jueves</label>
 				</p>
 				<p>
-					<input type="checkbox" id="friday" data-ng-model="menuCtrl.content.attributes.daily.friday"/>
+					<input type="checkbox" id="friday" data-ng-model="menuCtrl.content.attributes.dailyForm.V" value="V" />
 					<label for="friday">Viernes</label>
 				</p>
 				<p>
-					<input type="checkbox" id="saturday" data-ng-model="menuCtrl.content.attributes.daily.saturday"/>
+					<input type="checkbox" id="saturday" data-ng-model="menuCtrl.content.attributes.dailyForm.S" value="S"/>
 					<label for="saturday">Sábado</label>
 				</p>
 				<p>
-					<input type="checkbox" id="sunday" data-ng-model="menuCtrl.content.attributes.daily.sunday"/>
+					<input type="checkbox" id="sunday" data-ng-model="menuCtrl.content.attributes.dailyForm.D" value="D"/>
 					<label for="sunday">Domingo</label>
 				</p>
 			</div>
@@ -107,11 +107,11 @@
 				<p>Selecciona un rango de fechas en las que quieres que este activo tu menú.
 			</div>
 			<div class="input-field col s12">
-				<input type="date" class="datepicker" id="init" data-ng-model="menuCtrl.content.attributes.scheduled.init">
+				<input type="date" class="datepicker" id="init">
 				<label for="init">Fecha inicial</label>
 			</div>
 			<div class="input-field col s12">
-				<input type="date" class="datepicker" id="end" data-ng-model="menuCtrl.content.attributes.scheduled.end">
+				<input type="date" class="datepicker" id="end">
 				<label for="end">Fecha final</label>
 			</div>
 		</div>

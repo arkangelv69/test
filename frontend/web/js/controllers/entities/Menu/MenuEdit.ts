@@ -21,12 +21,27 @@ module ILovePlatos{
         autocompleteSeconds;
         autocompleteDesserts;
 
+        pickadateInit;
+        pickadateEnd;
+
         constructor(controller) {
+
+            var self = this;
             this.controller = controller;
             this.dataJson = new DataJsonController('Menu',controller.auth);
 
-            $('.datepicker').pickadate({
+            this.pickadateInit = $('#init').pickadate({
                 selectMonths: true, // Creates a dropdown to control month
+                onSet: function(dateSet) {
+                    self.controller.content.attributes.scheduled.init = dateSet.select;
+                }
+              });
+
+            this.pickadateEnd = $('#end').pickadate({
+                selectMonths: true, // Creates a dropdown to control month
+                onSet: function(dateSet) {
+                    self.controller.content.attributes.scheduled.end = dateSet.select;
+                }
               });
 
             var self = this;
@@ -281,6 +296,10 @@ module ILovePlatos{
             var dataJson = this.dataJson;
             var attributes = content.attributes;
 
+            angular.forEach(attributes.dailyForm,function(value,day) {
+                attributes.daily.push(day);
+            });
+
             dataJson.addAttributes(attributes);
 
             var user = this.controller._user.currentUser;
@@ -289,25 +308,46 @@ module ILovePlatos{
 
             //Relationships del usuario que crea la publicación
             var restaurants = this.autocompleteRestaurant.value;
-            var ids = [];
+            var idsRestaurants = [];
             angular.forEach(restaurants,function(restaurant) {
-                ids.push(restaurant.id);
+                idsRestaurants.push(restaurant.id);
             })
             var params = {
                 "admin":[idNeo4j],
-                "have_menu": ids
+                "have_menu": idsRestaurants
             };
 
             dataJson.addNewRelationships('relatedFrom',params);
 
+            var starters = this.autocompleteStarters.value;
+            var idsStarters = [];
+            angular.forEach(starters,function(starter) {
+                idsStarters.push(starter.id);
+            });
+            var firsts = this.autocompleteFirsts.value;
+            var idsFirsts = [];
+            angular.forEach(firsts,function(first) {
+                idsFirsts.push(first.id);
+            });
+            var seconds = this.autocompleteSeconds.value;
+            var idsSeconds = [];
+            angular.forEach(seconds,function(second) {
+                idsSeconds.push(second.id);
+            });
+            var desserts = this.autocompleteDesserts.value;
+            var idsDesserts = [];
+            angular.forEach(desserts,function(dessert) {
+                idsDesserts.push(dessert.id);
+            });
             var paramsPlates = {
                "have_plate": {
-                    "starters":[],
-                    "firsts":[],
-                    "seconds":[],
-                    "desserts":[]
+                    "starters":idsStarters,
+                    "firsts":idsFirsts,
+                    "seconds":idsSeconds,
+                    "desserts":idsDesserts
                 }
             };
+
             dataJson.addNewRelationships('relatedTo',paramsPlates);            
 
             //Obtenemos la nueva entidad
