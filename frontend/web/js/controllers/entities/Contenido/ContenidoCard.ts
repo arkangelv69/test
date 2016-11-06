@@ -83,6 +83,20 @@ module ILovePlatos{
             return '';
         }
 
+        getDescription(card) {
+            if(card && card.attributes && card.attributes.description) {
+                return card.attributes.description;
+            }
+            return '';
+        }
+
+        getPrice(card) {
+            if(card && card.attributes && card.attributes.price) {
+                return card.attributes.price;
+            }
+            return '';
+        }
+
     }
 
 }

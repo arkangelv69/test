@@ -11,7 +11,18 @@
 }
 .content-view {
 	padding-top: 52px;
-	background: url("../images/patterns.png");
+	min-height: 100vh;
+}
+.content-view:after{
+	content: "";
+	background: url("../images/patterns.jpg");
+	opacity: 1;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	position: fixed;
+	z-index: -1;
 	min-height: 100vh;
 }
 .btn-action {

@@ -31,12 +31,30 @@ module ILovePlatos{
             this.controller = controller;
             this.dataJson = new DataJsonController('Menu',controller.auth);
 
+            if(this.controller.$state.current.name == 'menu-create') {
+                this.initEdit();
+            }            
+
+        }
+
+        initEdit() {
+            var self = this;
+            var content = this.controller.content;
+
+            this.controller.FilesService.resetFiles();
+            this.controller.FilesService.setController('menuCtrl');
+
             this.pickadateInit = $('#init').pickadate({
                 selectMonths: true, // Creates a dropdown to control month
                 onSet: function(dateSet) {
                     self.controller.content.attributes.scheduled.init = dateSet.select;
                 }
               });
+
+            if( this.controller.content.attributes.scheduled.init ) {
+                var pickadateInit = this.pickadateInit.pickadate('picker');
+                pickadateInit.set('select', this.controller.content.attributes.scheduled.init );
+            }
 
             this.pickadateEnd = $('#end').pickadate({
                 selectMonths: true, // Creates a dropdown to control month
@@ -45,13 +63,18 @@ module ILovePlatos{
                 }
               });
 
+            if( this.controller.content.attributes.scheduled.end ) {
+                var pickadateEnd = this.pickadateEnd.pickadate('picker');
+                pickadateEnd.set('select', this.controller.content.attributes.scheduled.end );
+            }
+
             var self = this;
             var userId = this.controller._user.userNeo4j;
 
             //Para los restaurantes
-            this.controller.RestaurantApi.getAllByUserId(userId).then(function(content) {
+            this.controller.RestaurantApi.getAllByUserId(userId).then(function(response) {
                 var data = [];
-                angular.forEach(content,function(restaurant,index) {
+                angular.forEach(response,function(restaurant,index) {
                     data.push({
                         id:restaurant.data.id,
                         text:restaurant.data.attributes.name,
@@ -59,64 +82,52 @@ module ILovePlatos{
                     });
                 });
 
-                if(data.length <= 1) {
-                    self.autocompleteRestaurant = $('input.restaurant-autocomplete').materialize_autocomplete({
-                        limit: 20,
-                        multiple: {
-                            enable: true,
-                        },
-                        appender: {
-                            el: '',
-                            tagName: 'ul',
-                            className: 'ac-appender',
-                            tagTemplate: '<div class="chip" data-id="<%= item.id %>" data-text="<% item.text %>" data-image="<% item.image %>"><img src="<%= item.image %>" /><span> <%= item.text %> <i class="material-icons close">close</i></div>'
-                        },
-                        dropdown: {
-                            el: '',
-                            tagName: 'ul',
-                            className: 'collection',
-                            itemTemplate: '<li class="collection-item avatar" data-id="<%= item.id %>" data-text="<%= item.text %>" data-image="<%= item.image %>"><a href="javascript:void(0)"><img class="square" src="<%= item.image %>" /><span><%= item.text %></span></a></li>',
-                            noItem: ''
-                        },
-                        getData: function (value, callback) {
-                            var dataSet = self.controller.$filter('filter')(data, value);
-                            callback(value, dataSet);
-                        }
-                    });
-                    self.autocompleteRestaurant.setValue(data[0]);
 
-                }else if(content){
-                    self.autocompleteRestaurant = $('input.restaurant-autocomplete').materialize_autocomplete({
-                        limit: 20,
-                        multiple: {
-                            enable: true,
-                        },
-                        appender: {
-                            el: '',
-                            tagName: 'ul',
-                            className: 'ac-appender',
-                            tagTemplate: '<div class="chip" data-id="<%= item.id %>" data-text="<% item.text %>" data-image="<% item.image %>"><img src="<%= item.image %>" /><span> <%= item.text %> <i class="material-icons close">close</i></div>'
-                        },
-                        dropdown: {
-                            el: '',
-                            tagName: 'ul',
-                            className: 'collection',
-                            itemTemplate: '<li class="collection-item avatar" data-id="<%= item.id %>" data-text="<%= item.text %>" data-image="<%= item.image %>"><a href="javascript:void(0)"><img class="square" src="<%= item.image %>" /><span><%= item.text %></span></a></li>',
-                            noItem: ''
-                        },
-                        getData: function (value, callback) {
-                            var dataSet = self.controller.$filter('filter')(data, value);
-                            callback(value, dataSet);
-                        }
+                self.autocompleteRestaurant = $('input.restaurant-autocomplete').materialize_autocomplete({
+                    limit: 20,
+                    multiple: {
+                        enable: true,
+                    },
+                    appender: {
+                        el: '',
+                        tagName: 'ul',
+                        className: 'ac-appender',
+                        tagTemplate: '<div class="chip" data-id="<%= item.id %>" data-text="<% item.text %>" data-image="<% item.image %>"><img src="<%= item.image %>" /><span> <%= item.text %> <i class="material-icons close">close</i></div>'
+                    },
+                    dropdown: {
+                        el: '',
+                        tagName: 'ul',
+                        className: 'collection',
+                        itemTemplate: '<li class="collection-item avatar" data-id="<%= item.id %>" data-text="<%= item.text %>" data-image="<%= item.image %>"><a href="javascript:void(0)"><img class="square" src="<%= item.image %>" /><span><%= item.text %></span></a></li>',
+                        noItem: ''
+                    },
+                    getData: function (value, callback) {
+                        var dataSet = self.controller.$filter('filter')(data, value);
+                        callback(value, dataSet);
+                    }
+                });
+
+                if(data.length <= 1) {
+                    self.autocompleteRestaurant.setValue(data[0]);
+                    angular.element('[for=restaurant-input]').addClass('active');
+                }
+                else if(content.relationships.relatedFrom.have_menu.length > 0){
+                    angular.forEach(content.relationships.relatedFrom.have_menu,function(restaurant,key) {
+                        angular.forEach(data,function(item,index) {
+                            if(item.id == restaurant.data.id) {
+                                self.autocompleteRestaurant.setValue(data[index]);
+                            }
+                        });
                     });
+                    angular.element('[for=starters-input]').addClass('active');
                 }
 
             });
 
             //Para los platos
-            this.controller.PlateApi.getAllByUserId(userId).then(function(content) {
+            this.controller.PlateApi.getAllByUserId(userId).then(function(response) {
                 var data = [];
-                angular.forEach(content,function(plate,index) {
+                angular.forEach(response,function(plate,index) {
                     data.push({
                         id:plate.data.id,
                         text:plate.data.attributes.name,
@@ -125,6 +136,7 @@ module ILovePlatos{
                 });
 
                 if(data.length > 0) {
+
                     self.autocompleteStarters = $('input.starters-autocomplete').materialize_autocomplete({
                         limit: 20,
                         multiple: {
@@ -148,6 +160,17 @@ module ILovePlatos{
                             callback(value, dataSet);
                         }
                     });
+
+                    if(content.relationships.relatedTo.have_plate.starters.length > 0){
+                        angular.forEach(content.relationships.relatedTo.have_plate.starters,function(starter,key) {
+                            angular.forEach(data,function(item,index) {
+                                if(item.id == starter.data.id) {
+                                    self.autocompleteStarters.setValue(data[index]);
+                                }
+                            });
+                        });
+                        angular.element('[for=starters-input]').addClass('active');
+                    }
 
                     self.autocompleteFirsts = $('input.firsts-autocomplete').materialize_autocomplete({
                         limit: 20,
@@ -173,6 +196,17 @@ module ILovePlatos{
                         }
                     });
 
+                    if(content.relationships.relatedTo.have_plate.firsts.length > 0){
+                        angular.forEach(content.relationships.relatedTo.have_plate.firsts,function(first,key) {
+                            angular.forEach(data,function(item,index) {
+                                if(item.id == first.data.id) {
+                                    self.autocompleteFirsts.setValue(data[index]);
+                                }
+                            });
+                        });
+                        angular.element('[for=firsts-input]').addClass('active');
+                    }
+
                     self.autocompleteSeconds = $('input.seconds-autocomplete').materialize_autocomplete({
                         limit: 20,
                         multiple: {
@@ -196,6 +230,17 @@ module ILovePlatos{
                             callback(value, dataSet);
                         }
                     });
+
+                    if(content.relationships.relatedTo.have_plate.seconds.length > 0){
+                        angular.forEach(content.relationships.relatedTo.have_plate.seconds,function(second,key) {
+                            angular.forEach(data,function(item,index) {
+                                if(item.id == second.data.id) {
+                                    self.autocompleteSeconds.setValue(data[index]);
+                                }
+                            });
+                        });
+                        angular.element('[for=seconds-input]').addClass('active');
+                    }
 
                     self.autocompleteDesserts = $('input.desserts-autocomplete').materialize_autocomplete({
                         limit: 20,
@@ -221,21 +266,34 @@ module ILovePlatos{
                         }
                     });
 
+                    if(content.relationships.relatedTo.have_plate.desserts.length > 0){
+                        angular.forEach(content.relationships.relatedTo.have_plate.desserts,function(dessert,key) {
+                            angular.forEach(data,function(item,index) {
+                                if(item.id == dessert.data.id) {
+                                    self.autocompleteDesserts.setValue(data[index]);
+                                }
+                            });
+                        });
+                        angular.element('[for=desserts-input]').addClass('active');
+                    }
+
                 }
 
             });
 
+            if(content.attributes.daily != "") {
+                var daily = content.attributes.daily.split(",");
+                if(!content.attributes.dailyForm) {
+                    content.attributes.dailyForm = {}
+                }
+                angular.forEach(daily,function(day) {
+                    content.attributes.dailyForm[day] = true;
+                });
+            }
+
             setTimeout(function() {
                 Materialize.updateTextFields();
             },200);
-
-        }
-
-        initEdit() {
-            var self = this;
-
-            this.controller.FilesService.resetFiles();
-            this.controller.FilesService.setController('menuCtrl');
 
         }
 
@@ -406,7 +464,7 @@ module ILovePlatos{
         }
 
         isUpdate() {
-            if(this.controller.$state.current.name == 'editarpost') {
+            if(this.controller.$state.current.name == 'menu-update') {
                 return true;
             }else {
                 return false;
@@ -414,9 +472,7 @@ module ILovePlatos{
         }
 
         regenerateForm() {
-            setTimeout(function() {
-                Materialize.updateTextFields();
-            },100);   
+            this.initEdit();
         }
 
         editarPublicacion(event,card) {

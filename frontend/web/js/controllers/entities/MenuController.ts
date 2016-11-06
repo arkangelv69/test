@@ -49,7 +49,15 @@ module ILovePlatos{
                 },
                 relationships: {
                     relatedTo: {
-                        have_plate:[]
+                        have_plate:{
+                            starters:[],
+                            firsts:[],
+                            seconds:[],
+                            desserts:[]
+                        }
+                    },
+                    relatedFrom: {
+                        have_menu: []
                     },
                     miniaturas:{
                         data:[]
