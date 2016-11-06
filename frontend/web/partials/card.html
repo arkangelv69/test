@@ -42,27 +42,27 @@
           </div>
           <ul class="collapsible" data-collapsible="accordion" data-ng-init="cardCtrl.initAccordion('.collapsible');">
             <li data-ng-if="cardCtrl.haveMenuStarters(menu)">
-              <div class="collapsible-header"><i class="mdi mdi-food-variant mdi-24px"></i>Entrantes</div>
+              <div class="collapsible-header"><i class="mdi mdi-food-fork-drink mdi-24px"></i>Entrantes</div>
               <div class="collapsible-body">
-                <div class="item-group first" data-ng-repeat="plate in cardCtrl.getMenuStarters(menu) track by $index">
-                  <div class="item-media"><img data-ng-src="{[{cardCtrl.getUrlImgSquare(plate)}]}"/></div>
-                  <div class="item-body">
-                    <div class="item-title">Salpicon de pollo</div>
-                    <p class="item-description">pimiento, cebolla, pollo, salsa</p>
-                  </div>
-                  <div class="item-score">0</div>
-                  <div class="item-favorite">
-                    <a href="#">
-                      <i class="mdi mdi-star-outline mdi-24px"></i>
-                    </a>
+                <div class="item-group" data-ng-repeat="plate in cardCtrl.getMenuStarters(menu) track by $index" data-ng-class="{first:($index == 0)}">
+                    <div class="item-media"><img data-ng-src="{[{cardCtrl.getUrlImgSquare(plate.data)}]}"/></div>
+                    <div class="item-body">
+                      <div class="item-title">{[{cardCtrl.getName(plate.data)}]}</div>
+                      <p class="item-description">{[{cardCtrl.getDescription(plate.data)}]}</p>
+                    </div>
+                    <div class="item-score">0</div>
+                    <div class="item-favorite">
+                      <a href="#">
+                        <i class="mdi mdi-star-outline mdi-24px"></i>
+                      </a>
+                    </div>
                   </div>
                 </div>
-              </div>
             </li>
             <li data-ng-if="cardCtrl.haveMenuFirts(menu)">
               <div class="collapsible-header"><i class="mdi mdi-food-variant mdi-24px"></i>Primeros</div>
               <div class="collapsible-body">
-                <div class="item-group first" data-ng-repeat="plate in cardCtrl.getMenuFirts(menu) track by $index">
+                <div class="item-group" data-ng-repeat="plate in cardCtrl.getMenuFirts(menu) track by $index" data-ng-class="{first:($index == 0)}">
                   <div class="item-media"><img data-ng-src="{[{cardCtrl.getUrlImgSquare(plate.data)}]}"/></div>
                   <div class="item-body">
                     <div class="item-title">{[{cardCtrl.getName(plate.data)}]}</div>
@@ -80,7 +80,7 @@
             <li data-ng-if="cardCtrl.haveMenuSeconds(menu)">
               <div class="collapsible-header"><i class="mdi mdi-food mdi-24px"></i>Segundos</div>
               <div class="collapsible-body">
-                <div class="item-group first" data-ng-repeat="plate in cardCtrl.getMenuSeconds(menu) track by $index">
+                <div class="item-group" data-ng-repeat="plate in cardCtrl.getMenuSeconds(menu) track by $index" data-ng-class="{first:($index == 0)}">
                   <div class="item-media"><img data-ng-src="{[{cardCtrl.getUrlImgSquare(plate.data)}]}"/></div>
                   <div class="item-body">
                     <div class="item-title">{[{cardCtrl.getName(plate.data)}]}</div>
@@ -98,7 +98,7 @@
             <li data-ng-if="cardCtrl.haveMenuDesserts(menu)">
               <div class="collapsible-header"><i class="mdi mdi-food-apple mdi-24px"></i>Postres</div>
               <div class="collapsible-body">
-                <div class="item-group first" data-ng-repeat="plate in cardCtrl.getMenuDesserts(menu) track by $index">
+                <div class="item-group" data-ng-repeat="plate in cardCtrl.getMenuDesserts(menu) track by $index" data-ng-class="{first:($index == 0)}">
                   <div class="item-media"><img data-ng-src="{[{cardCtrl.getUrlImgSquare(plate.data)}]}"/></div>
                   <div class="item-body">
                     <div class="item-title">{[{cardCtrl.getName(plate.data)}]}</div>
