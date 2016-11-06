@@ -207,8 +207,12 @@ module ILovePlatos{
 
         localizame() {
            //navigator.geolocation.getCurrentPosition(this.coordenadas);
-           this.position.lat = 40.396761351388115;
-           this.position.lng = -3.489304971752527;
+           //40.396761351388115
+           //-3.489304971752527
+           //40.4236838
+           //-3.5370896
+           this.position.lat = 40.4285944;
+           this.position.lng = -3.5621125999999776;
         }
      
         coordenadas(){

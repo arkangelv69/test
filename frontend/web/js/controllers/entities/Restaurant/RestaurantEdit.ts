@@ -9,6 +9,7 @@ module ILovePlatos{
     declare var Camera:any;
     declare var window:any;
     declare var navigator:any;
+    declare var Materialize:any;
 
     export class RestaurantEdit{
 
@@ -41,6 +42,12 @@ module ILovePlatos{
                     self.formEntity();
                 }
             });
+
+            setTimeout(function()  {
+                $('input#name').characterCounter();
+                $('input#description').characterCounter();
+            },50);
+
         }
 
         initEdit() {
@@ -402,7 +409,9 @@ module ILovePlatos{
 
             setTimeout(function() {
                 self.controller.FilesService.previewImageUpload(images);
+                Materialize.updateTextFields();
             },100);
+
         }
 
         showNewCrop = false;

@@ -9,6 +9,7 @@ module ILovePlatos{
     declare var Camera:any;
     declare var window:any;
     declare var navigator:any;
+    declare var Materialize:any;
 
     export class PlateEdit{
 
@@ -62,7 +63,7 @@ module ILovePlatos{
                             el: '',
                             tagName: 'ul',
                             className: 'ac-appender',
-                            tagTemplate: '<div class="chip" data-id="<%= item.id %>" data-text="<% item.text %>" data-image="<% item.image %>"><img src="<%= item.image %>" /><span> <%= item.text %>(<%= item.id %>) <i class="material-icons close">close</i></div>'
+                            tagTemplate: '<div class="chip" data-id="<%= item.id %>" data-text="<% item.text %>" data-image="<% item.image %>"><img src="<%= item.image %>" /><span> <%= item.text %> <i class="material-icons close">close</i></div>'
                         },
                         dropdown: {
                             el: '',
@@ -72,7 +73,8 @@ module ILovePlatos{
                             noItem: ''
                         },
                         getData: function (value, callback) {
-                            callback(value, data);
+                            var dataSet = self.controller.$filter('filter')(data, value);
+                            callback(value, dataSet);
                         }
                     });
                     self.autocomplete.setValue(data[0]);
@@ -89,7 +91,7 @@ module ILovePlatos{
                             el: '',
                             tagName: 'ul',
                             className: 'ac-appender',
-                            tagTemplate: '<div class="chip" data-id="<%= item.id %>" data-text="<% item.text %>" data-image="<% item.image %>"><img src="<%= item.image %>" /><span> <%= item.text %>(<%= item.id %>) <i class="material-icons close">close</i></div>'
+                            tagTemplate: '<div class="chip" data-id="<%= item.id %>" data-text="<% item.text %>" data-image="<% item.image %>"><img src="<%= item.image %>" /><span> <%= item.text %> <i class="material-icons close">close</i></div>'
                         },
                         dropdown: {
                             el: '',
@@ -99,12 +101,18 @@ module ILovePlatos{
                             noItem: ''
                         },
                         getData: function (value, callback) {
-                            callback(value, data);
+                            var dataSet = self.controller.$filter('filter')(data, value);
+                            callback(value, dataSet);
                         }
                     });
                 }
 
             });
+
+            setTimeout(function()  {
+                $('input#name').characterCounter();
+                $('textarea#description').characterCounter();
+            },200);
 
         }
 
@@ -426,7 +434,9 @@ module ILovePlatos{
 
             setTimeout(function() {
                 self.controller.FilesService.previewImageUpload(images);
+                Materialize.updateTextFields();
             },100);
+
         }
 
         showNewCrop = false;
