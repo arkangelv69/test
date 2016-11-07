@@ -24,7 +24,7 @@ module ILovePlatos{
         userId:string;
         userNeo4j = 55;
         //44,3
-        deviceId:any = 3;
+        deviceId:any = 198619;
         username:string;
         nickname:string;
         description:string;

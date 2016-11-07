@@ -32,12 +32,7 @@
         <div class="menu-group" data-ng-repeat="menu in cardCtrl.getMenus(cardCtrl.content) track by $index">
           <div class="card-menu-header">
             <div class="card-menu-title">{[{cardCtrl.getName(menu)}]}</div>
-            <div class="card-menu-offer">
-              <span class="card-menu-offer-desserts">
-                <i class="mdi mdi-food-apple mdi-24px"></i>
-                <span class="and-or">y</span>
-                <i class="mdi mdi-coffee mdi-24px"></i>
-              </span>
+            <div class="card-menu-offer" data-ng-bind-html="cardCtrl.getDressertCoffee(menu)">
             </div>
           </div>
           <ul class="collapsible" data-collapsible="accordion" data-ng-init="cardCtrl.initAccordion('.collapsible');">
@@ -52,7 +47,7 @@
                     </div>
                     <div class="item-score">0</div>
                     <div class="item-favorite">
-                      <a href="#">
+                      <a href="#" data-ng-click="cardCtrl.toggleLike($event,plate.data.id)">
                         <i class="mdi mdi-star-outline mdi-24px"></i>
                       </a>
                     </div>
@@ -70,7 +65,7 @@
                   </div>
                   <div class="item-score">0</div>
                   <div class="item-favorite">
-                    <a href="#">
+                    <a href="#" data-ng-click="cardCtrl.toggleLike($event,plate.data.id)">
                       <i class="mdi mdi-star-outline mdi-24px"></i>
                     </a>
                   </div>
@@ -88,7 +83,7 @@
                   </div>
                   <div class="item-score">0</div>
                   <div class="item-favorite">
-                    <a href="#">
+                    <a href="#" data-ng-click="cardCtrl.toggleLike($event,plate.data.id)">
                       <i class="mdi mdi-star-outline mdi-24px"></i>
                     </a>
                   </div>
@@ -106,7 +101,7 @@
                   </div>
                   <div class="item-score">0</div>
                   <div class="item-favorite">
-                    <a href="#">
+                    <a href="#" data-ng-click="cardCtrl.toggleLike($event,plate.data.id)">
                       <i class="mdi mdi-star-outline mdi-24px"></i>
                     </a>
                   </div>
