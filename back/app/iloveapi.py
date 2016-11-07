@@ -345,4 +345,15 @@ def uploadImage():
     myJson = request.get_json(force=True)
     return json.dumps(uploadBinary(myJson))
 
+@app.route('/public/plate/addLike', methods=['POST'])
+#@crossdomain(origin='*')
+@cross_origin(headers=['Content-Type', 'Authorization'])
+@cross_origin(headers=['Access-Control-Allow-Origin', '*'])
+#@requires_auth
+def addLike():
+    myJson = request.get_json(force=True)
+    i = Plate.select(graph, myJson["plateId"]).first()
+    i.addLike(myJson["userId"],graph)
+    return "LIKED"
+
 app.run(host='0.0.0.0')

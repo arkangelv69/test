@@ -358,6 +358,20 @@
 				"description": ""
 			},
 			"response": []
+		},
+		{
+			"name": "Add like",
+			"request": {
+				"url": "{{url}}/public/plate/addLike",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userId\":44,\n\t\"plateId\":18\n}"
+				},
+				"description": ""
+			},
+			"response": []
 		}
 	]
 }

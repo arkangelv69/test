@@ -279,7 +279,8 @@ class Menu(GraphObject):
     desserts = Property()
     coffe = Property()
     daily = Property()
-    scheduled = Property()
+    scheduled_init = Property()
+    scheduled_end = Property()
     date = Property()
 
     have_plate = RelatedTo("Plate", "HAVE_PLATE")
@@ -287,7 +288,11 @@ class Menu(GraphObject):
 
     def create(self,json,g):
         for attribute, value in json["data"]["attributes"].items():
-            setattr(self,attribute,value)
+            if (attribute == "scheduled"):
+                setattr(self, "scheduled_init", json["data"]["attributes"]["scheduled"]["init"])
+                setattr(self, "scheduled_end", json["data"]["attributes"]["scheduled"]["end"])
+            else:
+                setattr(self,attribute,value)
 
         for restaurantId in json["data"]["relationships"]["relatedFrom"]["have_menu"]:
             restaurant = Restaurant.select(g,restaurantId).first()
@@ -316,7 +321,11 @@ class Menu(GraphObject):
         self.have_plate.clear()
 
         for attribute, value in json["data"]["attributes"].items():
-            setattr(self,attribute,value)
+            if (attribute == "scheduled"):
+                setattr(self, "scheduled_init", json["data"]["attributes"]["scheduled"]["init"])
+                setattr(self, "scheduled_end", json["data"]["attributes"]["scheduled"]["end"])
+            else:
+                setattr(self,attribute,value)
 
         for restaurantId in json["data"]["relationships"]["relatedFrom"]["have_menu"]:
             restaurant = Restaurant.select(g,restaurantId).first()
@@ -362,7 +371,10 @@ class Menu(GraphObject):
                     "drinkDescription": self.drinkDescription,
                     "desserts": self.desserts,
                     "daily": self.daily,
-                    "scheduled": self.scheduled
+                    "scheduled": {
+                        "init":self.scheduled_init,
+                        "end": self.scheduled_end
+                    }
                 }
             }
         }
@@ -377,6 +389,11 @@ class Menu(GraphObject):
 
         for p in self.have_plate:
             menu["data"]["relationships"]["relatedTo"]["have_plate"][self.have_plate.get(p,"type")].append(p.toJson())
+
+        menu["data"]["relationships"]["relatedFrom"] = {}
+        menu["data"]["relationships"]["relatedFrom"]["have_menu"] = []
+        for r in self.have_menu:
+            menu["data"]["relationships"]["relatedFrom"]["have_menu"].append(r.__primaryvalue__)
 
         return menu
 
