@@ -250,6 +250,7 @@
 .card-panel-group {
 	width: 100%;
 	height: calc((100vw * 0.45)/2);
+	margin-bottom: 2px;
 }
 .card-panel-media {
 	display: inline-block;
@@ -269,6 +270,10 @@
     	line-height: initial;
 }
 .card-panel-title {
+	margin-bottom: 5px;
+	font-weight: 400;
+}
+.card-panel-description {
 	margin-bottom: 5px;
 	font-weight: 200;
 }
@@ -433,6 +438,20 @@ p.item-description {
 
 .input-field .collection {
 	display: none;
+}
+
+.progress-button .progress {
+	position: relative;
+	height: auto;
+	display: initial;
+	border-radius: inherit;
+	margin: initial;
+	overflow: hidden;
+}
+
+.progress-button[disabled] {
+	background-color: #DFDFDF !important;
+	color: #9F9F9F !important;
 }
 
 /***********plates***************/

@@ -235,9 +235,9 @@ module ILovePlatos{
                 var entity = jQuery.extend({},newEntity);
                 entity.data.id = content.id;
 
-                this.controller.update(entity);
+                //this.controller.update(entity);
             }else {
-                this.controller.add(newEntity);
+                //this.controller.add(newEntity);
             }
 
         }
@@ -247,6 +247,7 @@ module ILovePlatos{
             this.progressbar = this.progressbarPartial  / this.progressbarTotal;
             if(this.progressbar == 1) {
                 this.progressbarRes.resolve();
+                this.progressbarPartial = 0;
             }else {
                 this.progressbarRes.notify(this.progressbar);
             }
@@ -257,16 +258,17 @@ module ILovePlatos{
         progressbarTotal = 5;
         progressbarRes:any;
 
-        progressStart(newPostForm) {
+        progressStart(form) {
             this.progressbarRes = this.controller.$q.defer();
 
-            this.submit(newPostForm);
+            this.submit(form);
 
             return this.progressbarRes.promise;
         }
 
         progressCancel() {
             this.progressbarRes.reject();
+            this.progressbarPartial = 0;
         }
 
         selectFile(event,selector) {

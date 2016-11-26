@@ -27,21 +27,21 @@ grunt.initConfig({
         'angular-translate',
         'angular-ui-router',
         'angular-animate',
-        'angular-ui-router-anim-in-out',
+        //'angular-ui-router-anim-in-out',
         'auth0-lock',
         'auth0-angular',
-        'jquery-simplecolorpicker',
+        //'jquery-simplecolorpicker',
         //'jssor-slider',
         //'lightgallery',
-        'masonry',
+        //'masonry',
         'cropper',
         'underscore',
         'md5',
         'ngCordova',
-        'angular-flippy',
+        //'angular-flippy',
         'angular-progress-button-styles',
     	 'tinymce',
-        'tinymce-mention',
+        //'tinymce-mention',
         'waypoints',
         'select2',
         'nouislider',
@@ -59,7 +59,7 @@ grunt.initConfig({
         'ngCordova': 'angular',
         //'ionic': 'angular',
         'tinymce': 'jquery',
-        'tinymce-mention':'tinymce',
+        //'tinymce-mention':'tinymce',
         'select2':'jquery',
         'nouislider':'jquery',
         'map-icons':'jquery',
@@ -74,10 +74,10 @@ grunt.initConfig({
         'map-icons',
       ],
       mainFiles: {
-        "angular-ui-router-anim-in-out": [
+        /*"angular-ui-router-anim-in-out": [
           "anim-in-out.js",
           "css/anim-in-out.css"
-        ],
+        ],*/
         "jquery": [
           "dist/jquery.min.js"
         ],
@@ -123,27 +123,27 @@ grunt.initConfig({
           "dist/js/lg-zoom.min.js",
           "dist/css/lightgallery.min.css"
         ],*/
-        "masonry": [
+        /*"masonry": [
           "dist/masonry.pkgd.min.js"
-        ],
-        "jquery-simplecolorpicker": [
+        ],*/
+        /*"jquery-simplecolorpicker": [
           "jquery.simplecolorpicker.js",
           "jquery.simplecolorpicker.css"
-        ],
+        ],*/
         "cropper": ["dist/cropper.min.js","dist/cropper.min.css"],
         "ngCordova": ["dist/ng-cordova.min.js","dist/ng-cordova-mocks.min.js"],
-        "angular-flippy": ["dist/js/angular-flippy.min.js","dist/css/angular-flippy.min.css"],
-        'angular-progress-button-styles': ["dist/angular-progress-button-styles.min.js","dist/angular-progress-button-styles.min.css"],
+        //"angular-flippy": ["dist/js/angular-flippy.min.js","dist/css/angular-flippy.min.css"],
+        'angular-progress-button-styles': ["dist/angular-progress-button-styles.js","dist/angular-progress-button-styles.min.css"],
         'tinymce': [
           "tinymce.min.js",
           "plugins/paste/plugin.min.js",
           "plugins/link/plugin.min.js",
           "plugins/code/plugin.min.js",
-          "plugins/emoticons/plugin.min.js",
+          //"plugins/emoticons/plugin.min.js",
           "plugins/fullscreen/plugin.min.js",
           "themes/modern/theme.min.js"
         ],
-        'tinymce-mention': ["mention/plugin.min.js"],
+        //'tinymce-mention': ["mention/plugin.min.js"],
         'underscore': ["underscore-min.js"],
         'waypoints': ["lib/jquery.waypoints.min.js","lib/shortcuts/infinite.min.js"],
         'select2': ["dist/js/select2.min.js","dist/css/select2.min.css"],

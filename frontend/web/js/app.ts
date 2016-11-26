@@ -58,12 +58,12 @@ module ILovePlatos{
         'ngSanitize',
         'ngAnimate',
         'ngCookies',
-        'anim-in-out',
+        //'anim-in-out',
         'auth0',
         'angular-storage',
         'angular-jwt',
         'ngCordova',
-        'angular-flippy',
+        //'angular-flippy',
         'angular-progress-button-styles',
         'ngMeta'
     ])
@@ -82,7 +82,7 @@ module ILovePlatos{
                   store.remove('token');
                   store.remove('refreshToken');
                   var url = window.location;
-                  window.location = url;
+                  location.reload();
                 }
                 else if (!idToken || !refreshToken) {
                   token = null;

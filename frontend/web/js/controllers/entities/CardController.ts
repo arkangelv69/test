@@ -41,7 +41,7 @@ module ILovePlatos{
             }
             if( typeof(data) == 'undefined') {
                 data = {
-                    top:[64],
+                    top:[64,50],
                     favorites:[50]
                 }
             }
@@ -142,6 +142,34 @@ module ILovePlatos{
             }
 
             return template;
+        }
+
+        haveCardFavorites(card) {
+            if(card && card.relationships.favorites && card.relationships.favorites.length > 0) {
+                return true;
+            }
+            return false;
+        }
+
+        haveCardTops(card) {
+            if(card && card.relationships.top && card.relationships.top.length > 0) {
+                return true;
+            }
+            return false;
+        }
+
+        favorites = [];
+        setFavorites(card) {
+            if(card && card.relationships.favorites && card.relationships.favorites.length > 0) {
+                this.favorites = card.relationships.favorites;
+            }
+        }
+
+        tops = [];
+        setTops(card) {
+            if(card && card.relationships.top && card.relationships.top.length > 0) {
+                this.tops = card.relationships.top;
+            }
         }
 
         getMenus() {
