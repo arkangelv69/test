@@ -247,6 +247,13 @@
 	padding: 2px;
 	border-radius: 50%;
 }
+.carousel-slider-important .indicators {
+	left: initial;
+	right: 5px;
+}
+.carousel-slider-important .indicators .indicator-item {
+	margin-bottom: 2px;
+}
 /*card panel*/
 .card-panel-group {
 	width: 100%;

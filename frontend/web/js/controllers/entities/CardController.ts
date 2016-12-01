@@ -250,7 +250,7 @@ module ILovePlatos{
         initCarrousel(selector) {
             setTimeout(function(){
                 $(selector).carousel({full_width: true});
-            },0);
+            },50);
         }
 
         initAccordion(selector) {
