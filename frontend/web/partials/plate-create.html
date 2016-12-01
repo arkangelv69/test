@@ -19,15 +19,13 @@
 				<textarea name="" id="description" type="text" class="materialize-textarea validate" row="15" length="1000" data-ng-model="plateCtrl.content.attributes.description"></textarea>
 				<label for="name">Descripción</label>
 			</div>
-		</div>
-		<div class="row">
 			<div class="input-field col s12">
 				<fileimage template="plate"></fileimage>
 			</div>
 		</div>
 		<div class="row">
 			<div class="submit-field col s12">
-				<button id="submit" type="submit" class="waves-effect waves-light btn" progress-button="plateCtrl.progressStart(newPostForm)" data-ng-disabled="!plateCtrl.isSubmitActive()"><i class="material-icons left">cloud</i>Enviar</button>
+				<button id="submit" type="submit" class="progress-button waves-effect waves-light" progress-button="plateCtrl.progressStart(newPostForm)" pb-style="fill" pb-direction="horizontal" pb-random-progress="false" data-ng-disabled="!plateCtrl.isSubmitActive()">Enviar</button>
 			</div>
 		</div>
 	</form>

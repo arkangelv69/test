@@ -506,18 +506,7 @@ module ILovePlatos{
             else if(this._user.username == this.$stateParams.username) {
                 return this.menuId = null;
             }
-            this.menuId = null;
-            if(menuId) {
-                this.menuId = menuId;
-                var self = this;
-                setTimeout(function(){
-                    var url = 'partials/menus/'+menuId+'.html';
-                    self.$http.get(url, {cache: self.$templateCache}).success(function(tplContent) {
-                        angular.element('#context-menu').append(self.$compile(tplContent)(self.$scope));
-                    });
-                    angular.element('.dropdown-menu').remove();
-                },50);
-            }
+            this.menuId = menuId;
         }
 
         setMenuAction(selectorId,menuId) {

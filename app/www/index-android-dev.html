@@ -133,21 +133,23 @@
 
         <link rel="icon" type="image/x-icon" href="favicon.ico" />
 
-        <!--script type="text/javascript" src="cordova.js"></script-->
-        <!--script type="text/javascript" src="js-default/index.js"></script-->
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js-default/index.js"></script>
 
     </head>
 
     <body class="appNative android" ng-class="[mainCtrl.customClass]" id="{[{mainCtrl.id}]}">
         <div data-ng-controller="UserController as userCtrl" ng-class="{'no-login':!userCtrl.currentUser,'login':userCtrl.currentUser}">
             <div id="main-menu">
+              <a class="back ng-hide" data-ng-show="mainCtrl.title != 'Home'" data-ng-click="mainCtrl.goBack();"><i class="mdi mdi-chevron-left"></i></a>
+              <h1 class="ng-hide" data-ng-show="mainCtrl.title != 'Home' ">{[{mainCtrl.title}]}</h1>
               <ul id="slide-out" class="side-nav">
                 <li ng-if="userCtrl.isLogged()">
                   <div class="userView">
-                      <img class="background" src="images/office.jpg">
-                      <a href="#!user"><img class="circle" src="images/yuna.jpg"></a>
-                      <a href="#!name"><span class="white-text name">John Doe</span></a>
-                      <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
+                      <img class="background" src="images/skullz.jpg">
+                      <a href="#!user"><img class="circle" src="images/cheff.jpg"></a>
+                      <a href="#!name"><span class="white-text name">David Muñoz</span></a>
+                      <a href="#!email"><span class="white-text email">dmunoz@opensistemas.com</span></a>
                   </div>
                 </li>
                 <li ng-if="!userCtrl.isLogged()">
@@ -163,17 +165,18 @@
                   </div>
                 </li>
                 <li ng-if="userCtrl.isLogged()"><div class="divider"></div></li>
+                <li ng-if="userCtrl.isLogged()"><a ui-sref="home" class="return">Volver al mapa</a></li>
+                <li ng-if="userCtrl.isLogged()"><div class="divider"></div></li>
                 <li ng-if="userCtrl.isLogged()"><a ui-sref="restaurant-list">Mis restaurantes</a></li>
-                <li ng-if="userCtrl.isLogged()"><a ui-sref="restaurant-create">Crear restaurante</a></li>
                 <li ng-if="userCtrl.isLogged()"><a ui-sref="plate-list">Mis platos</a></li>
-                <li ng-if="userCtrl.isLogged()"><a ui-sref="plate-create">Crear plato</a></li>
                 <li ng-if="userCtrl.isLogged()"><a ui-sref="menu-list">Mis menus</a></li>
-                <li ng-if="userCtrl.isLogged()"><a ui-sref="menu-create">Crear menu</a></li>
               </ul>
               <a href="#" data-activates="slide-out" class="action-button button-collapse"><i class="material-icons small">menu</i></a>
             </div>
-            <div data-ui-view class="anim-in-out anim-slide-below-fade" data-anim-speed="1000" data-anim-sync="true"></div>
-            <map></map>
+            <div class="content-view">
+                <div data-ui-view data-anim-speed="1000" data-anim-sync="true"></div>
+                <map></map>
+            </div>
         </div>
 
         <script>
@@ -183,6 +186,32 @@
                     angular.element('#map').scope().mapCtrl.initMap();
                 },200);
             });
+        }
+        document.addEventListener("deviceready", onDeviceReady, false);
+        function onDeviceReady() {
+            // onSuccess Callback
+            // This method accepts a Position object, which contains the
+            // current GPS coordinates
+            //
+            var onSuccess = function(position) {
+                alert('Latitude: '          + position.coords.latitude          + '\n' +
+                      'Longitude: '         + position.coords.longitude         + '\n' +
+                      'Altitude: '          + position.coords.altitude          + '\n' +
+                      'Accuracy: '          + position.coords.accuracy          + '\n' +
+                      'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
+                      'Heading: '           + position.coords.heading           + '\n' +
+                      'Speed: '             + position.coords.speed             + '\n' +
+                      'Timestamp: '         + position.timestamp                + '\n');
+            };
+
+            // onError Callback receives a PositionError object
+            //
+            function onError(error) {
+                alert('code: '    + error.code    + '\n' +
+                      'message: ' + error.message + '\n');
+            }
+
+            navigator.geolocation.getCurrentPosition(onSuccess, onError);
         }
         </script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJXI0Ul_ef-tPmKaNFqvCTQUIPJWO2osw&callback=initMap"></script>

@@ -11,7 +11,7 @@
 }
 .content-view {
 	padding-top: 52px;
-	min-height: 100vh;
+	min-height: calc( 100vh - 52px);
 }
 .content-view:after{
 	content: "";
@@ -104,15 +104,16 @@
 /*main-menu*/
 #home #main-menu {
 	display: block;
-	background: rgba(255,255,255,0.6);
+	/*background: rgba(255,255,255,0.6);*/
 }
 #main-menu {
-	position: absolute;
+	position: fixed;
 	z-index: 999;
-	background: rgba(0,0,0,0.2);
+	background: #fff;
 	width: calc(100% - 20px);
 	margin: 10px;
 	display: block;
+	box-shadow: 2px 2px 2px 0 rgba(0,0,0,.25);
 }
 #card #main-menu{
 	display: none;
@@ -418,8 +419,8 @@ p.item-description {
 /*---------------------form--------------------*/
 
 /*input-image*/
-.input-filed .fileimage input{
-	display: none;
+.input-field .fileimage input{
+	display: none!important;
 }
 /*canvas*/
 #preview canvas {
@@ -460,4 +461,12 @@ p.item-description {
 	height: auto;
 	display: inline;
 	margin-right: 10px;
+}
+
+/*************login***********/
+#a0-onestep {
+	width: 100%!important;
+}
+#login {
+	padding: 10px;
 }
