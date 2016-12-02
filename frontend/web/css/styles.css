@@ -15,7 +15,7 @@
 }
 .content-view:after{
 	content: "";
-	background: url("../images/patterns.jpg");
+	background: #f4f4f4;
 	opacity: 1;
 	top: 0;
 	left: 0;
@@ -110,8 +110,9 @@
 	position: fixed;
 	z-index: 999;
 	background: #fff;
-	width: calc(100% - 20px);
-	margin: 10px;
+	padding: 5px;
+	margin: 0;
+	width: 100%;
 	display: block;
 	box-shadow: 2px 2px 2px 0 rgba(0,0,0,.25);
 }
@@ -131,18 +132,39 @@
 	color: black;
 	padding: 0 0px 0 9px;
 }
-#home #main-menu a.action-button{
-	position: relative;
-}
 #main-menu a.action-button{
 	position: relative;
 	top: 4px;
     	float: right;
-    	margin-right: 5px;
+    	margin-right: : 5px;
 }
 #main-menu a.action-button i{
 	font-size: 30px;
 	color: #000;
+}
+#main-menu .mdi-chevron-left:before {
+    content: "\F141";
+    font-size: 30px;
+    position: relative;
+    top: 3px;
+}
+#home #main-menu {
+	position: fixed;
+	z-index: 999;
+	background: rgba(255,255,255,0.8);
+	width: calc(100% - 20px);
+	margin: 10px;
+	display: block;
+	box-shadow: 2px 2px 2px 0 rgba(0,0,0,.25);
+}
+#home #main-menu a.action-button{
+	position: relative;
+}
+#home #main-menu a.action-button{
+	position: relative;
+	top: 4px;
+    	float: left;
+    	margin-left: 5px;
 }
 
 /*map action-buttons*/
@@ -172,8 +194,9 @@
 }
 /*card panel */
 .card .card-panel {
-	margin:0;
-	padding: 0;
+	/*margin:0;
+	padding: 0;*/
+	color: rgba(0,0,0,0.4);
 }
 .card .card-panel .row{
 	margin-bottom: 0;
@@ -187,16 +210,20 @@
 }
 /*car menu*/
 .card-menu-header {
-	background: rgba(0,0,0,0.1);
-    	padding: 5px;	
+	/*background: rgba(0,0,0,0.1);
+    	padding: 5px;	*/
 }
 .card-menu-title{
 	display: inline-block;
+	font-size: 18px;
+	/* border-bottom: 1px solid; */
+	width: 100%;
+	padding: 5px 0;
 }
 .card-menu-offer {
-	text-align: right;
+	/*text-align: right;
 	display: inline-block;
-	float: right;
+	float: right;*/
 }
 .card-menu-offer i{
 	position: relative;
@@ -207,6 +234,10 @@
 	position: relative;
 	top:-4px;
 	color: rgba(0,0,0,0.4);
+}
+.card-menu-drink {
+	float: left;
+	margin-right: 10px;
 }
 .card .card-menus .collapsible{
 	margin-bottom:5px;
@@ -223,6 +254,9 @@
 }
 .card-menu-separator {
 	 margin: 0 5px;
+}
+.card .card-image {
+	 height: calc(100vw * 271/408);
 }
 .card .card-image .card-title {
 	background: rgba(0,0,0,.4);

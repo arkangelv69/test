@@ -2,7 +2,7 @@
   <div data-ng-if="cardCtrl.content.id">
     <div class="card-image-shadow"></div>
     <div class="card-image">
-      <img data-ng-src="{[{cardCtrl.getUrlImgMain(cardCtrl.content)}]}">
+      <img class="materialboxed" data-ng-src="{[{cardCtrl.getUrlImgMain(cardCtrl.content)}]}">
       <span class="card-title">{[{cardCtrl.getName(cardCtrl.content)}]}</span>
       <a class="card-navigation btn-floating btn-large blue">
         <i class="material-icons">navigation</i>
@@ -13,11 +13,11 @@
     </div>
     <div class="carousel carousel-slider carousel-slider-important
 " data-indicators="true" data-ng-init="cardCtrl.initCarrousel('.carousel-slider-important
-');">
+');cardCtrl.initTooltip();cardCtrl.initMaterialbox();">
       <div class="card-favorites-group" data-ng-if="cardCtrl.haveCardFavorites(cardCtrl.content);" data-ng-init="cardCtrl.setFavorites(cardCtrl.content);">
         <div  data-ng-repeat="favorite in cardCtrl.favorites track by $index" class="carousel-item card-panel-group green darken-2">
           <div class="card-panel-media">
-            <img data-ng-src="{[{cardCtrl.getUrlImgLandscape(favorite.data)}]}"> <!-- notice the "circle" class -->
+            <img class="materialboxed" data-ng-src="{[{cardCtrl.getUrlImgLandscape(favorite.data)}]}" data-original="{[{cardCtrl.getUrlImgOriginal(favorite.data)}]}"> <!-- notice the "circle" class -->
             <div class="card-panel-item-layer"></div>
             <div class="card-panel-item-score item-score-low">10</div>
             <div class="card-panel-item-favorite">
@@ -35,7 +35,7 @@
         <div class="card-tops-group" data-ng-if="cardCtrl.haveCardTops(cardCtrl.content);" data-ng-init="cardCtrl.setTops(cardCtrl.content);">
           <div data-ng-repeat="top in cardCtrl.tops track by $index" class="carousel-item card-panel-group yellow darken-2">
             <div class="card-panel-media">
-              <img data-ng-src="{[{cardCtrl.getUrlImgLandscape(top.data)}]}">
+              <img class="materialboxed" data-ng-src="{[{cardCtrl.getUrlImgLandscape(top.data)}]}" data-original="{[{cardCtrl.getUrlImgOriginal(top.data)}]}">
               <div class="card-panel-item-layer"></div>
               <div class="card-panel-item-score item-score-low">10</div>
               <div class="card-panel-item-favorite">
@@ -57,7 +57,15 @@
         <div class="menu-group" data-ng-repeat="menu in cardCtrl.getMenus(cardCtrl.content) track by $index">
           <div class="card-menu-header">
             <div class="card-menu-title">{[{cardCtrl.getName(menu)}]}</div>
-            <div class="card-menu-offer" data-ng-bind-html="cardCtrl.getDressertCoffee(menu)">
+            <div class="card-menu-offer card-panel blue lighten-5" data-ng-if="cardCtrl.getDressertCoffee(menu) || cardCtrl.haveDrink(menu)">
+              <div class="card-menu-drink" data-ng-if="cardCtrl.haveDrink(menu)">
+                <a class="card-menu-drink-icon tooltipped" data-position="bottom" data-delay="50" data-tooltip="{[{cardCtrl.getDrinkDescription(menu)}]}">
+                  <i class="mdi mdi-beer mdi-24px"></i>
+                </a>
+                <!--span class="card-menu-drink-description" data-ng-if="cardCtrl.haveDrinkDescription(menu)">
+                </span-->  
+              </div>
+              <div class="card-menu-dressert-coffee" data-ng-init="cardCtrl.getDressertCoffee(menu)"></div>
             </div>
           </div>
           <ul class="collapsible" data-collapsible="accordion" data-ng-init="cardCtrl.initAccordion('.collapsible');">
@@ -65,7 +73,7 @@
               <div class="collapsible-header"><i class="mdi mdi-food-fork-drink mdi-24px"></i>Entrantes</div>
               <div class="collapsible-body">
                 <div class="item-group" data-ng-repeat="plate in cardCtrl.getMenuStarters(menu) track by $index" data-ng-class="{first:($index == 0)}">
-                    <div class="item-media"><img data-ng-src="{[{cardCtrl.getUrlImgSquare(plate.data)}]}"/></div>
+                    <div class="item-media"><img class="materialboxed" data-ng-src="{[{cardCtrl.getUrlImgSquare(plate.data)}]}" data-original="{[{cardCtrl.getUrlImgOriginal(plate.data)}]}"/></div>
                     <div class="item-body">
                       <div class="item-title">{[{cardCtrl.getName(plate.data)}]}</div>
                       <p class="item-description">{[{cardCtrl.getDescription(plate.data)}]}</p>
@@ -83,7 +91,7 @@
               <div class="collapsible-header"><i class="mdi mdi-food-variant mdi-24px"></i>Primeros</div>
               <div class="collapsible-body">
                 <div class="item-group" data-ng-repeat="plate in cardCtrl.getMenuFirts(menu) track by $index" data-ng-class="{first:($index == 0)}">
-                  <div class="item-media"><img data-ng-src="{[{cardCtrl.getUrlImgSquare(plate.data)}]}"/></div>
+                  <div class="item-media"><img class="materialboxed" data-ng-src="{[{cardCtrl.getUrlImgSquare(plate.data)}]}" data-original="{[{cardCtrl.getUrlImgOriginal(plate.data)}]}"/></div>
                   <div class="item-body">
                     <div class="item-title">{[{cardCtrl.getName(plate.data)}]}</div>
                     <p class="item-description">{[{cardCtrl.getDescription(plate.data)}]}</p>
@@ -101,7 +109,7 @@
               <div class="collapsible-header"><i class="mdi mdi-food mdi-24px"></i>Segundos</div>
               <div class="collapsible-body">
                 <div class="item-group" data-ng-repeat="plate in cardCtrl.getMenuSeconds(menu) track by $index" data-ng-class="{first:($index == 0)}">
-                  <div class="item-media"><img data-ng-src="{[{cardCtrl.getUrlImgSquare(plate.data)}]}"/></div>
+                  <div class="item-media"><img class="materialboxed" data-ng-src="{[{cardCtrl.getUrlImgSquare(plate.data)}]}" data-original="{[{cardCtrl.getUrlImgOriginal(plate.data)}]}"/></div>
                   <div class="item-body">
                     <div class="item-title">{[{cardCtrl.getName(plate.data)}]}</div>
                     <p class="item-description">{[{cardCtrl.getDescription(plate.data)}]}</p>
@@ -119,7 +127,7 @@
               <div class="collapsible-header"><i class="mdi mdi-food-apple mdi-24px"></i>Postres</div>
               <div class="collapsible-body">
                 <div class="item-group" data-ng-repeat="plate in cardCtrl.getMenuDesserts(menu) track by $index" data-ng-class="{first:($index == 0)}">
-                  <div class="item-media"><img data-ng-src="{[{cardCtrl.getUrlImgSquare(plate.data)}]}"/></div>
+                  <div class="item-media"><img class="materialboxed" data-ng-src="{[{cardCtrl.getUrlImgSquare(plate.data)}]}" data-original="{[{cardCtrl.getUrlImgOriginal(plate.data)}]}"/></div>
                   <div class="item-body">
                     <div class="item-title">{[{cardCtrl.getName(plate.data)}]}</div>
                     <p class="item-description">{[{cardCtrl.getDescription(plate.data)}]}</p>

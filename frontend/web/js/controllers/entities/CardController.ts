@@ -77,6 +77,14 @@ module ILovePlatos{
             });
         }
 
+        haveDrink(card) {
+            return this.ContenidoCard.haveDrink(card);
+        }
+
+        haveDrinkDescription(card) {
+            return this.ContenidoCard.haveDrinkDescription(card);
+        }
+
         getName(card) {
             return this.ContenidoCard.getName(card);
         }
@@ -109,6 +117,10 @@ module ILovePlatos{
             return this.ContenidoCard.getUrlImgLandscape(card);
         }
 
+        getDrinkDescription(card) {
+            return this.ContenidoCard.getDrinkDescription(card);
+        }
+
         getDressertCoffee(menu) {
             var template = '';
 
@@ -116,32 +128,32 @@ module ILovePlatos{
 
             switch(option) {
                 case 'onlycoffee':
-                    template = '<span class="card-menu-offer-desserts">\
+                    template = '<a class="card-menu-offer-desserts tooltipped" data-position="bottom" data-delay="50" data-tooltip="Solo cafe">\
                         <i class="mdi mdi-coffee mdi-24px"></i>\
-                      </span>';
+                      </a>';
                     break;
                 case 'onlydessert':
-                    template = '<span class="card-menu-offer-desserts">\
+                    template = '<a class="card-menu-offer-desserts tooltipped" data-position="bottom" data-delay="50" data-tooltip="Solo postre">\
                         <i class="mdi mdi-food-apple mdi-24px"></i>\
-                      </span>';
+                      </a>';
                     break;
                 case 'dessertandcoffee':
-                    template = '<span class="card-menu-offer-desserts">\
+                    template = '<a class="card-menu-offer-desserts tooltipped" data-position="bottom" data-delay="50" data-tooltip="Postre y cafe">\
                         <i class="mdi mdi-food-apple mdi-24px"></i>\
                         <span class="and-or">y</span>\
                         <i class="mdi mdi-coffee mdi-24px"></i>\
-                      </span>';
+                      </a>';
                     break;
                 case 'dessertorcoffee':
-                    template = '<span class="card-menu-offer-desserts">\
+                    template = '<a class="card-menu-offer-desserts tooltipped" data-position="bottom" data-delay="50" data-tooltip="Postre o cafe">\
                         <i class="mdi mdi-food-apple mdi-24px"></i>\
                         <span class="and-or">o</span>\
                         <i class="mdi mdi-coffee mdi-24px"></i>\
-                      </span>';
+                      </a>';
                     break;
             }
 
-            return template;
+            angular.element('.card-menu-dressert-coffee').html(template);
         }
 
         haveCardFavorites(card) {
@@ -242,9 +254,6 @@ module ILovePlatos{
 
         init() {
             $(".button-collapse").sideNav();
-            $(window).scroll(function(event) {
-
-            });
         }
 
         initCarrousel(selector) {
@@ -259,6 +268,18 @@ module ILovePlatos{
                   accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
                 });
             },0);
+        }
+
+        initTooltip() {
+            setTimeout(function(){
+                $('.tooltipped').tooltip({delay: 50});
+            },200);
+        }
+
+        initMaterialbox() {
+            setTimeout(function(){
+                $('.materialboxed').materialbox();
+            },200);
         }
 
     }

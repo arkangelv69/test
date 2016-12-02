@@ -16,7 +16,7 @@ module ILovePlatos{
             var d = this.$q.defer();
             var params = this.getParamsUser();
 
-            this.$http.get(this.$config.protocolApirest+this.$config.domainApirest+"/public/"+this.type+"/"+lat+"/"+lng+"/"+range+"/"+deviceId, {params:params})
+            this.$http.get(this.$config.protocolApirest+this.$config.domainApirest+"/public/"+this.type+"/"+lat+"/"+lng+"/"+range+"/"+deviceId, {params:params,cache:true})
                 .success((data: iEntityApirest) => {
                     d.resolve(data);
                 })
@@ -32,7 +32,7 @@ module ILovePlatos{
             var d = this.$q.defer();
             var params = this.getParamsUser();
 
-            this.$http.get(this.$config.protocolApirest+this.$config.domainApirest+"/"+this.getTypeAccess()+"/"+this.type+"/publicados?filter[usuarios]="+entityId, {params:params})
+            this.$http.get(this.$config.protocolApirest+this.$config.domainApirest+"/"+this.getTypeAccess()+"/"+this.type+"/publicados?filter[usuarios]="+entityId, {params:params,cache:true})
                 .success((data: iEntityApirest) => {
                     d.resolve(data);
                 })

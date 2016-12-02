@@ -36,6 +36,20 @@ module ILovePlatos{
             return url;
         }
 
+        haveDrink(menu) {
+            if(menu.attributes.drink) {
+                return true;
+            }
+            return false;
+        }
+
+        haveDrinkDescription(menu) {
+            if(menu.attributes.drinkDescription) {
+                return true;
+            }
+            return false;
+        }
+
         getImageOriginal(card) {
             var original = {};
             if(card && card.attributes && card.attributes.images && card.attributes.images.original) {
@@ -95,6 +109,14 @@ module ILovePlatos{
                 return card.attributes.price;
             }
             return '';
+        }
+
+        getDrinkDescription(menu) {
+            var description = [];
+            if(this.haveDrinkDescription(menu)) {
+                description = menu.attributes.drinkDescription;
+            }
+            return description;
         }
 
     }
