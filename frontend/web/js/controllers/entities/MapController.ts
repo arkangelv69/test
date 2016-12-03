@@ -24,6 +24,7 @@ module ILovePlatos{
         ];
 
         map:any;
+        rangeCircle:any;
         markers = [];
         contents:any;
         filters:any = {
@@ -52,14 +53,38 @@ module ILovePlatos{
             return this.mapIncluded;
         }
 
+        getZoom() {
+            var zoom = 16;
+            if(this._main.position.range <= 0.5) {
+                zoom = 16;
+            }
+            else if(this._main.position.range > 0.5 && this._main.position.range <= 0.9) {
+                zoom = 15;
+            }
+            else if(this._main.position.range > 0.9 && this._main.position.range <= 1.4) {
+                zoom = 14;
+            }
+            else if(this._main.position.range > 1.4 && this._main.position.range <= 2) {
+                zoom = 13;
+            }
+            return zoom;
+        }
+
         initMap() {
             var self = this;
-            var minZoomLevel = 15;
+            var minZoomLevel = 13;
+            var zoom = this.getZoom();
+            
             var lat = this._main.position.lat;
             var lng = this._main.position.lng;
             var myLatLng = {lat: lat, lng: lng};
 
             jQuery("#map").addClass("loading");
+
+            var styles = [{"featureType":"water","stylers":[{"visibility":"on"},{"color":"#b5cbe4"}]},{"featureType":"landscape","stylers":[{"color":"#efefef"}]},{"featureType":"road.highway","elementType":"geometry","stylers":[{"color":"#83a5b0"}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"color":"#bdcdd3"}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"color":"#ffffff"}]},{"featureType":"poi.park","elementType":"geometry","stylers":[{"color":"#e3eed3"}]},{"featureType":"administrative","stylers":[{"visibility":"on"},{"lightness":33}]},{"featureType":"road"},{"featureType":"poi.park","elementType":"labels","stylers":[{"visibility":"on"},{"lightness":20}]},{},{"featureType":"road","stylers":[{"lightness":20}]}];
+
+            var styledMap = new google.maps.StyledMapType(styles,
+            {name: "Styled Map"});
 
             // Create a map object and specify the DOM element for display.
             this.map = new google.maps.Map(document.getElementById('map-layer'), {
@@ -68,13 +93,21 @@ module ILovePlatos{
               disableDefaultUI: true, // a way to quickly hide all controls
               zoomControl: true,
               streetViewControl: true,
-              zoom: minZoomLevel,
+              zoom: zoom,
+              mapTypeControlOptions: {
+                  mapTypeIds: ['map_style']
+              },
               //mapTypeId: google.maps.MapTypeId.ROADMAP,
               styles: [
                     {stylers: [{ visibility: 'simplified' }]},
                     //{elementType: 'labels', stylers: [{ visibility: 'off' }]}
                 ]
             });
+
+            this.map.mapTypes.set('map_style', styledMap);
+            this.map.setMapTypeId('map_style');
+
+            this.renderRangeCircle();
 
             this.getAll(function() {
 
@@ -84,7 +117,7 @@ module ILovePlatos{
                  new google.maps.LatLng(lat + 0.00001, lng + 0.00001));
 
                 // Listen for the dragend event
-                google.maps.event.addListener(self.map, 'dragend', function () {
+                /*google.maps.event.addListener(self.map, 'dragend', function () {
                      if (strictBounds.contains(self.map.getCenter())) return;
 
                      // We're out of bounds - Move the map back within the bounds
@@ -103,7 +136,7 @@ module ILovePlatos{
                      if (y > maxY) y = maxY;
 
                      self.map.setCenter(new google.maps.LatLng(y, x));
-                });
+                });*/
 
                 // Limit the zoom level
                 google.maps.event.addListener(self.map, 'zoom_changed', function () {
@@ -117,6 +150,23 @@ module ILovePlatos{
                 jQuery("#map").removeClass("loading");
 
             });
+        }
+
+        renderRangeCircle() {
+            var lat = this._main.position.lat;
+            var lng = this._main.position.lng;
+            var myLatLng = {lat: lat, lng: lng};
+
+            this.rangeCircle = new google.maps.Circle({
+                  strokeColor: '#26a69a',
+                  strokeOpacity: 0.6,
+                  strokeWeight: 2,
+                  fillColor: '#26a69a',
+                  fillOpacity: 0.1,
+                  map: this.map,
+                  center: myLatLng,
+                  radius: this._main.position.range * 1000
+                });
         }
 
         renderMarker() {
@@ -153,6 +203,8 @@ module ILovePlatos{
         }
 
         reloadMap() {
+            this.rangeCircle.setRadius(this._main.position.range * 1000);
+            this.map.setZoom(this.getZoom());
             this.clearMarkers();
             this.renderMarker();
             this.store.set("filters",this.filters);
@@ -284,7 +336,7 @@ module ILovePlatos{
 
         getAll(callback) {
             var self = this;
-            this.api.getAll(this._main.position.lat,this._main.position.lng,this._main.position.range,this._user.deviceId).then((contents: iEntityApirest) => {
+            this.api.getAll(this._main.position.lat,this._main.position.lng,this._main.position.range*1,this._user.deviceId).then((contents: iEntityApirest) => {
                 
                 if(contents.data) {
                     self.contents = contents.data;
