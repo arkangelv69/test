@@ -33,6 +33,9 @@ module ILovePlatos{
             all:true
         };
         timeoutRange:any;
+        favorites = [];
+        top = [];
+        restaurants = [];
 
         constructor($config,api,DateService,$rootScope,public $stateParams,public $scope,public $state,$element,$sce,auth,store,public FilesService, public $q){
             super($config,api,DateService,$rootScope,$stateParams,$scope,$state,$element,$sce,auth,store);
@@ -340,6 +343,10 @@ module ILovePlatos{
                 
                 if(contents.data) {
                     self.contents = contents.data;
+
+                    self.setFavorites();
+                    self.setTop();
+                    self.setRestaurants();
                 }
 
                 callback();
@@ -347,6 +354,86 @@ module ILovePlatos{
             });
 
             return false;
+        }
+
+        setFavorites() {
+            var self = this;
+            var exist = false;
+            if(self.contents) {
+                angular.forEach(self.contents,function(restaurant,id) {
+                    if(restaurant.data && restaurant.data.relationships && restaurant.data.relationships.favorites && restaurant.data.relationships.favorites.length > 0) {
+                        angular.forEach(restaurant.data.relationships.favorites,function(favorite,index) {
+                            favorite.data.attributes.restaurantId = id;
+                            self.favorites.push(favorite.data);
+                        });
+                        exist = true;
+                    }
+                });
+            }
+            if(!exist) {
+                this.favorites = [];
+            }
+        }
+
+        setTop() {
+            var self = this;
+            var exist = false;
+            if(self.contents) {
+                angular.forEach(self.contents,function(restaurant,id) {
+                    if(restaurant.data && restaurant.data.relationships && restaurant.data.relationships.top && restaurant.data.relationships.top.length > 0) {
+                        angular.forEach(restaurant.data.relationships.top,function(top,index) {
+                            top.data.attributes.restaurantId = id;
+                            self.top.push(top.data);
+                        });
+                        exist = true;
+                    }
+                });
+            }
+            if(!exist) {
+                this.top = [];
+            }
+        }
+
+        setRestaurants() {
+            var self = this;
+            var exist = false;
+            if(self.contents) {
+                angular.forEach(self.contents,function(restaurant,id) {
+                    restaurant.data.attributes.restaurantId = id;
+                    self.restaurants.push(restaurant.data);
+                });
+                exist = true;
+            }
+            if(!exist) {
+                this.restaurants = [];
+            }
+        }
+
+        haveFavorites() {
+            if(this.favorites && this.favorites.length > 0) {
+                return true;
+            }
+            return false;
+        }
+
+        haveTop() {
+            if(this.top && this.top.length > 0) {
+                return true;
+            }
+            return false;
+        }
+
+        haveRestaurants() {
+            if(this.restaurants && this.restaurants.length > 0) {
+                return true;
+            }
+            return false;
+        }
+
+        initMapTabs(selector) {
+            setTimeout(function() {
+                $(selector).tabs();
+            },50);
         }
 
     }

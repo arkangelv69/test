@@ -18,6 +18,8 @@ interface JQuery {
 	material_select(params?):any;
 	materialize_autocomplete(params?):any;
 	pickadate(params?):any;
+	tabs(params?):any;
+	materialbox(params?):any;
 }
 
 interface HTMLElement {

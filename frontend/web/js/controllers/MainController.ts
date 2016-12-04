@@ -566,6 +566,12 @@ module ILovePlatos{
             return (this.id == 'perfil-publico');
         }
 
+        showList = false;
+        toggleList(event) {
+            event.preventDefault();
+            this.showList = !this.showList;
+        }
+
         //----------------- SystemMessages -------------------------//
         resetMessages() {
             return this.SystemMessages.resetMessages();

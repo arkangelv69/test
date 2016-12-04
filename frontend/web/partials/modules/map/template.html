@@ -1,5 +1,50 @@
 <div id="map" class="container loading" data-ng-show="mainCtrl.isHome() || !mapCtrl.isMapIncluded()">
     <div id="map-layer"></div>
+    <div id="map-layer-list" class="row ng-hide" data-ng-show="mainCtrl.showList">
+      <div class="col s12" data-ng-init="mapCtrl.initMapTabs('#map-layer-list .tabs');">
+        <ul class="tabs">
+          <li class="tab col s3"><a href="#map-layer-list-favorites" class="active"><i class="small material-icons">grade</i></a></li>
+          <li class="tab col s3"><a href="#map-layer-list-top"><i class="small material-icons">equalizer</i></a></li>
+          <li class="tab col s3"><a href="#map-layer-list-restaurants"><i class="small material-icons">room</i></a></li>
+        </ul>
+        <div id="map-layer-list-favorites" class="col s12">
+          <ul class="collection" data-ng-if="mapCtrl.haveFavorites();">
+            <li class="collection-item avatar" data-ng-controller="PlateController as plateCtrl" data-ng-repeat="item in mapCtrl.favorites track by $index" data-ng-if="mapCtrl.favorites.length > 0">
+              <a class="collection-item-link" href="#" data-ui-sref="card({id:item.attributes.restaurantId})">
+                <img data-ng-src="{[{plateCtrl.getUrlImgSquare(item)}]}" class="circle" />
+                <span class="title">{[{plateCtrl.getName(item)}]}</span>
+                <div class="secondary-content"><i class="material-icons">grade</i></div>
+              </a>
+            </li>
+            <li class="collection-item" data-ng-if="mapCtrl.favorites.length < 1"><div></div></li>
+          </ul>
+        </div>
+        <div id="map-layer-list-top" class="col s12">
+          <ul class="collection" data-ng-if="mapCtrl.haveTop();">
+            <li class="collection-item avatar" data-ng-controller="PlateController as plateCtrl" data-ng-repeat="item in mapCtrl.top track by $index" data-ng-if="mapCtrl.top.length > 0">
+              <a class="collection-item-link" href="#" data-ui-sref="card({id:item.attributes.restaurantId})">
+                <img data-ng-src="{[{plateCtrl.getUrlImgSquare(item)}]}" class="circle" />
+                <span class="title">{[{plateCtrl.getName(item)}]}</span>
+                <div class="secondary-content"><i class="material-icons">grade</i></div>
+              </a>
+            </li>
+            <li class="collection-item" data-ng-if="mapCtrl.top.length < 1"><div></div></li>
+          </ul>
+        </div>
+        <div id="map-layer-list-restaurants" class="col s12">
+          <ul class="collection" data-ng-if="mapCtrl.haveRestaurants();">
+            <li class="collection-item avatar" data-ng-controller="RestaurantController as restaurantCtrl" data-ng-repeat="item in mapCtrl.restaurants track by $index" data-ng-if="mapCtrl.restaurants.length > 0">
+              <a class="collection-item-link" href="#" data-ui-sref="card({id:item.attributes.restaurantId})">
+                <img data-ng-src="{[{restaurantCtrl.getUrlImgSquare(item)}]}" class="circle" />
+                <span class="title">{[{restaurantCtrl.getName(item)}]}</span>
+                <div class="secondary-content"><i class="material-icons">info</i></div>
+              </a>
+            </li>
+            <li class="collection-item" data-ng-if="mapCtrl.restaurants.length < 1"><div></div></li>
+          </ul>
+        </div>
+      </div>
+    </div>
     <div class="map action-buttons">
       <div class="row">
           <div class="switch">

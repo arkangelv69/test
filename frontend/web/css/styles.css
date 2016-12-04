@@ -101,6 +101,21 @@
   margin-bottom: 2px;
 }
 
+#map-layer-list {
+	position: fixed;
+	top: 60px;
+	width: calc(100% - 20px);
+	background: #fff;
+	right: 20px;
+	max-height: calc(100vh - 80px);
+	overflow: auto;
+}
+
+#map-layer-list .tabs i{
+	position: relative;
+	top: 10px;
+}
+
 /*main-menu*/
 #home #main-menu {
 	display: block;
@@ -148,6 +163,12 @@
     position: relative;
     top: 3px;
 }
+#main-menu a.action-button-list {
+	display: none;
+}
+#main-menu a.action-button-favorites {
+	display: none;
+}
 #home #main-menu {
 	position: fixed;
 	z-index: 999;
@@ -166,6 +187,15 @@
     	float: left;
     	margin-left: 5px;
 }
+#home #main-menu a.action-button-list {
+	float: right;
+	display: block;
+}
+#home #main-menu a.action-button-favorites {
+	float: right;
+	display: block;
+}
+
 
 /*map action-buttons*/
 .map.action-buttons {
@@ -494,6 +524,11 @@ p.item-description {
 .progress-button[disabled] {
 	background-color: #DFDFDF !important;
 	color: #9F9F9F !important;
+}
+
+input[type=range]::-ms-track {
+	height: 10px!important;
+	border-width: 10px 0!important;
 }
 
 /***********plates***************/
