@@ -141,7 +141,7 @@
     <body class="appNative android" ng-class="[mainCtrl.customClass]" id="{[{mainCtrl.id}]}">
         <div data-ng-controller="UserController as userCtrl" ng-class="{'no-login':!userCtrl.currentUser,'login':userCtrl.currentUser}">
             <div id="main-menu">
-              <a class="back ng-hide" data-ng-show="mainCtrl.title != 'Home'" data-ng-click="mainCtrl.goBack();"><i class="mdi mdi-chevron-left"></i></a>
+              <a class="back ng-hide" data-ng-show="mainCtrl.title != 'Home'" data-ng-click="mainCtrl.goBack();"><i class="mdi mdi-arrow-left"></i></a>
               <h1 class="ng-hide" data-ng-show="mainCtrl.title != 'Home' ">{[{mainCtrl.title}]}</h1>
               <ul id="slide-out" class="side-nav">
                 <li ng-if="userCtrl.isLogged()">
@@ -171,7 +171,9 @@
                 <li ng-if="userCtrl.isLogged()"><a ui-sref="plate-list">Mis platos</a></li>
                 <li ng-if="userCtrl.isLogged()"><a ui-sref="menu-list">Mis menus</a></li>
               </ul>
-              <a href="#" data-activates="slide-out" class="action-button button-collapse"><i class="material-icons small">menu</i></a>
+              <a href="#" data-activates="slide-out" class="action-button action-button-menu button-collapse"><i class="material-icons small">menu</i></a>
+              <a href="#" class="action-button action-button-list" data-ng-click="mainCtrl.toggleList($event)"><i class="material-icons small">view_module</i></a>
+              <a href="#" class="action-button action-button-favorites"><i class="material-icons small">grade</i></a>
             </div>
             <div class="content-view">
                 <div data-ui-view data-anim-speed="1000" data-anim-sync="true"></div>

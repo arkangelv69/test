@@ -358,7 +358,7 @@ module ILovePlatos{
 
         setFavorites() {
             var self = this;
-            var exist = false;
+            this.favorites = [];
             if(self.contents) {
                 angular.forEach(self.contents,function(restaurant,id) {
                     if(restaurant.data && restaurant.data.relationships && restaurant.data.relationships.favorites && restaurant.data.relationships.favorites.length > 0) {
@@ -366,18 +366,14 @@ module ILovePlatos{
                             favorite.data.attributes.restaurantId = id;
                             self.favorites.push(favorite.data);
                         });
-                        exist = true;
                     }
                 });
-            }
-            if(!exist) {
-                this.favorites = [];
             }
         }
 
         setTop() {
             var self = this;
-            var exist = false;
+            this.top = [];
             if(self.contents) {
                 angular.forEach(self.contents,function(restaurant,id) {
                     if(restaurant.data && restaurant.data.relationships && restaurant.data.relationships.top && restaurant.data.relationships.top.length > 0) {
@@ -385,27 +381,19 @@ module ILovePlatos{
                             top.data.attributes.restaurantId = id;
                             self.top.push(top.data);
                         });
-                        exist = true;
                     }
                 });
-            }
-            if(!exist) {
-                this.top = [];
             }
         }
 
         setRestaurants() {
             var self = this;
-            var exist = false;
+            this.restaurants = [];
             if(self.contents) {
                 angular.forEach(self.contents,function(restaurant,id) {
                     restaurant.data.attributes.restaurantId = id;
                     self.restaurants.push(restaurant.data);
                 });
-                exist = true;
-            }
-            if(!exist) {
-                this.restaurants = [];
             }
         }
 

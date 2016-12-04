@@ -109,6 +109,7 @@
 	right: 20px;
 	max-height: calc(100vh - 80px);
 	overflow: auto;
+	z-index: 9;
 }
 
 #map-layer-list .tabs i{
