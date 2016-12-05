@@ -49,7 +49,7 @@ module ILovePlatos{
                     angular.element(".card-image-shadow").height(height);
                 }
             }, {
-              offset: -119
+              offset: -120
             });
         }
 

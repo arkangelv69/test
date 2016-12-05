@@ -4,7 +4,7 @@
     <div class="card-image">
       <img class="materialboxed" data-ng-src="{[{cardCtrl.getUrlImgMain(cardCtrl.content)}]}">
       <span class="card-title">{[{cardCtrl.getName(cardCtrl.content)}]}</span>
-      <a class="card-navigation btn-floating btn-large blue">
+      <a href="#" data-ng-click="mainCtrl.openNavigation($event,cardCtrl.content);" class="card-navigation btn-floating btn-large blue">
         <i class="material-icons">navigation</i>
       </a>
       <a class="card-close" ui-sref="home">
