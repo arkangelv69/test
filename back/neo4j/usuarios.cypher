@@ -1,0 +1,16 @@
+match (u:User),(p:Plate) where u.id = 1 and p.id = 115 create (u)-[:LIKED]->(p);
+match (u:User),(p:Plate) where u.id = 1 and p.id = 124 create (u)-[:LIKED]->(p);
+create (_2:User{id:2,deviceId:2,name:"Muñoz",email:"dmunoz@gmail.com"});
+match (b:Restaurant),(u:User) where b.id = 1 and u.id = 2 create (u)-[:ADMIN]->(b);
+match (u:User),(p:Plate) where u.id = 2 and p.id = 109 create (u)-[:LIKED]->(p);
+match (u:User),(p:Plate) where u.id = 2 and p.id = 101 create (u)-[:LIKED]->(p);
+match (u:User),(p:Plate) where u.id = 2 and p.id = 103 create (u)-[:LIKED]->(p);
+match (u:User),(p:Plate) where u.id = 2 and p.id = 122 create (u)-[:LIKED]->(p);
+create (_3:User{id:3,deviceId:3,name:"Gema",email:"gema@gmail.com"});
+match (u:User),(p:Plate) where u.id = 3 and p.id = 109 create (u)-[:LIKED]->(p);
+match (u:User),(p:Plate) where u.id = 3 and p.id = 122 create (u)-[:LIKED]->(p);
+match (u:User),(p:Plate) where u.id = 3 and p.id = 102 create (u)-[:LIKED]->(p);
+create (_4:User{id:4,deviceId:4,name:"Charlie",email:"davidgalcalde@gmail.com"});
+match (u:User),(p:Plate) where u.id = 4 and p.id = 109 create (u)-[:LIKED]->(p);
+match (u:User),(p:Plate) where u.id = 4 and p.id = 115 create (u)-[:LIKED]->(p);
+match (u:User),(p:Plate) where u.id = 4 and p.id = 120 create (u)-[:LIKED]->(p);
