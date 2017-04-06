@@ -57,10 +57,7 @@ module ILovePlatos{
 		searched:boolean;
 		prevState:string;
 		intervalMessages:any;
-		intervalConversaciones:any;
-		intervalNotificaciones:any;
-		intervalPaginaVista:any;
-		preview:any;
+		isSetLocation:boolean;
 		existState(nameState:string): boolean;
 		getState(nameState:string): EntityController;
 		removeState(nameState);
@@ -77,33 +74,20 @@ module ILovePlatos{
 		toggleShare();
 		setId(id:string);
 		setMenuId(menuId:string);
-		initTinymce(selector?,timeout?);
 		showLogin();
 		hideLogin();
-		regenereWall(selector?);
-		setContentBuho(isContent);
 		setMine(isMine);
 		go(name:string,params?);
 		setCache(name:string);
-		deleteAllCache();
-		deleteCache(name:string);
 		redirect404();
 		activeTooltip();
-		setOmniture(params,action?);
-		extendsOmniture(params);
-		sendOmniture();
 		sendGoogleAnalytics();
 		cleanRelativeUrl(url:string):string;
 		setCustomClass(customClass:any);
-		setChartBeat(options);
-		initChartBeat();
 		$scope:any;
 		goToScrollTop(event?):any;
-		homepublicarpostCtrl:any;
-		setTTLAdvise(name,ttl?);
-		selectorLightGallery:string;
-		isOpenLightGallery:boolean;
 		isCordovaApp();
+		setLocation(lat?,lng?);
 	}
 
 	export interface IUserScope extends ng.IScope {

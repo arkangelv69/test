@@ -64,6 +64,7 @@ module ILovePlatos{
         searched = false;
         cache = [];
         position:any = {};
+        isSetLocation = false;
 
         //Composición de clases
         SystemMessages:SystemMessages;
@@ -100,16 +101,45 @@ module ILovePlatos{
                 document.addEventListener("deviceready", function() {
                     //Cuando el dispositivo esta listo, ocultamos el spashscreen
                     navigator.splashscreen.hide();
+
+                    //Para obtener la geolocalización
+                    // onSuccess Callback
+                    // This method accepts a Position object, which contains the
+                    // current GPS coordinates
+                    //
+                    var onSuccess = function(position) {
+                        console.log('Latitude: '          + position.coords.latitude          + '\n' +
+                              'Longitude: '         + position.coords.longitude         + '\n' +
+                              'Altitude: '          + position.coords.altitude          + '\n' +
+                              'Accuracy: '          + position.coords.accuracy          + '\n' +
+                              'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
+                              'Heading: '           + position.coords.heading           + '\n' +
+                              'Speed: '             + position.coords.speed             + '\n' +
+                              'Timestamp: '         + position.timestamp                + '\n');
+
+                        self.setLocation(position.coords.latitude,position.coords.longitude);
+                    };
+
+                    // onError Callback receives a PositionError object
+                    //
+                    function onError(error) {
+                        console.log('code: '    + error.code    + '\n' +
+                              'message: ' + error.message + '\n');
+                    }
+
+                    navigator.geolocation.getCurrentPosition(onSuccess, onError);
                 }, false);
 
                 document.addEventListener("backbutton", function onBackKeyDown() {
                 }, false);
             }
+            //Cuando accedes desde el navegador
+            else {
+                navigator.geolocation.getCurrentPosition(this.coordenadas);
+            }
 
              //Eventos ggeneral
              self.initGeneralEnvent();
-
-             this.localizame();
 
             var range = this.store.get("range");
             if(range) {
@@ -205,19 +235,24 @@ module ILovePlatos{
             }
         }
 
-        localizame() {
-           //navigator.geolocation.getCurrentPosition(this.coordenadas);
+        setLocation(lat?,lng?) {
            //40.396761351388115
            //-3.489304971752527
            //40.4236838
            //-3.5370896
-           this.position.lat = 40.4285944;
-           this.position.lng = -3.5621125999999776;
+           if(!lat) {
+            lat = 40.4265986;
+           }
+           if(!lng) {
+            lng = -3.5539166;
+           }
+           this.position.lat = lat;
+           this.position.lng = lng;
+           this.isSetLocation = true;
         }
      
         coordenadas(){
-           this.position.lat = position.coords.latitude;
-           this.position.lng = position.coords.longitude;
+           this.setLocation(position.coords.latitude,position.coords.longitude);
         }
 
         getDispositivo() {

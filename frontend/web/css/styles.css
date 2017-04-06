@@ -196,6 +196,10 @@
 	float: right;
 	display: block;
 }
+#main-menu #slide-out i {
+	float: right;
+	margin: 0;
+}
 
 
 /*map action-buttons*/

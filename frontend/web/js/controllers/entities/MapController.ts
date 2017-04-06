@@ -73,6 +73,25 @@ module ILovePlatos{
             return zoom;
         }
 
+        initMapInterval() {
+            if(this._main.isSetLocation) {
+                this.initMap();
+            }else {
+                var i = 0;
+                var self = this;
+                var interval = setInterval(function() {
+                    if(i > 10) {
+                        self._main.setLocation();
+                    }
+                    if(self._main.isSetLocation) {
+                        self.initMap();
+                        clearInterval(interval);
+                    }
+                    i++;
+                },300);
+            }
+        }
+
         initMap() {
             var self = this;
             var minZoomLevel = 13;
@@ -208,6 +227,7 @@ module ILovePlatos{
         reloadMap() {
             this.rangeCircle.setRadius(this._main.position.range * 1000);
             this.map.setZoom(this.getZoom());
+            this.map.setCenter(this._main.position.lat,this._main.position.lng);
             this.clearMarkers();
             this.renderMarker();
             this.store.set("filters",this.filters);
@@ -236,15 +256,16 @@ module ILovePlatos{
             position: params.position,
             map: this.map,
             title: params.title,
-            icon: {
+            /*icon: {
                 path: LOCATION,
                 fillColor: color,
                 fillOpacity: 1,
                 strokeColor: '#000000',
                 strokeWeight: 1,
                 scale:2.5
-            },
-            map_icon_label: '<span class="map-icon '+classLabel+' "></span>'
+            },*/
+            icon: "/images/placeholder-for-map-"+color+".png"
+            //map_icon_label: '<span class="map-icon '+classLabel+' "></span>'
           });
 
           var paramsUrl = {
@@ -280,12 +301,15 @@ module ILovePlatos{
         }
 
         getColorMarkerForFilter(params) {
-            var color = "#90caf9"; 
+            //var color = "#90caf9"; 
+            var color = "blue"; 
             if(this.filters.favorites && params && params.favorites && params.favorites.length > 0) {
-                color = "#66bb6a";
+                //color = "#66bb6a";
+                color = "green";
             }
             else if(this.filters.top && params && params.top && params.top.length > 0) {
-                color = "#ffeb3b";
+                //color = "#ffeb3b";
+                color = "yellow";
             }
             /*else if(this.filters.top || this.filters.favorites) {
                 color = '#e0e0e0';

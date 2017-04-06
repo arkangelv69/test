@@ -165,7 +165,7 @@
                   </div>
                 </li>
                 <li ng-if="userCtrl.isLogged()"><div class="divider"></div></li>
-                <li ng-if="userCtrl.isLogged()"><a ui-sref="home" class="return">Volver al mapa</a></li>
+                <li ng-if="userCtrl.isLogged()"><a ui-sref="home" class="return">Volver al mapa<i class="material-icons">home</i></a></li>
                 <li ng-if="userCtrl.isLogged()"><div class="divider"></div></li>
                 <li ng-if="userCtrl.isLogged()"><a ui-sref="restaurant-list">Mis restaurantes</a></li>
                 <li ng-if="userCtrl.isLogged()"><a ui-sref="plate-list">Mis platos</a></li>
@@ -185,7 +185,7 @@
         function initMap() {
             jQuery().ready(function() {
                 setTimeout(function() {
-                    angular.element('#map').scope().mapCtrl.initMap();
+                    angular.element('#map').scope().mapCtrl.initMapInterval();
                 },200);
             });
         }
