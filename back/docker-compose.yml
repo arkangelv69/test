@@ -9,6 +9,7 @@ services:
      - SYS_RESOURCE
     ports:
      - "7474:7474"
+     - "7687:7687"
   web:
     build: .
     ports:
