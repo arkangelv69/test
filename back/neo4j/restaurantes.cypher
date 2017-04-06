@@ -1,0 +1,10 @@
+create (r:Restaurant{name:"Nombre",latitude:Latitude,longitude:Longitude});
+create (r:Restaurant{name:"Restaurante Los Hornos",latitude:40.39742216262167,longitude:-3.495282274542215});
+create (r:Restaurant{name:"Pilar Villamor Carrasco",latitude:40.397111674070814,longitude:-3.49066351061857});
+create (r:Restaurant{name:"Bar Stop",latitude:40.397418077255345,longitude:-3.4908029854873446});
+create (r:Restaurant{name:"La Sabana Cafe",latitude:40.39676850084879,longitude:-3.489290219602945});
+create (r:Restaurant{name:"Abadía",latitude:40.39699728319128,longitude:-3.487798911390665});
+create (r:Restaurant{name:"Bar Llorente",latitude:40.39701771014834,longitude:-3.487573605833414});
+create (r:Restaurant{name:"Cabasfood Mejorada del Campo",latitude:40.39561115802253,longitude:-3.4843720629517105});
+create (r:Restaurant{name:"Cafe bar Torreblanca",latitude:40.42174904436864,longitude:-3.561362190515187});
+create (r:Restaurant{name:"Bohemios",latitude:40.43048289656849,longitude:-3.5418182745281723});
