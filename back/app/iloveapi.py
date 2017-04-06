@@ -354,6 +354,17 @@ def addLike():
     myJson = request.get_json(force=True)
     i = Plate.select(graph, myJson["plateId"]).first()
     i.addLike(myJson["userId"],graph)
-    return "LIKED"
+    return json.dumps({ "likes": i.getLikes() })
+
+@app.route('/public/plate/removeLike', methods=['POST'])
+#@crossdomain(origin='*')
+@cross_origin(headers=['Content-Type', 'Authorization'])
+@cross_origin(headers=['Access-Control-Allow-Origin', '*'])
+#@requires_auth
+def removeLike():
+    myJson = request.get_json(force=True)
+    i = Plate.select(graph, myJson["plateId"]).first()
+    i.removeLike(myJson["userId"],graph)
+    return json.dumps({ "likes": i.getLikes() })
 
 app.run(host='0.0.0.0')

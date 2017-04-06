@@ -534,6 +534,10 @@ class Plate(GraphObject):
         self.liked.add(user)
         g.push(self)
 
+    def removeLike(self,userId,g):
+        user = User.select(g,userId).first()
+        self.liked.remove(user)
+        g.push(self)
 
 class TodayLove:
     restaurants = {"data":{}}
