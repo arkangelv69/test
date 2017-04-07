@@ -1,0 +1,15 @@
+version: '2'
+services:
+  front:
+    build: .
+    ports:
+     - "5010:80"
+    environment:
+     MODE: 'dev'
+     VIRTUAL_HOST: 'dev.iloveplatos.com'
+    volumes:
+     - ./src:/var/www/html
+     - /var/www/html/node_modules
+     - /var/www/html/web/js/bower_components
+     - /var/www/html/web/js/built
+     - /var/www/html/web/typings

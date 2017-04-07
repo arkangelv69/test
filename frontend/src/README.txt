@@ -34,7 +34,7 @@ Una vez que están instalados estos comandos, desde una terminal y desde el dire
 npm install
 bower install
 tsd install
-tsc --outDir web/js/ web/js/app.ts --out web/built/js/buho.js --sourceMap
+tsc --outDir web/js/ web/js/app.ts --out web/built/js/iloveplatos.js --sourceMap
 grunt
 
 Si cargamos la url devel.iloveplatos.com, se debería ver ya aplicación en el navegador.

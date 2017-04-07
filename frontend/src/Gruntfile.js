@@ -56,6 +56,13 @@ grunt.initConfig({
       dependencies: {
         'angular': 'jquery',
         'cropper': 'jquery',
+        'angular-cookies':'angular',
+        'angular-jwt':'angular',
+        'angular-sanitize':'angular',
+        'angular-translate':'angular',
+        'angular-ui-router':'angular',
+        'angular-animate':'angular',
+        'auth0-angular':'angular',
         'ngCordova': 'angular',
         //'ionic': 'angular',
         'tinymce': 'jquery',
@@ -79,10 +86,10 @@ grunt.initConfig({
           "css/anim-in-out.css"
         ],*/
         "jquery": [
-          "dist/jquery.min.js"
+          "jquery.min.js"
         ],
         "angular": [
-          "angular.js"
+          "angular.min.js"
         ],
         "angular-cookies": [
           "angular-cookies.min.js"

@@ -25,9 +25,9 @@ app/platforms
 app/www
 
 # Frontend
-frontend/web/built
-frontend/node_modules
-frontend/web/js/bower_components
-frontend/web/typings/
-frontend/web/css/iloveplatos.min.css
-frontend/web/js/config.ts
+frontend/src/web/built
+frontend/src/node_modules
+frontend/src/web/js/bower_components
+frontend/src/web/typings/
+frontend/src/web/css/iloveplatos.min.css
+frontend/src/web/js/config.ts
