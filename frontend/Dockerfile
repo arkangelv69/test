@@ -15,7 +15,10 @@ RUN apt-get install -y nodejs git git-core vim
 RUN rm -rf /var/www/html/*
 ADD src /var/www/html
 
+
 WORKDIR /var/www/html
+RUN mkdir -p web/js
+ADD web/js/config.ts web/js/config.ts
 
 #ADD src/package.json /tmp/package.json
 RUN npm install

@@ -160,25 +160,7 @@ def helloWorld():
 @cross_origin(headers=['Access-Control-Allow-Origin', '*'])
 #@requires_auth
 def newNode(type):
-    """
-        Get and Delete
-        Obtener y elemininar elementos
-        ---
-        tags:
-          - Post/Put
-        parameters:
-          - name: type
-            in: path
-            type: string
-            required: true
-            description: Type of node (plate,restaurant,user,menu)
-        responses:
-          500:
-            description: Error The language is not awesome!
-          200:
-            description: Crear/actualizar
-            schema:
-        """
+
     if request.method == 'POST':
         myJson = request.get_json(force=True)
         i = ILoveNode.factory(type.title())
