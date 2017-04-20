@@ -12,19 +12,57 @@ try:
 except IOError:
   env = os.environ
 
-def createUser(userId,deviceId):
-    url = "https://iloveplatos.eu.auth0.com/dbconnections/signup"
+def getToken():
+    url = "https://iloveplatos.eu.auth0.com/oauth/token"
+    client_id = "CKtvKpwjAuihyrWryiFyTwiHBTl58Sm5"
+    client_secret = "a3wo7AnFouMIzgM6fIQIwFoW4-dnsD8z7nM_BSOGTI6nIOkmkDc3m48TzCwuw48H"
     data = {
         "client_id": client_id,
-        "email": "mail_" + str(userId) + "_" + str(deviceId) +"@mail.com",
-        "password": str(deviceId)+"_password",
-        "connection": "Username-Password-Authentication"
+        "client_secret": client_secret,
+        "audience": "https://iloveplatos.eu.auth0.com/api/v2/",
+        "grant_type": "client_credentials"
     }
     headers = {'Content-Type': 'application/json'}
+    response = requests.post(url, data=json.dumps(data), headers=headers)
+    string = response.content.decode('utf-8')
+    json_obj = json.loads(string)
+    return json_obj["access_token"]
+
+def createUser(userId,deviceId):
+    token = getToken()
+    url = "https://iloveplatos.eu.auth0.com/api/v2/users"
+    #"username": "username_"+str(deviceId),
+    data = {
+        "connection": "Username-Password-Authentication",
+        "email": "mail_" + str(userId) + "_" + str(deviceId) + "@mail.com",
+        "password": str(deviceId)+"_password",
+        "user_metadata": {
+            "neo_id": userId
+        },
+        "email_verified": True,
+        "verify_email": False,
+        "app_metadata": {}
+    }
+
+    headers = {'Content-Type': 'application/json',
+               'Authorization': 'Bearer '+token}
     response = requests.post(url,data=json.dumps(data),headers=headers)
     return response
 
-
+"""
+{
+  "connection": "Initial-Connection",
+  "email": "john.doe@gmail.com",
+  "username": "johndoe",
+  "password": "secret",
+  "phone_number": "+199999999999999",
+  "user_metadata": {},
+  "email_verified": false,
+  "verify_email": false,
+  "phone_verified": false,
+  "app_metadata": {}
+}
+"""
 """
 {
   "connection": "Username-Password-Authentication",

@@ -150,8 +150,8 @@ class Restaurant(GraphObject):
 
         g.push(self)
         """TODO: Add without match"""
-        g.run("MATCH (r:Restaurant) WHERE ID(r)= "+str(self.__primaryvalue__)+" WITH collect(r) as restaurants "" \
-                ""CALL spatial.addNodes('Restaurants',restaurants) YIELD node RETURN count(*)")
+        g.run("MATCH (r:Restaurant) WHERE ID(r)= "+str(self.__primaryvalue__)+" WITH r "" \
+                ""CALL spatial.addNode('Restaurants',r) YIELD node RETURN node  ")
 
     def update(self, json, g):
         for attribute, value in json["data"]["attributes"].items():
